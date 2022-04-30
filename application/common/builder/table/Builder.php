@@ -12,6 +12,7 @@ namespace app\common\builder\table;
 use app\admin\model\Menu;
 use app\common\builder\ZBuilder;
 use app\user\model\Role;
+use think\Exception;
 use think\facade\Cache;
 use think\facade\Env;
 
@@ -2189,8 +2190,12 @@ class Builder extends ZBuilder
                                     if ($param === '__data__') $param = $row;
                                 }
                             }
+                            try {
+                                $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
 
-                            $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
+                            } catch (Exception $e) {
+
+                            }
                             break;
                         case 'popover':
                             $length = empty($column['default']) ? 10 : $column['default'];
