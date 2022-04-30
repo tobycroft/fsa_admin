@@ -14,23 +14,30 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for `oc_packet_wechat_area`
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_packet_wechat_area`;
-CREATE TABLE `oc_packet_wechat_area` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `country` varchar(32) NOT NULL DEFAULT '' COMMENT '国家名称',
-  `province` varchar(32) NOT NULL DEFAULT '' COMMENT '省份名称',
-  `city` varchar(32) NOT NULL DEFAULT '' COMMENT '城市名称',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=482 DEFAULT CHARSET=utf8 COMMENT='地区信息表';
+CREATE TABLE `oc_packet_wechat_area`
+(
+    `id`       int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `country`  varchar(32) NOT NULL DEFAULT '' COMMENT '国家名称',
+    `province` varchar(32) NOT NULL DEFAULT '' COMMENT '省份名称',
+    `city`     varchar(32) NOT NULL DEFAULT '' COMMENT '城市名称',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=482 DEFAULT CHARSET=utf8 COMMENT='地区信息表';
 
 -- ----------------------------
 -- Records of oc_packet_wechat_area
 -- ----------------------------
-INSERT INTO `oc_packet_wechat_area` VALUES ('1', '中国', '四川', '凉山');
-INSERT INTO `oc_packet_wechat_area` VALUES ('2', '中国', '四川', '资阳');
-INSERT INTO `oc_packet_wechat_area` VALUES ('3', '中国', '四川', '成都');
-INSERT INTO `oc_packet_wechat_area` VALUES ('4', '中国', '四川', '自贡');
-INSERT INTO `oc_packet_wechat_area` VALUES ('5', '中国', '四川', '泸州');
-INSERT INTO `oc_packet_wechat_area` VALUES ('6', '中国', '四川', '攀枝花');
+INSERT INTO `oc_packet_wechat_area`
+VALUES ('1', '中国', '四川', '凉山');
+INSERT INTO `oc_packet_wechat_area`
+VALUES ('2', '中国', '四川', '资阳');
+INSERT INTO `oc_packet_wechat_area`
+VALUES ('3', '中国', '四川', '成都');
+INSERT INTO `oc_packet_wechat_area`
+VALUES ('4', '中国', '四川', '自贡');
+INSERT INTO `oc_packet_wechat_area`
+VALUES ('5', '中国', '四川', '泸州');
+INSERT INTO `oc_packet_wechat_area`
+VALUES ('6', '中国', '四川', '攀枝花');
 INSERT INTO `oc_packet_wechat_area` VALUES ('7', '中国', '四川', '绵阳');
 INSERT INTO `oc_packet_wechat_area` VALUES ('8', '中国', '四川', '德阳');
 INSERT INTO `oc_packet_wechat_area` VALUES ('9', '中国', '四川', '遂宁');

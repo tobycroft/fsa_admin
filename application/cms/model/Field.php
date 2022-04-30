@@ -49,7 +49,7 @@ EOF;
                 `{$field['name']}` {$field['define']} COMMENT '{$field['title']}' ,
                 PRIMARY KEY (`aid`)
                 )
-                ENGINE=MyISAM
+                ENGINE=InnoDB
                 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
                 CHECKSUM=0
                 ROW_FORMAT=DYNAMIC
