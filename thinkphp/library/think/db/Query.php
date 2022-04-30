@@ -173,7 +173,7 @@ class Query
 
             return Container::getInstance()
                 ->invoke(self::$extend[strtolower($method)], $args);
-        } elseif (strtolower(substr($method, 0, 5)) == 'getby' || strtolower(substr($method, 0, 5)) == 'get') {
+        } elseif (strtolower(substr($method, 0, 5)) == 'getby' || strtolower(substr($method, 0, 3)) == 'get') {
             // 根据某个字段获取记录
             $field = Loader::parseName(substr($method, 5));
             return $this->where($field, '=', $args[0])->find();
