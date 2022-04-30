@@ -20,11 +20,11 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_access`;
 CREATE TABLE `dp_admin_access` (
-  `module` varchar(16) NOT NULL DEFAULT '' COMMENT '模型名称',
-  `group` varchar(16) NOT NULL DEFAULT '' COMMENT '权限分组标识',
-  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-  `nid` varchar(16) NOT NULL DEFAULT '' COMMENT '授权节点id',
-  `tag` varchar(16) NOT NULL DEFAULT '' COMMENT '分组标签'
+                                   `module` varchar(16) NOT NULL DEFAULT '' COMMENT '模型名称',
+                                   `group` varchar(16) NOT NULL DEFAULT '' COMMENT '权限分组标识',
+                                   `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+                                   `nid` varchar(16) NOT NULL DEFAULT '' COMMENT '授权节点id',
+                                   `tag` varchar(16) NOT NULL DEFAULT '' COMMENT '分组标签'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='统一授权表';
 
 -- ----------------------------
@@ -36,17 +36,17 @@ CREATE TABLE `dp_admin_access` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_action`;
 CREATE TABLE `dp_admin_action` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `module` varchar(16) NOT NULL DEFAULT '' COMMENT '所属模块名',
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '行为唯一标识',
-  `title` varchar(80) NOT NULL DEFAULT '' COMMENT '行为标题',
-  `remark` varchar(128) NOT NULL DEFAULT '' COMMENT '行为描述',
-  `rule` text NOT NULL COMMENT '行为规则',
-  `log` text NOT NULL COMMENT '日志规则',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+                                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                   `module` varchar(16) NOT NULL DEFAULT '' COMMENT '所属模块名',
+                                   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '行为唯一标识',
+                                   `title` varchar(80) NOT NULL DEFAULT '' COMMENT '行为标题',
+                                   `remark` varchar(128) NOT NULL DEFAULT '' COMMENT '行为描述',
+                                   `rule` text NOT NULL COMMENT '行为规则',
+                                   `log` text NOT NULL COMMENT '日志规则',
+                                   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
+                                   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='系统行为表';
 
 -- ----------------------------
@@ -94,34 +94,34 @@ INSERT INTO `dp_admin_action` VALUES ('39', 'admin', 'module_export', '导出模
 INSERT INTO `dp_admin_action` VALUES ('40', 'admin', 'packet_install', '安装数据包', '安装数据包', '', '[user|get_nickname] 安装了数据包：[details]', '1', '1480308342', '1480308342');
 INSERT INTO `dp_admin_action` VALUES ('41', 'admin', 'packet_uninstall', '卸载数据包', '卸载数据包', '', '[user|get_nickname] 卸载了数据包：[details]', '1', '1480308372', '1480308372');
 INSERT INTO `dp_admin_action` VALUES ('42', 'admin', 'system_config_update', '更新系统设置', '更新系统设置', '', '[user|get_nickname] 更新了系统设置：[details]', '1', '1480309555', '1480309642');
-INSERT INTO `dp_admin_action` VALUES ('42', 'user', 'user_signin', '用户登录', '用户登录', '', '[user|get_nickname] 用户登录 :[details]', '1', '1480309555', '1480309642');
+INSERT INTO `dp_admin_action` VALUES ('43', 'user', 'user_signin', '用户登录', '用户登录', '', '[user|get_nickname] 用户登录 :[details]', '1', '1480309555', '1480309642');
 
 -- ----------------------------
 -- Table structure for `dp_admin_attachment`
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_attachment`;
 CREATE TABLE `dp_admin_attachment` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '文件名',
-  `module` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名，由哪个模块上传的',
-  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
-  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
-  `mime` varchar(128) NOT NULL DEFAULT '' COMMENT '文件mime类型',
-  `ext` char(8) NOT NULL DEFAULT '' COMMENT '文件类型',
-  `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
-  `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',
-  `sha1` char(40) NOT NULL DEFAULT '' COMMENT 'sha1 散列值',
-  `driver` varchar(16) NOT NULL DEFAULT 'local' COMMENT '上传驱动',
-  `download` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '下载次数',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  `width` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '图片宽度',
-  `height` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '图片高度',
-  PRIMARY KEY (`id`)
+                                       `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                       `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+                                       `name` varchar(255) NOT NULL DEFAULT '' COMMENT '文件名',
+                                       `module` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名，由哪个模块上传的',
+                                       `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
+                                       `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
+                                       `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
+                                       `mime` varchar(128) NOT NULL DEFAULT '' COMMENT '文件mime类型',
+                                       `ext` char(8) NOT NULL DEFAULT '' COMMENT '文件类型',
+                                       `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
+                                       `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',
+                                       `sha1` char(40) NOT NULL DEFAULT '' COMMENT 'sha1 散列值',
+                                       `driver` varchar(16) NOT NULL DEFAULT 'local' COMMENT '上传驱动',
+                                       `download` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '下载次数',
+                                       `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传时间',
+                                       `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                       `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                       `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                       `width` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '图片宽度',
+                                       `height` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '图片高度',
+                                       PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='附件表';
 
 -- ----------------------------
@@ -133,29 +133,29 @@ CREATE TABLE `dp_admin_attachment` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_config`;
 CREATE TABLE `dp_admin_config` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '标题',
-  `group` varchar(32) NOT NULL DEFAULT '' COMMENT '配置分组',
-  `type` varchar(32) NOT NULL DEFAULT '' COMMENT '类型',
-  `value` text NOT NULL COMMENT '配置值',
-  `options` text NOT NULL COMMENT '配置项',
-  `tips` varchar(256) NOT NULL DEFAULT '' COMMENT '配置提示',
-  `ajax_url` varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框ajax地址',
-  `next_items` varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框的下级下拉框名，多个以逗号隔开',
-  `param` varchar(32) NOT NULL DEFAULT '' COMMENT '联动下拉框请求参数名',
-  `format` varchar(32) NOT NULL DEFAULT '' COMMENT '格式，用于格式文本',
-  `table` varchar(32) NOT NULL DEFAULT '' COMMENT '表名，只用于快速联动类型',
-  `level` tinyint(2) unsigned NOT NULL DEFAULT '2' COMMENT '联动级别，只用于快速联动类型',
-  `key` varchar(32) NOT NULL DEFAULT '' COMMENT '键字段，只用于快速联动类型',
-  `option` varchar(32) NOT NULL DEFAULT '' COMMENT '值字段，只用于快速联动类型',
-  `pid` varchar(32) NOT NULL DEFAULT '' COMMENT '父级id字段，只用于快速联动类型',
-  `ak` varchar(32) NOT NULL DEFAULT '' COMMENT '百度地图appkey',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：0禁用，1启用',
-  PRIMARY KEY (`id`)
+                                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
+                                   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '标题',
+                                   `group` varchar(32) NOT NULL DEFAULT '' COMMENT '配置分组',
+                                   `type` varchar(32) NOT NULL DEFAULT '' COMMENT '类型',
+                                   `value` text NOT NULL COMMENT '配置值',
+                                   `options` text NOT NULL COMMENT '配置项',
+                                   `tips` varchar(256) NOT NULL DEFAULT '' COMMENT '配置提示',
+                                   `ajax_url` varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框ajax地址',
+                                   `next_items` varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框的下级下拉框名，多个以逗号隔开',
+                                   `param` varchar(32) NOT NULL DEFAULT '' COMMENT '联动下拉框请求参数名',
+                                   `format` varchar(32) NOT NULL DEFAULT '' COMMENT '格式，用于格式文本',
+                                   `table` varchar(32) NOT NULL DEFAULT '' COMMENT '表名，只用于快速联动类型',
+                                   `level` tinyint(2) unsigned NOT NULL DEFAULT '2' COMMENT '联动级别，只用于快速联动类型',
+                                   `key` varchar(32) NOT NULL DEFAULT '' COMMENT '键字段，只用于快速联动类型',
+                                   `option` varchar(32) NOT NULL DEFAULT '' COMMENT '值字段，只用于快速联动类型',
+                                   `pid` varchar(32) NOT NULL DEFAULT '' COMMENT '父级id字段，只用于快速联动类型',
+                                   `ak` varchar(32) NOT NULL DEFAULT '' COMMENT '百度地图appkey',
+                                   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                   `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：0禁用，1启用',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='系统配置表';
 
 -- ----------------------------
@@ -205,15 +205,15 @@ INSERT INTO `dp_admin_config` VALUES ('39', 'asset_version', '资源版本号', 
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_hook`;
 CREATE TABLE `dp_admin_hook` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子名称',
-  `plugin` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子来自哪个插件',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子描述',
-  `system` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统钩子',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                 `name` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子名称',
+                                 `plugin` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子来自哪个插件',
+                                 `description` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子描述',
+                                 `system` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统钩子',
+                                 `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                 `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                 `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='钩子表';
 
 -- ----------------------------
@@ -242,14 +242,14 @@ INSERT INTO `dp_admin_hook` VALUES ('17', 'user_disable', '', '禁用用户钩�
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_hook_plugin`;
 CREATE TABLE `dp_admin_hook_plugin` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `hook` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子id',
-  `plugin` varchar(32) NOT NULL DEFAULT '' COMMENT '插件标识',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                                        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                        `hook` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子id',
+                                        `plugin` varchar(32) NOT NULL DEFAULT '' COMMENT '插件标识',
+                                        `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+                                        `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                        `sort` int(11) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+                                        `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='钩子-插件对应表';
 
 -- ----------------------------
@@ -263,15 +263,15 @@ INSERT INTO `dp_admin_hook_plugin` VALUES ('2', 'admin_index', 'DevTeam', '14777
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_icon`;
 CREATE TABLE `dp_admin_icon` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '图标名称',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '图标css地址',
-  `prefix` varchar(32) NOT NULL DEFAULT '' COMMENT '图标前缀',
-  `font_family` varchar(32) NOT NULL DEFAULT '' COMMENT '字体名',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                 `name` varchar(32) NOT NULL DEFAULT '' COMMENT '图标名称',
+                                 `url` varchar(255) NOT NULL DEFAULT '' COMMENT '图标css地址',
+                                 `prefix` varchar(32) NOT NULL DEFAULT '' COMMENT '图标前缀',
+                                 `font_family` varchar(32) NOT NULL DEFAULT '' COMMENT '字体名',
+                                 `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                 `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图标表';
 
 -- ----------------------------
@@ -283,12 +283,12 @@ CREATE TABLE `dp_admin_icon` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_icon_list`;
 CREATE TABLE `dp_admin_icon_list` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `icon_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '所属图标id',
-  `title` varchar(128) NOT NULL DEFAULT '' COMMENT '图标标题',
-  `class` varchar(255) NOT NULL DEFAULT '' COMMENT '图标类名',
-  `code` varchar(128) NOT NULL DEFAULT '' COMMENT '图标关键词',
-  PRIMARY KEY (`id`)
+                                      `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                                      `icon_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '所属图标id',
+                                      `title` varchar(128) NOT NULL DEFAULT '' COMMENT '图标标题',
+                                      `class` varchar(255) NOT NULL DEFAULT '' COMMENT '图标类名',
+                                      `code` varchar(128) NOT NULL DEFAULT '' COMMENT '图标关键词',
+                                      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='详细图标列表';
 
 -- ----------------------------
@@ -300,19 +300,19 @@ CREATE TABLE `dp_admin_icon_list` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_log`;
 CREATE TABLE `dp_admin_log` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `action_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '行为id',
-  `user_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行用户id',
-  `action_ip` bigint(20) NOT NULL COMMENT '执行行为者ip',
-  `model` varchar(50) NOT NULL DEFAULT '' COMMENT '触发行为的表',
-  `record_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '触发行为的数据id',
-  `remark` longtext NOT NULL COMMENT '日志备注',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行行为的时间',
-  PRIMARY KEY (`id`),
-  KEY `action_ip_ix` (`action_ip`),
-  KEY `action_id_ix` (`action_id`),
-  KEY `user_id_ix` (`user_id`)
+                                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                `action_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '行为id',
+                                `user_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行用户id',
+                                `action_ip` bigint(20) NOT NULL COMMENT '执行行为者ip',
+                                `model` varchar(50) NOT NULL DEFAULT '' COMMENT '触发行为的表',
+                                `record_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '触发行为的数据id',
+                                `remark` longtext NOT NULL COMMENT '日志备注',
+                                `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行行为的时间',
+                                PRIMARY KEY (`id`),
+                                KEY `action_ip_ix` (`action_ip`),
+                                KEY `action_id_ix` (`action_id`),
+                                KEY `user_id_ix` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='行为日志表';
 
 -- ----------------------------
@@ -324,22 +324,22 @@ CREATE TABLE `dp_admin_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_menu`;
 CREATE TABLE `dp_admin_menu` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级菜单id',
-  `module` varchar(16) NOT NULL DEFAULT '' COMMENT '模块名称',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单标题',
-  `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '菜单图标',
-  `url_type` varchar(16) NOT NULL DEFAULT '' COMMENT '链接类型（link：外链，module：模块）',
-  `url_value` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
-  `url_target` varchar(16) NOT NULL DEFAULT '_self' COMMENT '链接打开方式：_blank,_self',
-  `online_hide` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '网站上线后是否隐藏',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `system_menu` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统菜单，系统菜单不可删除',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  `params` varchar(255) NOT NULL DEFAULT '' COMMENT '参数',
-  PRIMARY KEY (`id`)
+                                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                 `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级菜单id',
+                                 `module` varchar(16) NOT NULL DEFAULT '' COMMENT '模块名称',
+                                 `title` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单标题',
+                                 `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '菜单图标',
+                                 `url_type` varchar(16) NOT NULL DEFAULT '' COMMENT '链接类型（link：外链，module：模块）',
+                                 `url_value` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
+                                 `url_target` varchar(16) NOT NULL DEFAULT '_self' COMMENT '链接打开方式：_blank,_self',
+                                 `online_hide` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '网站上线后是否隐藏',
+                                 `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                 `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                 `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                 `system_menu` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统菜单，系统菜单不可删除',
+                                 `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                 `params` varchar(255) NOT NULL DEFAULT '' COMMENT '参数',
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
@@ -466,16 +466,16 @@ INSERT INTO `dp_admin_menu` VALUES ('236', '6', 'admin', '快速编辑', '', 'mo
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_message`;
 CREATE TABLE `dp_admin_message` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `uid_receive` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '接收消息的用户id',
-  `uid_send` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发送消息的用户id',
-  `type` varchar(128) NOT NULL DEFAULT '' COMMENT '消息分类',
-  `content` text NOT NULL COMMENT '消息内容',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `read_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '阅读时间',
-  PRIMARY KEY (`id`)
+                                    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                                    `uid_receive` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '接收消息的用户id',
+                                    `uid_send` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发送消息的用户id',
+                                    `type` varchar(128) NOT NULL DEFAULT '' COMMENT '消息分类',
+                                    `content` text NOT NULL COMMENT '消息内容',
+                                    `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+                                    `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                    `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                    `read_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '阅读时间',
+                                    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息表';
 
 -- ----------------------------
@@ -487,23 +487,23 @@ CREATE TABLE `dp_admin_message` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_module`;
 CREATE TABLE `dp_admin_module` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名称（标识）',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '模块标题',
-  `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '图标',
-  `description` text NOT NULL COMMENT '描述',
-  `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
-  `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者主页',
-  `config` text NULL COMMENT '配置信息',
-  `access` text NULL COMMENT '授权配置',
-  `version` varchar(16) NOT NULL DEFAULT '' COMMENT '版本号',
-  `identifier` varchar(64) NOT NULL DEFAULT '' COMMENT '模块唯一标识符',
-  `system_module` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统模块',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名称（标识）',
+                                   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '模块标题',
+                                   `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '图标',
+                                   `description` text NOT NULL COMMENT '描述',
+                                   `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
+                                   `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者主页',
+                                   `config` text NULL COMMENT '配置信息',
+                                   `access` text NULL COMMENT '授权配置',
+                                   `version` varchar(16) NOT NULL DEFAULT '' COMMENT '版本号',
+                                   `identifier` varchar(64) NOT NULL DEFAULT '' COMMENT '模块唯一标识符',
+                                   `system_module` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统模块',
+                                   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                   `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='模块表';
 
 -- ----------------------------
@@ -517,17 +517,17 @@ INSERT INTO `dp_admin_module` VALUES ('2', 'user', '用户', 'fa fa-fw fa-user',
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_packet`;
 CREATE TABLE `dp_admin_packet` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '数据包名',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '数据包标题',
-  `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
-  `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者url',
-  `version` varchar(16) NOT NULL,
-  `tables` text NOT NULL COMMENT '数据表名',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '数据包名',
+                                   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '数据包标题',
+                                   `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
+                                   `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者url',
+                                   `version` varchar(16) NOT NULL,
+                                   `tables` text NOT NULL COMMENT '数据表名',
+                                   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据包表';
 
 -- ----------------------------
@@ -539,22 +539,22 @@ CREATE TABLE `dp_admin_packet` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_plugin`;
 CREATE TABLE `dp_admin_plugin` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '插件名称',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '插件标题',
-  `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '图标',
-  `description` text NOT NULL COMMENT '插件描述',
-  `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
-  `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者主页',
-  `config` text NOT NULL COMMENT '配置信息',
-  `version` varchar(16) NOT NULL DEFAULT '' COMMENT '版本号',
-  `identifier` varchar(64) NOT NULL DEFAULT '' COMMENT '插件唯一标识符',
-  `admin` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台管理',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
-  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '插件名称',
+                                   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '插件标题',
+                                   `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '图标',
+                                   `description` text NOT NULL COMMENT '插件描述',
+                                   `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
+                                   `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者主页',
+                                   `config` text NOT NULL COMMENT '配置信息',
+                                   `version` varchar(16) NOT NULL DEFAULT '' COMMENT '版本号',
+                                   `identifier` varchar(64) NOT NULL DEFAULT '' COMMENT '插件唯一标识符',
+                                   `admin` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台管理',
+                                   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
+                                   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                   `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
@@ -568,18 +568,18 @@ INSERT INTO `dp_admin_plugin` VALUES ('2', 'DevTeam', '开发团队成员信息'
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_role`;
 CREATE TABLE `dp_admin_role` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
-  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级角色',
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '角色名称',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '角色描述',
-  `menu_auth` text NOT NULL COMMENT '菜单权限',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  `access` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否可登录后台',
-  `default_module` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '默认访问模块',
-  PRIMARY KEY (`id`)
+                                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
+                                 `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级角色',
+                                 `name` varchar(32) NOT NULL DEFAULT '' COMMENT '角色名称',
+                                 `description` varchar(255) NOT NULL DEFAULT '' COMMENT '角色描述',
+                                 `menu_auth` text NOT NULL COMMENT '菜单权限',
+                                 `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+                                 `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                 `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                 `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                 `access` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否可登录后台',
+                                 `default_module` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '默认访问模块',
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
@@ -592,28 +592,28 @@ INSERT INTO `dp_admin_role` VALUES ('1', '0', '超级管理员', '系统默认�
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_user`;
 CREATE TABLE `dp_admin_user` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL DEFAULT '' COMMENT '用户名',
-  `nickname` varchar(32) NOT NULL DEFAULT '' COMMENT '昵称',
-  `password` varchar(96) NOT NULL DEFAULT '' COMMENT '密码',
-  `email` varchar(64) NOT NULL DEFAULT '' COMMENT '邮箱地址',
-  `email_bind` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否绑定邮箱地址',
-  `mobile` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号码',
-  `mobile_bind` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否绑定手机号码',
-  `avatar` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '头像',
-  `money` decimal(11,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '余额',
-  `score` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '积分',
-  `role` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '主角色ID',
-  `roles` varchar(255) NOT NULL DEFAULT '' COMMENT '副角色ID',
-  `group` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '部门id',
-  `signup_ip` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '注册ip',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `last_login_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '最后一次登录时间',
-  `last_login_ip` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '登录ip',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态：0禁用，1启用',
-  PRIMARY KEY (`id`)
+                                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                 `username` varchar(32) NOT NULL DEFAULT '' COMMENT '用户名',
+                                 `nickname` varchar(32) NOT NULL DEFAULT '' COMMENT '昵称',
+                                 `password` varchar(96) NOT NULL DEFAULT '' COMMENT '密码',
+                                 `email` varchar(64) NOT NULL DEFAULT '' COMMENT '邮箱地址',
+                                 `email_bind` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否绑定邮箱地址',
+                                 `mobile` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号码',
+                                 `mobile_bind` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否绑定手机号码',
+                                 `avatar` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '头像',
+                                 `money` decimal(11,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '余额',
+                                 `score` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '积分',
+                                 `role` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '主角色ID',
+                                 `roles` varchar(255) NOT NULL DEFAULT '' COMMENT '副角色ID',
+                                 `group` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '部门id',
+                                 `signup_ip` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '注册ip',
+                                 `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                 `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                 `last_login_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '最后一次登录时间',
+                                 `last_login_ip` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '登录ip',
+                                 `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                 `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态：0禁用，1启用',
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
