@@ -2191,7 +2191,7 @@ class Builder extends ZBuilder
                                 }
                             }
 
-                            $row[$column['name'] . '__' . $column['type']] = call_user_func($column['default'], $params);
+//                            $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
                             break;
                         case 'popover':
                             $length = empty($column['default']) ? 10 : $column['default'];
