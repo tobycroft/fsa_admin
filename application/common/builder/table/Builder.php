@@ -2191,6 +2191,9 @@ class Builder extends ZBuilder
                                 }
                             }
                             try {
+                                print_r(call_user_func_array($column['default'], $params));
+                                exit();
+
                                 $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
 
                             } catch (Exception $e) {
