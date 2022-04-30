@@ -634,12 +634,14 @@ class Builder extends ZBuilder
         $url = $this->_module . '/' . $this->_controller . '/' . $type;
         $MenuModel = new Menu();
         $menu = $MenuModel->where('url_value', $url)->find();
-        if ($menu['params'] != '') {
-            $url_params = explode('&', trim($menu['params'], '&'));
-            if (!empty($url_params)) {
-                foreach ($url_params as $item) {
-                    list($key, $value) = explode('=', $item);
-                    $params[$key] = $value;
+        if ($menu != null) {
+            if ($menu['params'] != '') {
+                $url_params = explode('&', trim($menu['params'], '&'));
+                if (!empty($url_params)) {
+                    foreach ($url_params as $item) {
+                        list($key, $value) = explode('=', $item);
+                        $params[$key] = $value;
+                    }
                 }
             }
         }
