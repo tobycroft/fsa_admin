@@ -88,7 +88,7 @@ class Model extends ThinkModel
             `trash` tinyint(2) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回收站' ,
             PRIMARY KEY (`id`)
             )
-            ENGINE=InnoDB
+            ENGINE=MyISAM
             DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
             CHECKSUM=0
             ROW_FORMAT=DYNAMIC
@@ -103,7 +103,7 @@ EOF;
                 `aid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '文档id' ,
                 PRIMARY KEY (`aid`)
                 )
-                ENGINE=InnoDB
+                ENGINE=MyISAM
                 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
                 CHECKSUM=0
                 ROW_FORMAT=DYNAMIC

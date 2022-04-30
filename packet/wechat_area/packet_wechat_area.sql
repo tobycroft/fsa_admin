@@ -21,7 +21,7 @@ CREATE TABLE `oc_packet_wechat_area`
     `province` varchar(32) NOT NULL DEFAULT '' COMMENT '省份名称',
     `city`     varchar(32) NOT NULL DEFAULT '' COMMENT '城市名称',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=482 DEFAULT CHARSET=utf8 COMMENT='地区信息表';
+) ENGINE=MyISAM AUTO_INCREMENT=482 DEFAULT CHARSET=utf8 COMMENT='地区信息表';
 
 -- ----------------------------
 -- Records of oc_packet_wechat_area
