@@ -269,7 +269,7 @@ INSERT INTO `dp_admin_config`
 VALUES ('6', 'web_site_keywords', '站点关键词', 'base', 'text', '海豚PHP、PHP开发框架、后台框架', '', '网站搜索引擎关键字', '', '', '', '', '',
         '2', '', '', '', '', '1475241328', '1475241328', '7', '1');
 INSERT INTO `dp_admin_config`
-VALUES ('7', 'web_site_copyright', '版权信息', 'base', 'text', 'Copyright © 2015-2017 DolphinPHP All rights reserved.', '',
+VALUES ('7', 'web_site_copyright', '版权信息', 'base', 'text', 'Copyright © 2015-2017 DPAll rights reserved.', '',
         '调用方式：<code>config(\'web_site_copyright\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475241416',
         '1477710383', '8', '1');
 INSERT INTO `dp_admin_config`
