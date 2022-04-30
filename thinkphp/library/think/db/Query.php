@@ -180,6 +180,8 @@ class Query
         } elseif (strtolower(substr($method, 0, 3)) == 'get') {
             // 根据某个字段获取记录
             $field = Loader::parseName(substr($method, 3));
+            print_r($args);
+            exit(0);
             return $this->where($field, '=', $args[0])->find();
         } elseif (strtolower(substr($method, 0, 10)) == 'getfieldby') {
             // 根据某个字段获取记录的某个值
