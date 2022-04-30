@@ -9,8 +9,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Log as LogModel;
 use app\common\builder\ZBuilder;
+use app\admin\model\Log as LogModel;
 
 /**
  * 系统日志控制器
@@ -20,9 +20,9 @@ class Log extends Admin
 {
     /**
      * 日志列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -44,7 +44,7 @@ class Log extends Admin
                 ['id', '编号'],
                 ['title', '行为名称'],
                 ['username', '执行者'],
-                ['action_ip', '执行IP', 'callback', function ($value) {
+                ['action_ip', '执行IP', 'callback', function($value){
                     return long2ip(intval($value));
                 }],
                 ['module_title', '所属模块'],
@@ -53,7 +53,7 @@ class Log extends Admin
             ])
             ->addOrder(['title' => 'admin_action', 'username' => 'admin_user', 'module_title' => 'admin_module.title'])
             ->addFilter(['admin_action.title', 'admin_user.username', 'module_title' => 'admin_module.title'])
-            ->addRightButton('details', ['icon' => 'fa fa-eye', 'title' => '详情', 'href' => url('details', ['id' => '__id__'])])
+            ->addRightButton('edit', ['icon' => 'fa fa-eye', 'title' => '详情', 'href' => url('details', ['id' => '__id__'])])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染模板
@@ -62,9 +62,9 @@ class Log extends Admin
     /**
      * 日志详情
      * @param null $id 日志id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function details($id = null)
     {
@@ -77,13 +77,13 @@ class Log extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['hidden', 'id'],
-                ['static', 'title', '行为名称'],
-                ['static', 'username', '执行者'],
-                ['static', 'record_id', '目标ID'],
-                ['static', 'action_ip', '执行IP'],
-                ['static', 'module_title', '所属模块'],
-                ['textarea', 'remark', '备注'],
+                 ['hidden', 'id'],
+                 ['static', 'title', '行为名称'],
+                 ['static', 'username', '执行者'],
+                 ['static', 'record_id', '目标ID'],
+                 ['static', 'action_ip', '执行IP'],
+                 ['static', 'module_title', '所属模块'],
+                 ['textarea', 'remark', '备注'],
             ])
             ->hideBtn('submit')
             ->setFormData($info) // 设置表单数据

@@ -9,10 +9,10 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Hook as HookModel;
 use app\admin\model\HookPlugin;
-use app\admin\model\HookPlugin as HookPluginModel;
 use app\common\builder\ZBuilder;
+use app\admin\model\Hook as HookModel;
+use app\admin\model\HookPlugin as HookPluginModel;
 
 /**
  * 钩子控制器
@@ -22,14 +22,14 @@ class Hook extends Admin
 {
     /**
      * 钩子管理
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
-        $map = $this->getMap();
+        $map   = $this->getMap();
         $order = $this->getOrder();
 
         // 数据列表
@@ -45,7 +45,7 @@ class Hook extends Admin
             ->addColumns([ // 批量添加数据列
                 ['name', '名称'],
                 ['description', '描述'],
-                ['plugin', '所属插件', 'callback', function ($plugin) {
+                ['plugin', '所属插件', 'callback', function($plugin){
                     return $plugin == '' ? '系统' : $plugin;
                 }],
                 ['system', '系统钩子', 'yesno'],
@@ -74,7 +74,7 @@ class Hook extends Admin
 
             // 验证
             $result = $this->validate($data, 'Hook');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($hook = HookModel::create($data)) {
                 cache('hook_plugins', null);
@@ -97,9 +97,9 @@ class Hook extends Admin
     /**
      * 编辑
      * @param int $id 钩子id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = 0)
     {
@@ -110,7 +110,7 @@ class Hook extends Admin
             $data = $this->request->post();
             // 验证
             $result = $this->validate($data, 'Hook');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($hook = HookModel::update($data)) {
                 // 调整插件顺序
@@ -147,13 +147,13 @@ class Hook extends Admin
     /**
      * 快速编辑（启用/禁用）
      * @param string $status 状态
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($status = '')
     {
-        $id = $this->request->post('pk');
-        $status = $this->request->param('value');
+        $id        = $this->request->post('pk');
+        $status    = $this->request->param('value');
         $hook_name = HookModel::where('id', $id)->value('name');
 
         if (false === HookPluginModel::where('hook', $hook_name)->setField('status', $status == 'true' ? 1 : 0)) {
@@ -167,9 +167,9 @@ class Hook extends Admin
     /**
      * 启用
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -179,15 +179,15 @@ class Hook extends Admin
     /**
      * 禁用
      * @param array $record 行为日志内容
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     /**
      * 禁用
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -197,16 +197,16 @@ class Hook extends Admin
     /**
      * 删除钩子
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids   = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $map = [
             ['id', 'in', $ids],
             ['system', '=', 1],
@@ -221,9 +221,9 @@ class Hook extends Admin
      * 设置状态
      * @param string $type 类型
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
@@ -236,7 +236,7 @@ class Hook extends Admin
         }
         cache('hook_plugins', null);
         $hook_delete = is_array($ids) ? '' : $ids;
-        $hook_names = HookModel::where('id', 'in', $ids)->column('name');
-        return parent::setStatus($type, ['hook_' . $type, 'admin_hook', $hook_delete, UID, implode('、', $hook_names)]);
+        $hook_names  = HookModel::where('id', 'in', $ids)->column('name');
+        return parent::setStatus($type, ['hook_'.$type, 'admin_hook', $hook_delete, UID, implode('、', $hook_names)]);
     }
 }

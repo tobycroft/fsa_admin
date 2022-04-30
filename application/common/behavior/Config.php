@@ -11,9 +11,9 @@ namespace app\common\behavior;
 
 use app\admin\model\Config as ConfigModel;
 use app\admin\model\Module as ModuleModel;
-use think\facade\App;
 use think\facade\Env;
 use think\facade\Request;
+use think\facade\App;
 
 /**
  * 初始化配置信息行为
@@ -31,7 +31,7 @@ class Config
     public function run()
     {
         // 如果是安装操作，直接返回
-        if (defined('BIND_MODULE') && BIND_MODULE === 'install') return;
+        if(defined('BIND_MODULE') && BIND_MODULE === 'install') return;
 
         // 路由检测
         $dispatch = App::routeCheck()->init()->getDispatch();
@@ -45,56 +45,54 @@ class Config
 
         // 获取入口目录
         $base_file = Request::baseFile();
-        $base_dir = substr($base_file, 0, strripos($base_file, '/') + 1);
+        $base_dir  = substr($base_file, 0, strripos($base_file, '/') + 1);
         define('PUBLIC_PATH', $base_dir);
 
         // 视图输出字符串内容替换
         $view_replace_str = [
             // 静态资源目录
-            '__STATIC__' => PUBLIC_PATH . 'static',
+            '__STATIC__'    => PUBLIC_PATH. 'static',
             // 文件上传目录
-            '__UPLOADS__' => PUBLIC_PATH . 'uploads',
+            '__UPLOADS__'   => PUBLIC_PATH. 'uploads',
             // JS插件目录
-            '__LIBS__' => PUBLIC_PATH . 'static/libs',
+            '__LIBS__'      => PUBLIC_PATH. 'static/libs',
             // 后台CSS目录
-            '__ADMIN_CSS__' => PUBLIC_PATH . 'static/admin/css',
+            '__ADMIN_CSS__' => PUBLIC_PATH. 'static/admin/css',
             // 后台JS目录
-            '__ADMIN_JS__' => PUBLIC_PATH . 'static/admin/js',
+            '__ADMIN_JS__'  => PUBLIC_PATH. 'static/admin/js',
             // 后台IMG目录
-            '__ADMIN_IMG__' => PUBLIC_PATH . 'static/admin/img',
+            '__ADMIN_IMG__' => PUBLIC_PATH. 'static/admin/img',
             // 前台CSS目录
-            '__HOME_CSS__' => PUBLIC_PATH . 'static/home/css',
+            '__HOME_CSS__'  => PUBLIC_PATH. 'static/home/css',
             // 前台JS目录
-            '__HOME_JS__' => PUBLIC_PATH . 'static/home/js',
+            '__HOME_JS__'   => PUBLIC_PATH. 'static/home/js',
             // 前台IMG目录
-            '__HOME_IMG__' => PUBLIC_PATH . 'static/home/img',
+            '__HOME_IMG__'  => PUBLIC_PATH. 'static/home/img',
             // 表单项扩展目录
-            '__EXTEND_FORM__' => PUBLIC_PATH . 'extend/form'
+            '__EXTEND_FORM__' => PUBLIC_PATH.'extend/form'
         ];
         config('template.tpl_replace_string', $view_replace_str);
 
         // 如果定义了入口为admin，则修改默认的访问控制器层
-        if (defined('ENTRANCE') && ENTRANCE == 'admin') {
+        if(defined('ENTRANCE') && ENTRANCE == 'admin') {
             define('ADMIN_FILE', substr($base_file, strripos($base_file, '/') + 1));
 
             if ($module == '') {
-                header("Location: " . $base_file . '/admin', true, 302);
-                exit();
+                header("Location: ".$base_file.'/admin', true, 302);exit();
             }
 
             if (!in_array($module, config('module.default_controller_layer'))) {
                 // 修改默认访问控制器层
                 config('url_controller_layer', 'admin');
                 // 修改视图模板路径
-                config('template.view_path', Env::get('app_path') . $module . '/view/admin/');
+                config('template.view_path', Env::get('app_path'). $module. '/view/admin/');
             }
 
             // 插件静态资源目录
             config('template.tpl_replace_string.__PLUGINS__', '/plugins');
         } else {
             if ($module == 'admin') {
-                header("Location: " . $base_dir . ADMIN_FILE . '/admin', true, 302);
-                exit();
+                header("Location: ".$base_dir.ADMIN_FILE.'/admin', true, 302);exit();
             }
 
             if ($module != '' && !in_array($module, config('module.default_controller_layer'))) {
@@ -104,22 +102,22 @@ class Config
         }
 
         // 定义模块资源目录
-        config('template.tpl_replace_string.__MODULE_CSS__', PUBLIC_PATH . 'static/' . $module . '/css');
-        config('template.tpl_replace_string.__MODULE_JS__', PUBLIC_PATH . 'static/' . $module . '/js');
-        config('template.tpl_replace_string.__MODULE_IMG__', PUBLIC_PATH . 'static/' . $module . '/img');
-        config('template.tpl_replace_string.__MODULE_LIBS__', PUBLIC_PATH . 'static/' . $module . '/libs');
+        config('template.tpl_replace_string.__MODULE_CSS__', PUBLIC_PATH. 'static/'. $module .'/css');
+        config('template.tpl_replace_string.__MODULE_JS__', PUBLIC_PATH. 'static/'. $module .'/js');
+        config('template.tpl_replace_string.__MODULE_IMG__', PUBLIC_PATH. 'static/'. $module .'/img');
+        config('template.tpl_replace_string.__MODULE_LIBS__', PUBLIC_PATH. 'static/'. $module .'/libs');
         // 静态文件目录
-        config('public_static_path', PUBLIC_PATH . 'static/');
+        config('public_static_path', PUBLIC_PATH. 'static/');
 
         // 读取系统配置
         $system_config = cache('system_config');
         if (!$system_config) {
-            $ConfigModel = new ConfigModel();
+            $ConfigModel   = new ConfigModel();
             $system_config = $ConfigModel->getConfig();
             // 所有模型配置
             $module_config = ModuleModel::where('config', 'neq', '')->column('config', 'name');
             foreach ($module_config as $module_name => $config) {
-                $system_config[strtolower($module_name) . '_config'] = json_decode($config, true);
+                $system_config[strtolower($module_name).'_config'] = json_decode($config, true);
             }
             // 非开发模式，缓存系统配置
             if ($system_config['develop_mode'] == 0) {

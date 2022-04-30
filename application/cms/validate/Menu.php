@@ -31,9 +31,9 @@ class Menu extends Validate
     // 定义验证提示
     protected $message = [
         'column.requireIf' => '请选择栏目',
-        'page.requireIf' => '请选择单页',
-        'title.requireIf' => '菜单标题不能为空',
-        'url.requireIf' => 'URL不能为空'
+        'page.requireIf'   => '请选择单页',
+        'title.requireIf'  => '菜单标题不能为空',
+        'url.requireIf'    => 'URL不能为空'
     ];
 
     // 定义验证场景

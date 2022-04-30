@@ -9,8 +9,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Packet as PacketModel;
 use app\common\builder\ZBuilder;
+use app\admin\model\Packet as PacketModel;
 
 /**
  * 数据包控制器
@@ -21,25 +21,25 @@ class Packet extends Admin
     /**
      * 首页
      * @param string $group 分组
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed|string
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index($group = 'local')
     {
         // 配置分组信息
         $list_group = ['local' => '本地数据包'];
-        $tab_list = [];
+        $tab_list   = [];
         foreach ($list_group as $key => $value) {
             $tab_list[$key]['title'] = $value;
-            $tab_list[$key]['url'] = url('index', ['group' => $key]);
+            $tab_list[$key]['url']   = url('index', ['group' => $key]);
         }
 
         $PacketModel = new PacketModel;
         $data_list = $PacketModel->getAll();
         foreach ($data_list as &$value) {
             if (isset($value['author_url']) && !empty($value['author_url'])) {
-                $value['author'] = '<a href="' . $value['author_url'] . '" target="_blank">' . $value['author'] . '</a>';
+                $value['author'] = '<a href="'. $value['author_url']. '" target="_blank">'. $value['author'] .'</a>';
             }
         }
 
@@ -50,27 +50,27 @@ class Packet extends Admin
         // 自定义按钮
         $btn_install = [
             'title' => '安装',
-            'icon' => 'fa fa-fw fa-sign-in',
+            'icon'  => 'fa fa-fw fa-sign-in',
             'class' => 'btn btn-xs btn-default ajax-get confirm',
-            'href' => url('install', ['name' => '__id__'])
+            'href'  => url('install', ['name' => '__id__'])
         ];
         $btn_uninstall = [
             'title' => '卸载',
-            'icon' => 'fa fa-fw fa-sign-out',
+            'icon'  => 'fa fa-fw fa-sign-out',
             'class' => 'btn btn-xs btn-default ajax-get confirm',
-            'href' => url('uninstall', ['name' => '__id__'])
+            'href'  => url('uninstall', ['name' => '__id__'])
         ];
         $btn_install_all = [
             'title' => '安装',
-            'icon' => 'fa fa-fw fa-sign-in',
+            'icon'  => 'fa fa-fw fa-sign-in',
             'class' => 'btn btn-primary ajax-post confirm',
-            'href' => url('install')
+            'href'  => url('install')
         ];
         $btn_uninstall_all = [
             'title' => '卸载',
-            'icon' => 'fa fa-fw fa-sign-out',
+            'icon'  => 'fa fa-fw fa-sign-out',
             'class' => 'btn btn-danger ajax-post confirm',
-            'href' => url('uninstall')
+            'href'  => url('uninstall')
         ];
 
         switch ($group) {
@@ -104,10 +104,10 @@ class Packet extends Admin
     /**
      * 安装
      * @param string $name 数据包名
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function install($name = '')
     {
@@ -123,7 +123,7 @@ class Packet extends Admin
                     PacketModel::create($data);
                 }
             } else {
-                $this->error('安装失败：' . $result);
+                $this->error('安装失败：'. $result);
             }
         }
         // 记录行为

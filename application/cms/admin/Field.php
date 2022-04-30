@@ -12,8 +12,8 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Field as FieldModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\Field as FieldModel;
 use think\Db;
 
 /**
@@ -34,7 +34,7 @@ class Field extends Admin
 
         // 查询
         $map = $this->getMap();
-        $map[] = ['model', '=', $id];
+        $map[]=['model','=',$id];
         // 数据列表
         $data_list = FieldModel::where($map)->order('id desc')->paginate();
 
@@ -43,15 +43,15 @@ class Field extends Admin
             ->setSearch(['name' => '名称', 'title' => '标题']) // 设置搜索框
             ->setPageTips('【显示】表示新增或编辑文档时是否显示该字段<br>【启用】表示前台是否显示')
             ->addColumns([ // 批量添加数据列
-                ['id', 'ID'],
-                ['name', '名称'],
-                ['title', '标题'],
-                ['type', '类型', 'text', '', config('form_item_type')],
-                ['create_time', '创建时间', 'datetime'],
-                ['sort', '排序', 'text.edit'],
-                ['show', '显示', 'switch'],
-                ['status', '启用', 'switch'],
-                ['right_button', '操作', 'btn']
+               ['id', 'ID'],
+               ['name', '名称'],
+               ['title', '标题'],
+               ['type', '类型', 'text', '', config('form_item_type')],
+               ['create_time', '创建时间', 'datetime'],
+               ['sort', '排序', 'text.edit'],
+               ['show', '显示', 'switch'],
+               ['status', '启用', 'switch'],
+               ['right_button', '操作', 'btn']
             ])
             ->addTopButton('back', ['href' => url('model/index')]) // 批量添加顶部按钮
             ->addTopButton('add', ['href' => url('add', ['model' => $id])]) // 添加顶部按钮
@@ -65,8 +65,8 @@ class Field extends Admin
     /**
      * 新增字段
      * @param string $model 文档模型id
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function add($model = '')
     {
@@ -86,14 +86,14 @@ class Field extends Admin
             }
 
             $result = $this->validate($data, 'Field');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             // 如果是快速联动
             switch ($data['type']) {
                 case 'linkages':
-                    $data['key'] = $data['key'] == '' ? 'id' : $data['key'];
-                    $data['pid'] = $data['pid'] == '' ? 'pid' : $data['pid'];
-                    $data['level'] = $data['level'] == '' ? '2' : $data['level'];
+                    $data['key']    = $data['key']    == '' ? 'id'   : $data['key'];
+                    $data['pid']    = $data['pid']    == '' ? 'pid'  : $data['pid'];
+                    $data['level']  = $data['level']  == '' ? '2'    : $data['level'];
                     $data['option'] = $data['option'] == '' ? 'name' : $data['option'];
                     break;
                 case 'number':
@@ -109,7 +109,7 @@ class Field extends Admin
                 // 添加字段
                 if ($FieldModel->newField($data)) {
                     // 记录行为
-                    $details = '详情：文档模型(' . get_model_title($data['model']) . ')、字段名称(' . $data['name'] . ')、字段标题(' . $data['title'] . ')、字段类型(' . $data['type'] . ')';
+                    $details    = '详情：文档模型('.get_model_title($data['model']).')、字段名称('.$data['name'].')、字段标题('.$data['title'].')、字段类型('.$data['type'].')';
                     action_log('field_add', 'cms_field', $field['id'], UID, $details);
                     // 清除缓存
                     cache('cms_system_fields', null);
@@ -125,15 +125,15 @@ class Field extends Admin
         }
 
         if ($model_type != 2) {
-            $field_exist = Db::name('cms_field')->where('model', 'in', [0, $model])->column('name');
+            $field_exist   = Db::name('cms_field')->where('model', 'in', [0, $model])->column('name');
             $field_exist[] = 'aid';
         } else {
-            $field_exist = ['id', 'cid', 'uid', 'title', 'model', 'create_time', 'update_time', 'sort', 'status', 'view', 'trash'];
+            $field_exist = ['id','cid','uid','title','model','create_time','update_time','sort','status','view','trash'];
         }
 
         // 显示添加页面
         return ZBuilder::make('form')
-            ->setPageTips('以下字段名称已存在，请不要建立同名的字段：<br>' . implode('、', $field_exist))
+            ->setPageTips('以下字段名称已存在，请不要建立同名的字段：<br>'. implode('、', $field_exist))
             ->addFormItems([
                 ['hidden', 'model', $model],
                 ['text', 'name', '字段名称', '由小写英文字母和下划线组成'],
@@ -171,8 +171,8 @@ class Field extends Admin
     /**
      * 编辑字段
      * @param null $id 字段id
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function edit($id = null)
     {
@@ -185,13 +185,13 @@ class Field extends Admin
 
             // 验证
             $result = $this->validate($data, 'Field');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             // 如果是快速联动
             if ($data['type'] == 'linkages') {
-                $data['key'] = $data['key'] == '' ? 'id' : $data['key'];
-                $data['pid'] = $data['pid'] == '' ? 'pid' : $data['pid'];
-                $data['level'] = $data['level'] == '' ? '2' : $data['level'];
+                $data['key']    = $data['key']    == '' ? 'id'   : $data['key'];
+                $data['pid']    = $data['pid']    == '' ? 'pid'  : $data['pid'];
+                $data['level']  = $data['level']  == '' ? '2'    : $data['level'];
                 $data['option'] = $data['option'] == '' ? 'name' : $data['option'];
             }
             // 如果是百度地图
@@ -254,20 +254,20 @@ class Field extends Admin
     /**
      * 删除字段
      * @param null $ids 字段id
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function delete($ids = null)
     {
         if ($ids === null) $this->error('参数错误');
 
         $FieldModel = new FieldModel();
-        $field = $FieldModel->where('id', $ids)->find();
+        $field      = $FieldModel->where('id', $ids)->find();
 
         if ($FieldModel->deleteField($field)) {
             if ($FieldModel->where('id', $ids)->delete()) {
                 // 记录行为
-                $details = '详情：文档模型(' . get_model_title($field['model']) . ')、字段名称(' . $field['name'] . ')、字段标题(' . $field['title'] . ')、字段类型(' . $field['type'] . ')';
+                $details = '详情：文档模型('.get_model_title($field['model']).')、字段名称('.$field['name'].')、字段标题('.$field['title'].')、字段类型('.$field['type'].')';
                 action_log('field_delete', 'cms_field', $ids, UID, $details);
                 $this->success('删除成功', cookie('__forward__'));
             }
@@ -278,8 +278,8 @@ class Field extends Admin
     /**
      * 启用字段
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function enable($record = [])
     {
@@ -289,8 +289,8 @@ class Field extends Admin
     /**
      * 禁用字段
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function disable($record = [])
     {
@@ -301,29 +301,29 @@ class Field extends Admin
      * 设置字段状态：删除、禁用、启用
      * @param string $type 类型：enable/disable
      * @param array $record
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids          = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $field_delete = is_array($ids) ? '' : $ids;
-        $field_names = FieldModel::where('id', 'in', $ids)->column('name');
-        return parent::setStatus($type, ['field_' . $type, 'cms_field', $field_delete, UID, implode('、', $field_names)]);
+        $field_names  = FieldModel::where('id', 'in', $ids)->column('name');
+        return parent::setStatus($type, ['field_'.$type, 'cms_field', $field_delete, UID, implode('、', $field_names)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $config = FieldModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $config  = FieldModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $config . ')，新值：(' . $value . ')';
         return parent::quickEdit(['field_edit', 'cms_field', $id, UID, $details]);
     }

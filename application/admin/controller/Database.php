@@ -22,18 +22,18 @@ class Database extends Admin
     /**
      * 数据库管理
      * @param string $group 分组
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index($group = 'export')
     {
         // 配置分组信息
-        $list_group = ['export' => '备份数据库', 'import' => '还原数据库'];
+        $list_group = ['export' =>'备份数据库', 'import' => '还原数据库'];
         $tab_list = [];
         foreach ($list_group as $key => $value) {
             $tab_list[$key]['title'] = $value;
-            $tab_list[$key]['url'] = url('index', ['group' => $key]);
+            $tab_list[$key]['url']   = url('index', ['group' => $key]);
         }
 
         switch ($group) {
@@ -44,33 +44,33 @@ class Database extends Admin
                 // 自定义按钮
                 $btn_export = [
                     'title' => '立即备份',
-                    'icon' => 'fa fa-fw fa-copy',
+                    'icon'  => 'fa fa-fw fa-copy',
                     'class' => 'btn btn-primary ajax-post confirm',
-                    'href' => url('export')
+                    'href'  => url('export')
                 ];
                 $btn_optimize_all = [
                     'title' => '优化表',
-                    'icon' => 'fa fa-fw fa-cogs',
+                    'icon'  => 'fa fa-fw fa-cogs',
                     'class' => 'btn btn-success ajax-post',
-                    'href' => url('optimize')
+                    'href'  => url('optimize')
                 ];
                 $btn_repair_all = [
                     'title' => '修复表',
-                    'icon' => 'fa fa-fw fa-wrench',
+                    'icon'  => 'fa fa-fw fa-wrench',
                     'class' => 'btn btn-success ajax-post',
-                    'href' => url('repair')
+                    'href'  => url('repair')
                 ];
                 $btn_optimize = [
                     'title' => '优化表',
-                    'icon' => 'fa fa-fw fa-cogs',
+                    'icon'  => 'fa fa-fw fa-cogs',
                     'class' => 'btn btn-xs btn-default ajax-get',
-                    'href' => url('optimize', ['ids' => '__id__'])
+                    'href'  => url('optimize', ['ids' => '__id__'])
                 ];
                 $btn_repair = [
                     'title' => '修复表',
-                    'icon' => 'fa fa-fw fa-wrench',
+                    'icon'  => 'fa fa-fw fa-wrench',
                     'class' => 'btn btn-xs btn-default ajax-get',
-                    'href' => url('repair', ['ids' => '__id__'])
+                    'href'  => url('repair', ['ids' => '__id__'])
                 ];
 
                 // 使用ZBuilder快速创建数据表格
@@ -97,7 +97,7 @@ class Database extends Admin
             case 'import':
                 // 列出备份文件列表
                 $path = config('data_backup_path');
-                if (!is_dir($path)) {
+                if(!is_dir($path)){
                     mkdir($path, 0755, true);
                 }
                 $path = realpath($path);
@@ -106,14 +106,14 @@ class Database extends Admin
 
                 $data_list = [];
                 foreach ($glob as $name => $file) {
-                    if (preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql(?:\.gz)?$/', $name)) {
+                    if(preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql(?:\.gz)?$/', $name)){
                         $name = sscanf($name, '%4s%2s%2s-%2s%2s%2s-%d');
 
                         $date = "{$name[0]}-{$name[1]}-{$name[2]}";
                         $time = "{$name[3]}:{$name[4]}:{$name[5]}";
                         $part = $name[6];
 
-                        if (isset($data_list["{$date} {$time}"])) {
+                        if(isset($data_list["{$date} {$time}"])){
                             $info = $data_list["{$date} {$time}"];
                             $info['part'] = max($info['part'], $part);
                             $info['size'] = $info['size'] + $file->getSize();
@@ -121,10 +121,10 @@ class Database extends Admin
                             $info['part'] = $part;
                             $info['size'] = $file->getSize();
                         }
-                        $extension = strtoupper(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
+                        $extension        = strtoupper(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
                         $info['compress'] = ($extension === 'SQL') ? '-' : $extension;
-                        $info['time'] = strtotime("{$date} {$time}");
-                        $info['name'] = $info['time'];
+                        $info['time']     = strtotime("{$date} {$time}");
+                        $info['name']     = $info['time'];
 
                         $data_list["{$date} {$time}"] = $info;
                     }
@@ -135,9 +135,9 @@ class Database extends Admin
                 // 自定义按钮
                 $btn_import = [
                     'title' => '还原',
-                    'icon' => 'fa fa-fw fa-reply',
+                    'icon'  => 'fa fa-fw fa-reply',
                     'class' => 'btn btn-xs btn-default ajax-get confirm',
-                    'href' => url('import', ['time' => '__id__'])
+                    'href'  => url('import', ['time' => '__id__'])
                 ];
 
                 // 使用ZBuilder快速创建数据表格
@@ -174,21 +174,21 @@ class Database extends Admin
         if ($this->request->isPost() && !empty($tables) && is_array($tables)) {
             // 初始化
             $path = config('data_backup_path');
-            if (!is_dir($path)) {
+            if(!is_dir($path)){
                 mkdir($path, 0755, true);
             }
 
             // 读取备份配置
             $config = array(
-                'path' => realpath($path) . DIRECTORY_SEPARATOR,
-                'part' => config('data_backup_part_size'),
+                'path'     => realpath($path) . DIRECTORY_SEPARATOR,
+                'part'     => config('data_backup_part_size'),
                 'compress' => config('data_backup_compress'),
-                'level' => config('data_backup_compress_level'),
+                'level'    => config('data_backup_compress_level'),
             );
 
             // 检查是否有正在执行的任务
             $lock = "{$config['path']}backup.lock";
-            if (is_file($lock)) {
+            if(is_file($lock)){
                 $this->error('检测到有一个备份任务正在执行，请稍后再试！');
             } else {
                 // 创建锁文件
@@ -206,7 +206,7 @@ class Database extends Admin
 
             // 创建备份文件
             $Database = new DatabaseModel($file, $config);
-            if (false !== $Database->create()) {
+            if(false !== $Database->create()){
                 // 备份指定表
                 foreach ($tables as $table) {
                     $start = $Database->backup($table, $start);
@@ -241,24 +241,24 @@ class Database extends Admin
         if ($time === 0) $this->error('参数错误！');
 
         // 初始化
-        $name = date('Ymd-His', $time) . '-*.sql*';
-        $path = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
+        $name  = date('Ymd-His', $time) . '-*.sql*';
+        $path  = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
         $files = glob($path);
-        $list = array();
-        foreach ($files as $name) {
+        $list  = array();
+        foreach($files as $name){
             $basename = basename($name);
-            $match = sscanf($basename, '%4s%2s%2s-%2s%2s%2s-%d');
-            $gz = preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql.gz$/', $basename);
+            $match    = sscanf($basename, '%4s%2s%2s-%2s%2s%2s-%d');
+            $gz       = preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql.gz$/', $basename);
             $list[$match[6]] = array($match[6], $name, $gz);
         }
         ksort($list);
 
         // 检测文件正确性
         $last = end($list);
-        if (count($list) === $last[0]) {
+        if(count($list) === $last[0]){
             foreach ($list as $item) {
                 $config = [
-                    'path' => realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR,
+                    'path'     => realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR,
                     'compress' => $item[2]
                 ];
                 $Database = new DatabaseModel($item, $config);
@@ -288,12 +288,12 @@ class Database extends Admin
     public function optimize($ids = null)
     {
         $tables = $ids;
-        if ($tables) {
-            if (is_array($tables)) {
+        if($tables) {
+            if(is_array($tables)){
                 $tables = implode('`,`', $tables);
-                $list = Db::query("OPTIMIZE TABLE `{$tables}`");
+                $list   = Db::query("OPTIMIZE TABLE `{$tables}`");
 
-                if ($list) {
+                if($list){
                     // 记录行为
                     action_log('database_optimize', 'database', 0, UID, "`{$tables}`");
                     $this->success("数据表优化完成！");
@@ -302,7 +302,7 @@ class Database extends Admin
                 }
             } else {
                 $list = Db::query("OPTIMIZE TABLE `{$tables}`");
-                if ($list) {
+                if($list){
                     // 记录行为
                     action_log('database_optimize', 'database', 0, UID, $tables);
                     $this->success("数据表'{$tables}'优化完成！");
@@ -323,12 +323,12 @@ class Database extends Admin
     public function repair($ids = null)
     {
         $tables = $ids;
-        if ($tables) {
-            if (is_array($tables)) {
+        if($tables) {
+            if(is_array($tables)){
                 $tables = implode('`,`', $tables);
                 $list = Db::query("REPAIR TABLE `{$tables}`");
 
-                if ($list) {
+                if($list){
                     // 记录行为
                     action_log('database_repair', 'database', 0, UID, "`{$tables}`");
                     $this->success("数据表修复完成！");
@@ -337,7 +337,7 @@ class Database extends Admin
                 }
             } else {
                 $list = Db::query("REPAIR TABLE `{$tables}`");
-                if ($list) {
+                if($list){
                     // 记录行为
                     action_log('database_repair', 'database', 0, UID, $tables);
                     $this->success("数据表'{$tables}'修复完成！");
@@ -353,17 +353,17 @@ class Database extends Admin
     /**
      * 删除备份文件
      * @param int $ids 备份时间
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function delete($ids = 0)
     {
         if ($ids == 0) $this->error('参数错误！');
 
-        $name = date('Ymd-His', $ids) . '-*.sql*';
-        $path = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
+        $name  = date('Ymd-His', $ids) . '-*.sql*';
+        $path  = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
         array_map("unlink", glob($path));
-        if (count(glob($path))) {
+        if(count(glob($path))){
             $this->error('备份文件删除失败，请检查权限！');
         } else {
             // 记录行为

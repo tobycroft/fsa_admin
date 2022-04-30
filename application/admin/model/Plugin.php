@@ -33,15 +33,15 @@ class Plugin extends Model
      * 获取所有插件信息
      * @param string $keyword 查找关键词
      * @param string $status 查找状态
-     * @return array|bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|bool
      */
     public function getAll($keyword = '', $status = '')
     {
         $result = cache('plugin_all');
         if (!$result) {
             // 获取插件目录下的所有插件目录
-            $dirs = array_map('basename', glob(config('plugin_path') . '*', GLOB_ONLYDIR));
+            $dirs = array_map('basename', glob(config('plugin_path').'*', GLOB_ONLYDIR));
             if ($dirs === false || !file_exists(config('plugin_path'))) {
                 $this->error = '插件目录不可读或者不存在';
                 return false;
@@ -91,10 +91,10 @@ class Plugin extends Model
             // 数量统计
             $total = [
                 'all' => count($plugins), // 所有插件数量
-                '-2' => 0,               // 错误插件数量
-                '-1' => 0,               // 未安装数量
-                '0' => 0,               // 未启用数量
-                '1' => 0,               // 已启用数量
+                '-2'  => 0,               // 错误插件数量
+                '-1'  => 0,               // 未安装数量
+                '0'   => 0,               // 未启用数量
+                '1'   => 0,               // 已启用数量
             ];
 
             // 过滤查询结果和统计数量
@@ -154,32 +154,32 @@ class Plugin extends Model
                         break;
                     case '-1': // 未安装
                         $plugin['bg_color'] = 'info';
-                        $plugin['actions'] = '<a class="btn btn-sm btn-noborder btn-success ajax-get confirm" href="' . url('install', ['name' => $plugin['name']]) . '">安装</a>';
+                        $plugin['actions'] = '<a class="btn btn-sm btn-noborder btn-success ajax-get confirm" href="'.url('install', ['name' => $plugin['name']]).'">安装</a>';
                         $plugin['status_class'] = 'text-info';
                         $plugin['status_info'] = '<i class="fa fa-fw fa-th-large"></i> 未安装';
                         break;
                     case '0': // 禁用
                         $plugin['bg_color'] = 'warning';
-                        $plugin['actions'] = '<a class="btn btn-sm btn-noborder btn-success ajax-get confirm" href="' . url('enable', ['ids' => $plugin['id']]) . '">启用</a> ';
-                        $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-danger ajax-get confirm" data-tips="如果包括数据库，将同时删除数据库！" href="' . url('uninstall', ['name' => $plugin['name']]) . '">卸载</a> ';
+                        $plugin['actions'] = '<a class="btn btn-sm btn-noborder btn-success ajax-get confirm" href="'.url('enable', ['ids' => $plugin['id']]).'">启用</a> ';
+                        $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-danger ajax-get confirm" data-tips="如果包括数据库，将同时删除数据库！" href="'.url('uninstall', ['name' => $plugin['name']]).'">卸载</a> ';
                         if (isset($plugin['config']) && $plugin['config'] != '') {
-                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-info" href="' . url('config', ['name' => $plugin['name']]) . '">设置</a> ';
+                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-info" href="'.url('config', ['name' => $plugin['name']]).'">设置</a> ';
                         }
                         if ($plugin['admin'] != '0') {
-                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-primary" href="' . url('manage', ['name' => $plugin['name']]) . '">管理</a> ';
+                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-primary" href="'.url('manage', ['name' => $plugin['name']]).'">管理</a> ';
                         }
                         $plugin['status_class'] = 'text-warning';
                         $plugin['status_info'] = '<i class="fa fa-ban"></i> 已禁用';
                         break;
                     case '1': // 启用
                         $plugin['bg_color'] = 'success';
-                        $plugin['actions'] = '<a class="btn btn-sm btn-noborder btn-warning ajax-get confirm" href="' . url('disable', ['ids' => $plugin['id']]) . '">禁用</a> ';
-                        $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-danger ajax-get confirm" data-tips="如果包括数据库，将同时删除数据库！" href="' . url('uninstall', ['name' => $plugin['name']]) . '">卸载</a> ';
+                        $plugin['actions'] = '<a class="btn btn-sm btn-noborder btn-warning ajax-get confirm" href="'.url('disable', ['ids' => $plugin['id']]).'">禁用</a> ';
+                        $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-danger ajax-get confirm" data-tips="如果包括数据库，将同时删除数据库！" href="'.url('uninstall', ['name' => $plugin['name']]).'">卸载</a> ';
                         if (isset($plugin['config']) && $plugin['config'] != '') {
-                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-info" href="' . url('config', ['name' => $plugin['name']]) . '">设置</a> ';
+                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-info" href="'.url('config', ['name' => $plugin['name']]).'">设置</a> ';
                         }
                         if ($plugin['admin'] != '0') {
-                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-primary" href="' . url('manage', ['name' => $plugin['name']]) . '">管理</a> ';
+                            $plugin['actions'] .= '<a class="btn btn-sm btn-noborder btn-primary" href="'.url('manage', ['name' => $plugin['name']]).'">管理</a> ';
                         }
                         $plugin['status_class'] = 'text-success';
                         $plugin['status_info'] = '<i class="fa fa-check"></i> 已启用';
@@ -202,12 +202,12 @@ class Plugin extends Model
     /**
      * 检查插件插件信息是否完整
      * @param string $info 插件插件信息
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     private function checkInfo($info = '')
     {
-        $default_item = ['name', 'title', 'author', 'version'];
+        $default_item = ['name','title','author','version'];
         foreach ($default_item as $item) {
             if (!isset($info[$item]) || $info[$item] == '') {
                 return false;
@@ -220,12 +220,12 @@ class Plugin extends Model
      * 获取插件配置
      * @param string $name 插件名称
      * @param string $item 指定返回的插件配置项
-     * @return array|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|mixed
      */
     public function getConfig($name = '', $item = '')
     {
-        $config = cache('plugin_config_' . $name);
+        $config = cache('plugin_config_'.$name);
         if (!$config) {
             $config = $this->where('name', $name)->value('config');
             if (!$config) {
@@ -235,7 +235,7 @@ class Plugin extends Model
             $config = json_decode($config, true);
             // 非开发模式，缓存数据
             if (config('develop_mode') == 0) {
-                cache('plugin_config_' . $name, $config);
+                cache('plugin_config_'.$name, $config);
             }
         }
 
@@ -258,8 +258,8 @@ class Plugin extends Model
      * 设置插件配置
      * @param string $name 插件名.配置名
      * @param string $value 配置值
-     * @return bool
      * @author caiweiming <314013107@qq.com>
+     * @return bool
      */
     public function setConfig($name = '', $value = '')
     {
@@ -269,7 +269,7 @@ class Plugin extends Model
         }
 
         // 获取缓存
-        $config = cache('plugin_config_' . $name);
+        $config = cache('plugin_config_'.$name);
 
         if (!$config) {
             $config = $this->where('name', $name)->value('config');
@@ -299,7 +299,7 @@ class Plugin extends Model
 
         // 非开发模式，缓存数据
         if (config('develop_mode') == 0) {
-            cache('plugin_config_' . $name, $config);
+            cache('plugin_config_'.$name, $config);
         }
 
         return true;

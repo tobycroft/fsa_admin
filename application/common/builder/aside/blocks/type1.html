@@ -3,8 +3,7 @@
     <div class="block-header bg-gray-lighter">
         <ul class="block-options">
             <li>
-                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i
-                        class="si si-refresh"></i></button>
+                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
             </li>
             <li>
                 <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
@@ -21,9 +20,9 @@
                 <div class="font-w600">{$vo.title|raw|default=''}</div>
                 <div>
                     {notempty name="vo.link.url"}
-                    <a href="{$vo.link.url}">{$vo.link.title|raw|default=''}</a>
+                        <a href="{$vo.link.url}">{$vo.link.title|raw|default=''}</a>
                     {else/}
-                    {$vo.link.title|raw|default=''}
+                        {$vo.link.title|raw|default=''}
                     {/notempty}
                 </div>
                 {notempty name="vo.tips"}

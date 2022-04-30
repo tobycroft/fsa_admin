@@ -10,8 +10,8 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Link as LinkModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\Link as LinkModel;
 
 /**
  * 友情链接控制器
@@ -21,10 +21,10 @@ class Link extends Admin
 {
     /**
      * 友情链接列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -58,9 +58,9 @@ class Link extends Admin
 
     /**
      * 新增
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -71,7 +71,7 @@ class Link extends Admin
 
             // 验证
             $result = $this->validate($data, 'Link');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($link = LinkModel::create($data)) {
                 // 记录行为
@@ -101,9 +101,9 @@ class Link extends Admin
     /**
      * 编辑
      * @param null $id 链接id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = null)
     {
@@ -116,7 +116,7 @@ class Link extends Admin
 
             // 验证
             $result = $this->validate($data, 'Link');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if (LinkModel::update($data)) {
                 // 记录行为
@@ -150,9 +150,9 @@ class Link extends Admin
     /**
      * 删除友情链接
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
@@ -162,9 +162,9 @@ class Link extends Admin
     /**
      * 启用友情链接
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -174,9 +174,9 @@ class Link extends Admin
     /**
      * 禁用友情链接
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -187,29 +187,29 @@ class Link extends Admin
      * 设置友情链接状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids        = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $link_title = LinkModel::where('id', 'in', $ids)->column('title');
-        return parent::setStatus($type, ['link_' . $type, 'cms_link', 0, UID, implode('、', $link_title)]);
+        return parent::setStatus($type, ['link_'.$type, 'cms_link', 0, UID, implode('、', $link_title)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $link = LinkModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $link    = LinkModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $link . ')，新值：(' . $value . ')';
         return parent::quickEdit(['link_edit', 'cms_link', $id, UID, $details]);
     }

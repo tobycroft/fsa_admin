@@ -9,8 +9,8 @@
 
 namespace app\admin\model;
 
-use think\Db;
 use think\Model;
+use think\Db;
 use util\Sql;
 
 /**
@@ -27,13 +27,13 @@ class Packet extends Model
 
     /**
      * 获取所有数据包列表
-     * @return array|bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|bool
      */
     public function getAll()
     {
         // 获取数据包目录下的所有插件目录
-        $dirs = array_map('basename', glob(config('packet_path') . '*', GLOB_ONLYDIR));
+        $dirs = array_map('basename', glob(config('packet_path').'*', GLOB_ONLYDIR));
         if ($dirs === false || !file_exists(config('packet_path'))) {
             $this->error = '插件目录不可读或者不存在';
             return false;
@@ -57,16 +57,16 @@ class Packet extends Model
     /**
      * 从文件获取数据包信息
      * @param string $name 数据包名称
-     * @return array|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|mixed
      */
     public static function getInfoFromFile($name = '')
     {
         $info = [];
         if ($name != '') {
             // 从配置文件获取
-            if (is_file(config('packet_path') . $name . '/info.php')) {
-                $info = include config('packet_path') . $name . '/info.php';
+            if (is_file(config('packet_path'). $name . '/info.php')) {
+                $info = include config('packet_path'). $name . '/info.php';
             }
         }
         return $info;
@@ -75,15 +75,15 @@ class Packet extends Model
     /**
      * 安装数据包
      * @param string $name 数据包名
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public static function install($name = '')
     {
         $info = self::getInfoFromFile($name);
 
         foreach ($info['tables'] as $table) {
-            $sql_file = realpath(config('packet_path') . $name . "/{$table}.sql");
+            $sql_file = realpath(config('packet_path').$name."/{$table}.sql");
             if (file_exists($sql_file)) {
                 if (isset($info['database_prefix']) && $info['database_prefix'] != '') {
                     $sql_statement = Sql::getSqlFromFile($sql_file, false, [$info['database_prefix'] => config('database.prefix')]);
@@ -107,16 +107,16 @@ class Packet extends Model
     /**
      * 卸载数据包
      * @param string $name 数据包名
+     * @author 蔡伟明 <314013107@qq.com>
      * @return bool
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function uninstall($name = '')
     {
         $info = self::getInfoFromFile($name);
         foreach ($info['tables'] as $table) {
-            $sql = "DROP TABLE IF EXISTS `" . config('database.prefix') . "{$table}`;";
+            $sql = "DROP TABLE IF EXISTS `". config('database.prefix') ."{$table}`;";
             Db::execute($sql);
             self::where('name', $name)->delete();
         }

@@ -10,9 +10,9 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Menu as MenuModel;
-use app\cms\model\Nav as NavModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\Nav as NavModel;
+use app\cms\model\Menu as MenuModel;
 
 /**
  * 导航控制器
@@ -22,10 +22,10 @@ class Nav extends Admin
 {
     /**
      * 导航列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -39,8 +39,8 @@ class Nav extends Admin
         // 自定义按钮
         $btnMenuList = [
             'title' => '菜单列表',
-            'icon' => 'fa fa-list',
-            'href' => url('menu/index', ['id' => '__id__'])
+            'icon'  => 'fa fa-list',
+            'href'  => url('menu/index', ['id' => '__id__'])
         ];
 
         // 使用ZBuilder快速创建数据表格
@@ -66,9 +66,9 @@ class Nav extends Admin
 
     /**
      * 新增
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -79,7 +79,7 @@ class Nav extends Admin
 
             // 验证
             $result = $this->validate($data, 'Nav');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($nav = NavModel::create($data)) {
                 // 记录行为
@@ -103,10 +103,10 @@ class Nav extends Admin
     /**
      * 删除导航
      * @param null $ids 菜单id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($ids = null)
     {
@@ -121,9 +121,9 @@ class Nav extends Admin
     /**
      * 启用导航
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -133,9 +133,9 @@ class Nav extends Admin
     /**
      * 禁用导航
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -146,29 +146,29 @@ class Nav extends Admin
      * 设置导航状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids        = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $nav_title = NavModel::where('id', 'in', $ids)->column('title');
-        return parent::setStatus($type, ['nav_' . $type, 'cms_nav', 0, UID, implode('、', $nav_title)]);
+        return parent::setStatus($type, ['nav_'.$type, 'cms_nav', 0, UID, implode('、', $nav_title)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $nav = NavModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $nav     = NavModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $nav . ')，新值：(' . $value . ')';
         return parent::quickEdit(['nav_edit', 'cms_nav', $id, UID, $details]);
     }

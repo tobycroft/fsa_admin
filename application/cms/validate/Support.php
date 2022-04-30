@@ -23,8 +23,8 @@ class Support extends Validate
     // 定义验证规则
     protected $rule = [
         'name|客服名称' => 'require',
-        'qq|QQ号码' => 'number',
-        'msn|MSN' => 'email',
+        'qq|QQ号码'    => 'number',
+        'msn|MSN'     => 'email',
     ];
 
     // 定义验证场景

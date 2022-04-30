@@ -22,18 +22,18 @@ class Column extends Common
     /**
      * 栏目文章列表
      * @param null $id 栏目id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index($id = null)
     {
         if ($id === null) $this->error('缺少参数');
         $map = [
             'status' => 1,
-            'id' => $id
+            'id'     => $id
         ];
 
         $column = Db::name('cms_column')->where($map)->find();
@@ -42,23 +42,23 @@ class Column extends Common
         $model = Db::name('cms_model')->where('id', $column['model'])->find();
 
         if ($model['type'] == 2) {
-            $cid_all = ColumnModel::getChildsId($id);
+            $cid_all   = ColumnModel::getChildsId($id);
             $cid_all[] = (int)$id;
 
             $map = [
-                [$model['table'] . '.trash', '=', 0],
-                [$model['table'] . '.status', '=', 1],
-                [$model['table'] . '.cid', 'in', $cid_all],
+                [$model['table'].'.trash', '=', 0],
+                [$model['table'].'.status', '=', 1],
+                [$model['table'].'.cid', 'in', $cid_all],
             ];
 
             $data_list = Db::view($model['table'], true)
-                ->view('admin_user', 'username', $model['table'] . '.uid=admin_user.id', 'left')
+                ->view('admin_user', 'username', $model['table'].'.uid=admin_user.id', 'left')
                 ->where($map)
                 ->order('create_time desc')
                 ->paginate(config('list_rows'));
             $this->assign('model', $column['model']);
         } else {
-            $cid_all = ColumnModel::getChildsId($id);
+            $cid_all   = ColumnModel::getChildsId($id);
             $cid_all[] = (int)$id;
 
             $map = [
@@ -69,7 +69,7 @@ class Column extends Common
 
             $data_list = Db::view('cms_document', true)
                 ->view('admin_user', 'username', 'cms_document.uid=admin_user.id', 'left')
-                ->view($model['table'], '*', 'cms_document.id=' . $model['table'] . '.aid', 'left')
+                ->view($model['table'], '*', 'cms_document.id='. $model['table'] . '.aid', 'left')
                 ->where($map)
                 ->order('create_time desc')
                 ->paginate(config('list_rows'));
@@ -88,8 +88,8 @@ class Column extends Common
     /**
      * 获取栏目面包屑导航
      * @param $id
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function getBreadcrumb($id)
     {

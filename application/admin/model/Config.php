@@ -25,7 +25,7 @@ class Config extends Model
 
     /**
      * 获取配置信息
-     * @param string $name 配置名
+     * @param  string $name 配置名
      * @return mixed
      */
     public function getConfig($name = '')

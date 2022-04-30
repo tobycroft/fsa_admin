@@ -11,8 +11,8 @@ namespace app\cms\home;
 
 use app\cms\model\Column as ColumnModel;
 use app\cms\model\Document as DocumentModel;
-use think\Db;
 use util\Tree;
+use think\Db;
 
 /**
  * 文档控制器
@@ -24,8 +24,8 @@ class Document extends Common
      * 文档详情页
      * @param null $id 文档id
      * @param string $model 独立模型id
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function detail($id = null, $model = '')
     {
@@ -34,13 +34,13 @@ class Document extends Common
         if ($model != '') {
             $table = get_model_table($model);
             $map = [
-                $table . '.status' => 1,
-                $table . '.trash' => 0
+                $table.'.status' => 1,
+                $table.'.trash'  => 0
             ];
         } else {
             $map = [
                 'cms_document.status' => 1,
-                'cms_document.trash' => 0
+                'cms_document.trash'  => 0
             ];
         }
 
@@ -61,8 +61,8 @@ class Document extends Common
     /**
      * 获取栏目面包屑导航
      * @param int $id 栏目id
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     private function getBreadcrumb($id)
     {
@@ -79,11 +79,11 @@ class Document extends Common
      * 获取上一篇文档
      * @param int $id 当前文档id
      * @param string $model 独立模型id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function getPrev($id, $model = '')
     {
@@ -97,7 +97,7 @@ class Document extends Common
             ])->order('id desc')->find();
         } else {
             $table = get_model_table($model);
-            $cid = Db::table($table)->where('id', $id)->value('cid');
+            $cid   = Db::table($table)->where('id', $id)->value('cid');
             $document = Db::table($table)->where([
                 ['status', '=', 1],
                 ['trash', '=', 0],
@@ -116,11 +116,11 @@ class Document extends Common
      * 获取下一篇文档
      * @param int $id 当前文档id
      * @param string $model 独立模型id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function getNext($id, $model = '')
     {
@@ -134,7 +134,7 @@ class Document extends Common
             ])->find();
         } else {
             $table = get_model_table($model);
-            $cid = Db::table($table)->where('id', $id)->value('cid');
+            $cid   = Db::table($table)->where('id', $id)->value('cid');
             $document = Db::table($table)->where([
                 ['status', '=', 1],
                 ['trash', '=', 0],

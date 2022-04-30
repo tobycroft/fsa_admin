@@ -10,14 +10,14 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
+use app\common\builder\ZBuilder;
+use app\cms\model\Model as DocumentModel;
 use app\cms\model\Column as ColumnModel;
 use app\cms\model\Document;
-use app\cms\model\Model as DocumentModel;
-use app\common\builder\ZBuilder;
 use app\user\model\Role as RoleModel;
-use think\facade\Env;
-use util\File;
 use util\Tree;
+use util\File;
+use think\facade\Env;
 
 /**
  * 栏目控制器
@@ -27,9 +27,9 @@ class Column extends Admin
 {
     /**
      * 栏目列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -45,33 +45,33 @@ class Column extends Admin
         // 自定义按钮
         $btnMove = [
             'class' => 'btn btn-xs btn-default js-move-column',
-            'icon' => 'fa fa-fw fa-arrow-circle-right',
+            'icon'  => 'fa fa-fw fa-arrow-circle-right',
             'title' => '移动栏目'
         ];
         $btnAdd = [
             'class' => 'btn btn-xs btn-default',
-            'icon' => 'fa fa-fw fa-plus',
+            'icon'  => 'fa fa-fw fa-plus',
             'title' => '新增子栏目',
-            'href' => url('add', ['pid' => '__id__'])
+            'href'  => url('add', ['pid' => '__id__'])
         ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['name' => '栏目名称']) // 设置搜索框
             ->addColumns([ // 批量添加数据列
-                ['id', 'ID'],
-                ['icon', '图标', 'icon'],
-                ['name', '栏目名称', 'callback', function ($value, $data) {
-                    return isset($data['title_prefix']) ? $data['title_display'] : $value;
-                }, '__data__'],
-                ['model', '内容模型', 'select', DocumentModel::getTitleList()],
-                ['rank_auth', '浏览权限', 'select', RoleModel::getTree(null, '开放浏览')],
-                ['hide', '是否隐藏', 'yesno'],
-                ['post_auth', '支持投稿', 'yesno'],
-                ['create_time', '创建时间', 'datetime'],
-                ['sort', '排序', 'text.edit'],
-                ['status', '状态', 'switch'],
-                ['right_button', '操作', 'btn']
+               ['id', 'ID'],
+               ['icon', '图标', 'icon'],
+               ['name', '栏目名称', 'callback', function($value, $data){
+                   return isset($data['title_prefix']) ? $data['title_display'] : $value;
+               }, '__data__'],
+               ['model', '内容模型', 'select', DocumentModel::getTitleList()],
+               ['rank_auth', '浏览权限', 'select', RoleModel::getTree(null, '开放浏览')],
+               ['hide', '是否隐藏', 'yesno'],
+               ['post_auth', '支持投稿', 'yesno'],
+               ['create_time', '创建时间', 'datetime'],
+               ['sort', '排序', 'text.edit'],
+               ['status', '状态', 'switch'],
+               ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('add,enable,disable') // 批量添加顶部按钮
             ->addRightButton('custom', $btnAdd)
@@ -85,9 +85,9 @@ class Column extends Admin
     /**
      * 新增栏目
      * @param int $pid 父级id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add($pid = 0)
     {
@@ -98,7 +98,7 @@ class Column extends Admin
 
             // 验证
             $result = $this->validate($data, 'Column');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($column = ColumnModel::create($data)) {
                 cache('cms_column_list', null);
@@ -110,8 +110,8 @@ class Column extends Admin
             }
         }
 
-        $template_list = File::get_dirs(Env::get('app_path') . 'cms/view/column/')['file'];
-        $template_detail = File::get_dirs(Env::get('app_path') . 'cms/view/document/')['file'];
+        $template_list   = File::get_dirs(Env::get('app_path').'cms/view/column/')['file'];
+        $template_detail = File::get_dirs(Env::get('app_path').'cms/view/document/')['file'];
 
         // 显示添加页面
         return ZBuilder::make('form')
@@ -141,9 +141,9 @@ class Column extends Admin
     /**
      * 编辑栏目
      * @param string $id 栏目id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = '')
     {
@@ -156,7 +156,7 @@ class Column extends Admin
             // 验证
             $result = $this->validate($data, 'Column');
             // 验证失败 输出错误信息
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if (ColumnModel::update($data)) {
                 // 记录行为
@@ -170,8 +170,8 @@ class Column extends Admin
         // 获取数据
         $info = ColumnModel::get($id);
 
-        $template_list = File::get_dirs(Env::get('app_path') . 'cms/view/column/')['file'];
-        $template_detail = File::get_dirs(Env::get('app_path') . 'cms/view/document/')['file'];
+        $template_list   = File::get_dirs(Env::get('app_path').'cms/view/column/')['file'];
+        $template_detail = File::get_dirs(Env::get('app_path').'cms/view/document/')['file'];
 
         // 显示编辑页面
         return ZBuilder::make('form')
@@ -203,12 +203,12 @@ class Column extends Admin
     /**
      * 删除栏目
      * @param null $ids 栏目id
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($ids = null)
     {
@@ -232,9 +232,9 @@ class Column extends Admin
     /**
      * 启用栏目
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -244,9 +244,9 @@ class Column extends Admin
     /**
      * 禁用栏目
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -257,30 +257,30 @@ class Column extends Admin
      * 设置栏目状态：删除、禁用、启用
      * @param string $type 类型：enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids           = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $column_delete = is_array($ids) ? '' : $ids;
-        $column_names = ColumnModel::where('id', 'in', $ids)->column('name');
-        return parent::setStatus($type, ['column_' . $type, 'cms_column', $column_delete, UID, implode('、', $column_names)]);
+        $column_names  = ColumnModel::where('id', 'in', $ids)->column('name');
+        return parent::setStatus($type, ['column_'.$type, 'cms_column', $column_delete, UID, implode('、', $column_names)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $column = ColumnModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $column  = ColumnModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $column . ')，新值：(' . $value . ')';
         return parent::quickEdit(['column_edit', 'cms_column', $id, UID, $details]);
     }

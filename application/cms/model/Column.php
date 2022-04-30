@@ -30,8 +30,7 @@ class Column extends ThinkModel
      * @param $data
      * @author 蔡伟明 <314013107@qq.com>
      */
-    protected function getTitleAttr($value, $data)
-    {
+    protected function getTitleAttr($value, $data) {
         switch ($data['type']) {
             case 0: // 栏目
                 break;
@@ -42,8 +41,8 @@ class Column extends ThinkModel
 
     /**
      * 获取栏目列表
-     * @return array|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|mixed
      */
     public static function getList()
     {
@@ -62,8 +61,8 @@ class Column extends ThinkModel
      * 获取树状栏目
      * @param int $id 需要隐藏的栏目id
      * @param string $default 默认第一个节点项，默认为“顶级栏目”，如果为false则不显示，也可传入其他名称
-     * @return array|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|mixed
      */
     public static function getTreeList($id = 0, $default = '')
     {
@@ -75,7 +74,7 @@ class Column extends ThinkModel
         ];
         if ($id !== 0) {
             $hide_ids = array_merge([$id], self::getChildsId($id));
-            $where[] = ['id', 'not in', $hide_ids];
+            $where[]  = ['id', 'not in', $hide_ids];
         }
 
         $data_list = Tree::config(['title' => 'name'])->toList(self::where($where)->order('pid,id')->column('id,pid,name'));
@@ -99,8 +98,8 @@ class Column extends ThinkModel
     /**
      * 获取所有子栏目id
      * @param int $pid 父级id
-     * @return array
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array
      */
     public static function getChildsId($pid = 0)
     {
@@ -114,17 +113,17 @@ class Column extends ThinkModel
     /**
      * 获取指定栏目数据
      * @param int $cid 栏目id
-     * @return mixed|static
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed|static
      */
     public static function getInfo($cid = 0)
     {
-        $result = cache('cms_column_info_' . $cid);
+        $result = cache('cms_column_info_'. $cid);
         if (!$result) {
             $result = self::get($cid);
             // 非开发模式，缓存数据
             if (config('develop_mode') == 0) {
-                cache('cms_column_info_' . $cid, $result);
+                cache('cms_column_info_'. $cid, $result);
             }
         }
         return $result;

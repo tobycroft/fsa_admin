@@ -20,17 +20,17 @@ class Page extends Common
     /**
      * 单页详情
      * @param null $id 单页id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function detail($id = null)
     {
         $info = PageModel::where('status', 1)->find($id);
-        $info['url'] = url('cms/page/detail', ['id' => $info['id']]);
+        $info['url']  = url('cms/page/detail', ['id' => $info['id']]);
         $info['tags'] = explode(',', $info['keywords']);
 
         // 更新阅读量

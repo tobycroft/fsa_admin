@@ -9,8 +9,8 @@
 
 namespace app\admin\model;
 
-use app\admin\model\Hook as HookModel;
 use think\Model;
+use app\admin\model\Hook as HookModel;
 
 /**
  * 钩子-插件模型
@@ -27,8 +27,8 @@ class HookPlugin extends Model
     /**
      * 启用插件钩子
      * @param string $plugin 插件名称
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public static function enable($plugin = '')
     {
@@ -38,8 +38,8 @@ class HookPlugin extends Model
     /**
      * 禁用插件钩子
      * @param string $plugin 插件名称
-     * @return int
      * @author 蔡伟明 <314013107@qq.com>
+     * @return int
      */
     public static function disable($plugin = '')
     {
@@ -50,11 +50,11 @@ class HookPlugin extends Model
      * 添加钩子-插件对照
      * @param array $hooks 钩子
      * @param string $plugin_name 插件名称
+     * @author 蔡伟明 <314013107@qq.com>
      * @return bool|int|string
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function addHooks($hooks = [], $plugin_name = '')
     {
@@ -70,8 +70,8 @@ class HookPlugin extends Model
                     $name = $description;
                 }
                 $data[] = [
-                    'hook' => $name,
-                    'plugin' => $plugin_name,
+                    'hook'        => $name,
+                    'plugin'      => $plugin_name,
                     'create_time' => request()->time(),
                     'update_time' => request()->time(),
                 ];
@@ -85,10 +85,10 @@ class HookPlugin extends Model
     /**
      * 删除钩子
      * @param string $plugin_name 钩子名称
+     * @author 蔡伟明 <314013107@qq.com>
      * @return bool
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function deleteHooks($plugin_name = '')
     {
@@ -108,8 +108,8 @@ class HookPlugin extends Model
      * 钩子插件排序
      * @param string $hook 钩子
      * @param string $plugins 插件名
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public static function sort($hook = '', $plugins = '')
     {
@@ -118,7 +118,7 @@ class HookPlugin extends Model
 
             foreach ($plugins as $key => $plugin) {
                 $map = [
-                    'hook' => $hook,
+                    'hook'   => $hook,
                     'plugin' => $plugin
                 ];
                 self::where($map)->setField('sort', $key + 1);

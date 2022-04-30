@@ -21,8 +21,8 @@ class Config extends Validate
     // 定义验证规则
     protected $rule = [
         'group|配置分组' => 'require',
-        'type|配置类型' => 'require',
-        'name|配置名称' => 'require|regex:^[a-zA-Z]\w{0,39}$|unique:admin_config',
+        'type|配置类型'  => 'require',
+        'name|配置名称'  => 'require|regex:^[a-zA-Z]\w{0,39}$|unique:admin_config',
         'title|配置标题' => 'require',
     ];
 
@@ -33,7 +33,7 @@ class Config extends Validate
 
     // 定义场景，供快捷编辑时验证
     protected $scene = [
-        'name' => ['name'],
+        'name'  => ['name'],
         'title' => ['title'],
     ];
 }

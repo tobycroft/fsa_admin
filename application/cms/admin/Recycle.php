@@ -10,8 +10,8 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Document as DocumentModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\Document as DocumentModel;
 use think\Db;
 
 /**
@@ -23,16 +23,16 @@ class Recycle extends Admin
     /**
      * 文档列表
      * @param string $model 内容模型id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index($model = '')
     {
         if ($model == '') {
             // 查询
-            $map = $this->getMap();
+            $map   = $this->getMap();
             $map[] = ['cms_document.trash', '=', 1];
             // 排序
             $order = $this->getOrder('update_time desc');
@@ -42,15 +42,15 @@ class Recycle extends Admin
             // 自定义按钮
             $btnRestore = [
                 'class' => 'btn btn-xs btn-default ajax-get confirm',
-                'icon' => 'fa fa-fw fa-reply',
+                'icon'  => 'fa fa-fw fa-reply',
                 'title' => '还原',
-                'href' => url('restore', ['ids' => '__id__'])
+                'href'  => url('restore', ['ids' => '__id__'])
             ];
             $btnRestoreAll = [
                 'class' => 'btn btn-success ajax-post confirm',
-                'icon' => 'fa fa-fw fa-reply-all',
+                'icon'  => 'fa fa-fw fa-reply-all',
                 'title' => '批量还原',
-                'href' => url('restore')
+                'href'  => url('restore')
             ];
 
             // 使用ZBuilder快速创建数据表格
@@ -77,15 +77,15 @@ class Recycle extends Admin
             $table_name = get_model_table($model);
 
             // 查询
-            $map = $this->getMap();
+            $map   = $this->getMap();
             $map[] = ['trash', '=', 1];
 
             // 排序
             $order = $this->getOrder('update_time desc');
             // 数据列表
             $data_list = Db::view($table_name, true)
-                ->view("cms_column", ['name' => 'column_name'], 'cms_column.id=' . $table_name . '.cid', 'left')
-                ->view("admin_user", 'username', 'admin_user.id=' . $table_name . '.uid', 'left')
+                ->view("cms_column", ['name' => 'column_name'], 'cms_column.id='.$table_name.'.cid', 'left')
+                ->view("admin_user", 'username', 'admin_user.id='.$table_name.'.uid', 'left')
                 ->where($map)
                 ->order($order)
                 ->paginate();
@@ -93,15 +93,15 @@ class Recycle extends Admin
             // 自定义按钮
             $btnRestore = [
                 'class' => 'btn btn-xs btn-default ajax-get confirm',
-                'icon' => 'fa fa-fw fa-reply',
+                'icon'  => 'fa fa-fw fa-reply',
                 'title' => '还原',
-                'href' => url('restore', ['table' => $table_name, 'ids' => '__id__'])
+                'href'  => url('restore', ['table' => $table_name, 'ids' => '__id__'])
             ];
             $btnRestoreAll = [
                 'class' => 'btn btn-success ajax-post confirm',
-                'icon' => 'fa fa-fw fa-reply-all',
+                'icon'  => 'fa fa-fw fa-reply-all',
                 'title' => '批量还原',
-                'href' => url('restore', ['table' => $table_name])
+                'href'  => url('restore', ['table' => $table_name])
             ];
 
             // 使用ZBuilder快速创建数据表格
@@ -138,7 +138,7 @@ class Recycle extends Admin
         if ($ids === null) $this->error('请选择要操作的数据');
         $table = $table != '' ? substr($table, strlen(config('database.prefix'))) : 'cms_document';
 
-        $document_id = is_array($ids) ? '' : $ids;
+        $document_id    = is_array($ids) ? '' : $ids;
         $document_title = Db::name($table)->where('id', 'in', $ids)->column('title');
 
         // 还原文档
@@ -155,9 +155,9 @@ class Recycle extends Admin
      * 彻底删除文档
      * @param null $ids 文档id
      * @param string $table 表名
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($ids = null, $table = '')
     {
@@ -174,7 +174,7 @@ class Recycle extends Admin
 
                 // 删除附加表文档
                 if (false === Db::table($extra_table)->where('aid', $document['id'])->delete()) {
-                    $this->error('删除文档：' . $document['title'] . ' 失败');
+                    $this->error('删除文档：'. $document['title']. ' 失败');
                 }
 
                 // 删除主表文档
@@ -195,7 +195,7 @@ class Recycle extends Admin
             }
 
             // 记录行为
-            action_log('document_delete', $table, 0, UID, '表(' . $table . '),文档(' . implode('、', $document_title) . ')');
+            action_log('document_delete', $table, 0, UID, '表('.$table.'),文档('.implode('、', $document_title).')');
         }
         $this->success('删除成功');
     }

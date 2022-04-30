@@ -9,16 +9,16 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Icon as IconModel;
+use app\common\controller\Common;
+use app\common\builder\ZBuilder;
 use app\admin\model\Menu as MenuModel;
 use app\admin\model\Module as ModuleModel;
-use app\common\builder\ZBuilder;
-use app\common\controller\Common;
-use app\user\model\Message as MessageModel;
+use app\admin\model\Icon as IconModel;
 use app\user\model\Role as RoleModel;
+use app\user\model\Message as MessageModel;
+use think\facade\Cache;
 use think\Db;
 use think\facade\App;
-use think\facade\Cache;
 use think\helper\Hash;
 
 /**
@@ -29,8 +29,8 @@ class Admin extends Common
 {
     /**
      * 初始化
-     * @throws \think\Exception
      * @author 蔡伟明 <314013107@qq.com>
+     * @throws \think\Exception
      */
     protected function initialize()
     {
@@ -68,22 +68,22 @@ class Admin extends Common
             $this->assign('_icons', IconModel::getUrls());
             // 构建侧栏
             $data = [
-                'table' => 'admin_config', // 表名或模型名
-                'prefix' => 1,
-                'module' => 'admin',
+                'table'      => 'admin_config', // 表名或模型名
+                'prefix'     => 1,
+                'module'     => 'admin',
                 'controller' => 'system',
-                'action' => 'quickedit',
+                'action'     => 'quickedit',
             ];
             $table_token = substr(sha1('_aside'), 0, 8);
             session($table_token, $data);
             $settings = [
                 [
-                    'title' => '站点开关',
-                    'tips' => '站点关闭后将不能访问',
+                    'title'   => '站点开关',
+                    'tips'    => '站点关闭后将不能访问',
                     'checked' => Db::name('admin_config')->where('id', 1)->value('value'),
-                    'table' => $table_token,
-                    'id' => 1,
-                    'field' => 'value'
+                    'table'   => $table_token,
+                    'id'      => 1,
+                    'field'   => 'value'
                 ]
             ];
             ZBuilder::make('aside')
@@ -93,20 +93,20 @@ class Admin extends Common
 
     /**
      * 获取当前操作模型
-     * @return object|\think\db\Query
      * @author 蔡伟明 <314013107@qq.com>
+     * @return object|\think\db\Query
      */
     final protected function getCurrModel()
     {
         $table_token = input('param._t', '');
-        $module = $this->request->module();
-        $controller = parse_name($this->request->controller());
+        $module      = $this->request->module();
+        $controller  = parse_name($this->request->controller());
 
         $table_token == '' && $this->error('缺少参数');
-        !session('?' . $table_token) && $this->error('参数错误');
+        !session('?'.$table_token) && $this->error('参数错误');
 
         $table_data = session($table_token);
-        $table = $table_data['table'];
+        $table      = $table_data['table'];
 
         $Model = null;
         if ($table_data['prefix'] == 2) {
@@ -114,7 +114,7 @@ class Admin extends Common
             try {
                 $Model = App::model($table);
             } catch (\Exception $e) {
-                $this->error('找不到模型：' . $table);
+                $this->error('找不到模型：'.$table);
             }
         } else {
             // 使用DB类
@@ -143,8 +143,8 @@ class Admin extends Common
 
     /**
      * 检查是否登录，没有登录则跳转到登录页面
-     * @return int
      * @author 蔡伟明 <314013107@qq.com>
+     * @return int
      */
     final protected function isLogin()
     {
@@ -161,9 +161,9 @@ class Admin extends Common
     /**
      * 禁用
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -173,9 +173,9 @@ class Admin extends Common
     /**
      * 启用
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -185,9 +185,9 @@ class Admin extends Common
     /**
      * 启用
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
@@ -201,22 +201,22 @@ class Admin extends Common
      */
     public function quickEdit($record = [])
     {
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $type = input('post.type', '');
-        $id = input('post.pk', '');
-        $validate = input('post.validate', '');
+        $field           = input('post.name', '');
+        $value           = input('post.value', '');
+        $type            = input('post.type', '');
+        $id              = input('post.pk', '');
+        $validate        = input('post.validate', '');
         $validate_fields = input('post.validate_fields', '');
 
         $field == '' && $this->error('缺少字段名');
-        $id == '' && $this->error('缺少主键值');
+        $id    == '' && $this->error('缺少主键值');
 
         $Model = $this->getCurrModel();
         $protect_table = [
             '__ADMIN_USER__',
             '__ADMIN_ROLE__',
-            config('database.prefix') . 'admin_user',
-            config('database.prefix') . 'admin_role',
+            config('database.prefix').'admin_user',
+            config('database.prefix').'admin_role',
         ];
 
         // 验证是否操作管理员
@@ -228,7 +228,7 @@ class Admin extends Common
         if ($validate != '') {
             $validate_fields = array_flip(explode(',', $validate_fields));
             if (isset($validate_fields[$field])) {
-                $result = $this->validate([$field => $value], $validate . '.' . $field);
+                $result = $this->validate([$field => $value], $validate.'.'.$field);
                 if (true !== $result) $this->error($result);
             }
         }
@@ -249,7 +249,7 @@ class Admin extends Common
         }
 
         // 主键名
-        $pk = $Model->getPk();
+        $pk     = $Model->getPk();
         $result = $Model->where($pk, $id)->setField($field, $value);
 
         cache('hook_plugins', null);
@@ -268,16 +268,16 @@ class Admin extends Common
 
     /**
      * 自动创建添加页面
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
         // 获取表单项
-        $cache_name = $this->request->module() . '/' . parse_name($this->request->controller()) . '/add';
+        $cache_name = $this->request->module().'/'.parse_name($this->request->controller()).'/add';
         $cache_name = strtolower($cache_name);
-        $form = Cache::get($cache_name, []);
+        $form       = Cache::get($cache_name, []);
         if (!$form) {
             $this->error('自动新增数据不存在，请重新打开此页面');
         }
@@ -291,7 +291,7 @@ class Admin extends Common
             // 验证
             if ($form['validate'] != '') {
                 $result = $this->validate($data, $form['validate']);
-                if (true !== $result) $this->error($result);
+                if(true !== $result) $this->error($result);
             }
 
             // 是否需要自动插入时间
@@ -328,22 +328,22 @@ class Admin extends Common
     /**
      * 自动创建编辑页面
      * @param string $id 主键值
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = '')
     {
         if ($id === '') $this->error('参数错误');
 
         // 获取表单项
-        $cache_name = $this->request->module() . '/' . parse_name($this->request->controller()) . '/edit';
+        $cache_name = $this->request->module().'/'.parse_name($this->request->controller()).'/edit';
         $cache_name = strtolower($cache_name);
-        $form = Cache::get($cache_name, []);
+        $form       = Cache::get($cache_name, []);
         if (!$form) {
             $this->error('自动编辑数据不存在，请重新打开此页面');
         }
@@ -357,7 +357,7 @@ class Admin extends Common
             // 验证
             if ($form['validate'] != '') {
                 $result = $this->validate($data, $form['validate']);
-                if (true !== $result) $this->error($result);
+                if(true !== $result) $this->error($result);
             }
 
             // 是否需要自动插入时间
@@ -401,14 +401,14 @@ class Admin extends Common
      * 禁用、启用、删除都是调用这个内部方法
      * @param string $type 操作类型：enable,disable,delete
      * @param array $record 行为日志内容
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
-        $ids = (array)$ids;
+        $ids   = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids   = (array)$ids;
         $field = input('param.field', 'status');
 
         empty($ids) && $this->error('缺少主键');
@@ -418,9 +418,9 @@ class Admin extends Common
             '__ADMIN_USER__',
             '__ADMIN_ROLE__',
             '__ADMIN_MODULE__',
-            config('database.prefix') . 'admin_user',
-            config('database.prefix') . 'admin_role',
-            config('database.prefix') . 'admin_module',
+            config('database.prefix').'admin_user',
+            config('database.prefix').'admin_role',
+            config('database.prefix').'admin_module',
         ];
 
         // 禁止操作核心表的主要数据
@@ -464,10 +464,10 @@ class Admin extends Common
 
     /**
      * 模块设置
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function moduleConfig()
     {
@@ -480,7 +480,7 @@ class Admin extends Common
             $data = json_encode($data);
 
             if (false !== ModuleModel::where('name', $module)->update(['config' => $data])) {
-                cache('module_config_' . $module, null);
+                cache('module_config_'.$module, null);
                 $this->success('更新成功');
             } else {
                 $this->error('更新失败');
@@ -489,8 +489,8 @@ class Admin extends Common
 
         // 模块配置信息
         $module_info = ModuleModel::getInfoFromFile($module);
-        $config = $module_info['config'];
-        $trigger = isset($module_info['trigger']) ? $module_info['trigger'] : [];
+        $config      = $module_info['config'];
+        $trigger     = isset($module_info['trigger']) ? $module_info['trigger'] : [];
 
         // 数据库内的模块信息
         $db_config = ModuleModel::where('name', $module)->value('config');

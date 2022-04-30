@@ -27,11 +27,11 @@ class Hook extends Model
      * 添加钩子
      * @param array $hooks 钩子
      * @param string $plugin_name
+     * @author 蔡伟明 <314013107@qq.com>
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function addHooks($hooks = [], $plugin_name = '')
     {
@@ -46,8 +46,8 @@ class Hook extends Model
                     continue;
                 }
                 $data[] = [
-                    'name' => $name,
-                    'plugin' => $plugin_name,
+                    'name'        => $name,
+                    'plugin'      => $plugin_name,
                     'description' => $description,
                     'create_time' => request()->time(),
                     'update_time' => request()->time(),
@@ -63,10 +63,10 @@ class Hook extends Model
     /**
      * 删除钩子
      * @param string $plugin_name 钩子名称
+     * @author 蔡伟明 <314013107@qq.com>
      * @return bool
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function deleteHooks($plugin_name = '')
     {

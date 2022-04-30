@@ -1,8 +1,7 @@
 {extend name="layout" /}
 {block name="progress"}
 <div class="progress active progress-mini">
-    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="80"
-         aria-valuemin="0" aria-valuemax="100" style="width: 80%"></div>
+    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"></div>
 </div>
 {/block}
 {block name="content"}
@@ -16,28 +15,25 @@
 <script type="text/javascript">
     var loading_text = document.getElementById('loading-text');
     var message = document.getElementById('msg');
-
-    function show_progress(msg, status) {
+    function show_progress(msg, status){
         loading_text.innerText = msg;
     }
-
-    function showmsg(msg, status) {
+    function showmsg(msg, status){
         message.innerText = msg;
     }
 </script>
-{php}
-use think\Db;
-// 连接数据库
-$db_config = session('db_config');
-$db_instance = Db::connect($db_config);
+    {php}
+    use think\Db;
+    // 连接数据库
+    $db_config = session('db_config');
+    $db_instance = Db::connect($db_config);
 
-// 创建数据表
-create_tables($db_instance, $db_config['prefix']);
+    // 创建数据表
+    create_tables($db_instance, $db_config['prefix']);
 
-// 创建配置文件
-$conf = write_config($db_config);
+    // 创建配置文件
+    $conf = write_config($db_config);
 
-echo "
-<script type=\"text/javascript\">location.href='". request()->baseFile() ."?s=/index/complete.html'</script>";
-{/php}
+    echo "<script type=\"text/javascript\">location.href='". request()->baseFile() ."?s=/index/complete.html'</script>";
+    {/php}
 {/block}

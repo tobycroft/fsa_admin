@@ -25,8 +25,7 @@ class Index extends Controller
      * 获取入口目录
      * @author 蔡伟明 <314013107@qq.com>
      */
-    protected function initialize()
-    {
+    protected function initialize() {
         $this->assign('static_dir', 'static/');
     }
 
@@ -52,16 +51,16 @@ class Index extends Controller
 
     /**
      * 步骤二，检查环境
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function step2()
     {
         if (session('step') != 1 && session('step') != 3) $this->redirect($this->request->baseFile());
-        if (session('reinstall')) {
+        if(session('reinstall')){
             session('step', 2);
-            $this->redirect($this->request->baseFile() . '?s=/index/step4.html');
-        } else {
+            $this->redirect($this->request->baseFile().'?s=/index/step4.html');
+        }else{
             session('error', false);
 
             // 环境检测
@@ -85,8 +84,8 @@ class Index extends Controller
 
     /**
      * 步骤三，设置数据库连接
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function step3()
     {
@@ -95,7 +94,7 @@ class Index extends Controller
             if (session('error')) {
                 $this->error('环境检测没有通过，请调整环境后重试！');
             } else {
-                $this->success('恭喜您环境检测通过', $this->request->baseFile() . '?s=/index/step3.html');
+                $this->success('恭喜您环境检测通过', $this->request->baseFile().'?s=/index/step3.html');
             }
         }
         if (session('step') != 2) $this->redirect($this->request->baseFile());
@@ -108,19 +107,19 @@ class Index extends Controller
      * 步骤四，创建数据库
      * @param null $db 数据库配置信息
      * @param int $cover 是否覆盖已存在数据库
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function step4($db = null, $cover = 0)
     {
         // 检查上一步是否通过
         if ($this->request->isPost()) {
             // 检测数据库配置
-            if (!is_array($db) || empty($db['type'])
+            if(!is_array($db) || empty($db['type'])
                 || empty($db['hostname'])
                 || empty($db['database'])
                 || empty($db['username'])
-                || empty($db['prefix'])) {
+                || empty($db['prefix'])){
                 $this->error('请填写完整的数据库配置');
             }
 
@@ -135,16 +134,16 @@ class Index extends Controller
             $db_instance = Db::connect($db);
 
             // 检测数据库连接
-            try {
+            try{
                 $db_instance->execute('select version()');
-            } catch (\Exception $e) {
+            }catch(\Exception $e){
                 $this->error('数据库连接失败，请检查数据库配置！');
             }
 
             // 用户选择不覆盖情况下检测是否已存在数据库
             if (!$cover) {
                 // 检测是否已存在数据库
-                $result = $db_instance->execute('SELECT * FROM information_schema.schemata WHERE schema_name="' . $db_name . '"');
+                $result = $db_instance->execute('SELECT * FROM information_schema.schemata WHERE schema_name="'.$db_name.'"');
                 if ($result) {
                     $this->error('该数据库已存在，请更换名称！如需覆盖，请选中覆盖按钮！');
                 }
@@ -155,7 +154,7 @@ class Index extends Controller
             $db_instance->execute($sql) || $this->error($db_instance->getError());
 
             // 跳转到数据库安装页面
-            $this->success('参数正确开始安装', $this->request->baseFile() . '?s=/index/step4.html');
+            $this->success('参数正确开始安装', $this->request->baseFile().'?s=/index/step4.html');
         } else {
             if (session('step') != 3 && !session('reinstall')) {
                 $this->redirect($this->request->baseFile());
@@ -168,8 +167,8 @@ class Index extends Controller
 
     /**
      * 完成安装
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function complete()
     {

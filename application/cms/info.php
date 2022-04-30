@@ -14,21 +14,21 @@
  */
 return [
     // 模块名[必填]
-    'name' => 'cms',
+    'name'        => 'cms',
     // 模块标题[必填]
-    'title' => '门户',
+    'title'       => '门户',
     // 模块唯一标识[必填]，格式：模块名.开发者标识.module
-    'identifier' => 'cms.ming.module',
+    'identifier'  => 'cms.ming.module',
     // 模块图标[选填]
-    'icon' => 'fa fa-fw fa-newspaper-o',
+    'icon'        => 'fa fa-fw fa-newspaper-o',
     // 模块描述[选填]
     'description' => '门户模块',
     // 开发者[必填]
-    'author' => 'CaiWeiMing',
+    'author'      => 'CaiWeiMing',
     // 开发者网址[选填]
-    'author_url' => 'http://www.dolphinphp.com',
+    'author_url'  => 'http://www.dolphinphp.com',
     // 版本[必填],格式采用三段式：主版本号.次版本号.修订版本号
-    'version' => '1.0.0',
+    'version'     => '1.0.0',
     // 模块依赖[可选]，格式[[模块名, 模块唯一标识, 依赖版本, 对比方式]]
     'need_module' => [
         ['admin', 'admin.dolphinphp.module', '1.0.0']
@@ -593,11 +593,11 @@ return [
         'column' => [
             'title' => '栏目授权',
             'nodes' => [
-                'group' => 'column',
-                'table_name' => 'cms_column',
+                'group'       => 'column',
+                'table_name'  => 'cms_column',
                 'primary_key' => 'id',
-                'parent_id' => 'pid',
-                'node_name' => 'name',
+                'parent_id'   => 'pid',
+                'node_name'   => 'name',
             ]
         ],
     ],

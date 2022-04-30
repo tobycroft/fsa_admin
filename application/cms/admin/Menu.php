@@ -10,12 +10,12 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Column as ColumnModel;
-use app\cms\model\Menu as MenuModel;
-use app\cms\model\Page as PageModel;
 use app\common\builder\ZBuilder;
-use think\Db;
+use app\cms\model\Menu as MenuModel;
+use app\cms\model\Column as ColumnModel;
+use app\cms\model\Page as PageModel;
 use util\Tree;
+use think\Db;
 
 /**
  * 菜单控制器
@@ -26,12 +26,12 @@ class Menu extends Admin
     /**
      * 菜单列表
      * @param null $id 导航id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index($id = null)
     {
@@ -66,7 +66,7 @@ class Menu extends Admin
             ->setSearch(['cms_menu.title|cms_column.name|cms_page.title' => '标题'])// 设置搜索框
             ->addColumns([ // 批量添加数据列
                 ['id', 'ID'],
-                ['title', '标题', 'callback', function ($value, $data) {
+                ['title', '标题', 'callback', function($value, $data){
                     return isset($data['title_prefix']) ? $data['title_display'] : $value;
                 }, '__data__'],
                 ['type', '类型', 'text', '', ['栏目链接', '单页链接', '自定义链接']],
@@ -92,9 +92,9 @@ class Menu extends Admin
      * 新增
      * @param null $nid 导航id
      * @param int $pid 菜单父级id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add($nid = null, $pid = 0)
     {
@@ -106,7 +106,7 @@ class Menu extends Admin
 
             // 验证
             $result = $this->validate($data, 'Menu');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($menu = MenuModel::create($data)) {
                 // 记录行为
@@ -142,9 +142,9 @@ class Menu extends Admin
     /**
      * 编辑
      * @param null $id 菜单id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = null)
     {
@@ -156,7 +156,7 @@ class Menu extends Admin
 
             // 验证
             $result = $this->validate($data, 'Menu');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if (MenuModel::update($data)) {
                 // 记录行为
@@ -193,9 +193,9 @@ class Menu extends Admin
     /**
      * 删除菜单
      * @param null $ids 菜单id
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($ids = null)
     {
@@ -209,9 +209,9 @@ class Menu extends Admin
     /**
      * 启用菜单
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -221,9 +221,9 @@ class Menu extends Admin
     /**
      * 禁用菜单
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -234,29 +234,29 @@ class Menu extends Admin
      * 设置菜单状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids        = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $menu_title = MenuModel::where('id', 'in', $ids)->column('title');
-        return parent::setStatus($type, ['menu_' . $type, 'cms_menu', 0, UID, implode('、', $menu_title)]);
+        return parent::setStatus($type, ['menu_'.$type, 'cms_menu', 0, UID, implode('、', $menu_title)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $menu = MenuModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $menu    = MenuModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $menu . ')，新值：(' . $value . ')';
         return parent::quickEdit(['menu_edit', 'cms_menu', $id, UID, $details]);
     }

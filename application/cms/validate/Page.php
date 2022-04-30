@@ -22,7 +22,7 @@ class Page extends Validate
 {
     // 定义验证规则
     protected $rule = [
-        'title|页面标题' => 'require|length:1,30'
+        'title|页面标题'  => 'require|length:1,30'
     ];
 
     // 定义验证场景

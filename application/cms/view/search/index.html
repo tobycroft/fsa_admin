@@ -8,8 +8,7 @@
         <section class="content content-full content-boxed overflow-hidden">
             <!-- Section Content -->
             <div class="push-100-t push-50 text-center">
-                <h1 class="h2 text-white push-10 visibility-hidden" data-toggle="appear"
-                    data-class="animated fadeInDown">搜索：{$keyword|default=''}</h1>
+                <h1 class="h2 text-white push-10 visibility-hidden" data-toggle="appear" data-class="animated fadeInDown">搜索：{$keyword|default=''}</h1>
             </div>
             <!-- END Section Content -->
         </section>
@@ -47,15 +46,12 @@
                                         <em class="pull-right">{$item.create_time|time_tran}</em>
                                         <a href="#">{$item.username}</a> 发表于 {$item.create_time|format_time}
                                     </div>
-                                    <h4 class="text-uppercase push-10"><a class="text-primary-dark"
-                                                                          href="{:url('cms/document/detail', ['id' => $item['id']])}">{$item.title}</a>
-                                    </h4>
+                                    <h4 class="text-uppercase push-10"><a class="text-primary-dark" href="{:url('cms/document/detail', ['id' => $item['id']])}">{$item.title}</a></h4>
                                     {present name="item.summary"}
                                     <p class="push-20">{$item.summary|raw}</p>
                                     {/present}
                                     <div class="btn-group btn-group-sm">
-                                        <a class="btn btn-default"
-                                           href="{:url('cms/document/detail', ['id' => $item['id']])}">继续阅读...</a>
+                                        <a class="btn btn-default" href="{:url('cms/document/detail', ['id' => $item['id']])}">继续阅读...</a>
                                     </div>
                                 </div>
                                 {else/}
@@ -64,15 +60,12 @@
                                         <em class="pull-right">{$item.create_time|time_tran}</em>
                                         <a href="#">{$item.username}</a> 发表于 {$item.create_time|format_time}
                                     </div>
-                                    <h4 class="text-uppercase push-10"><a class="text-primary-dark"
-                                                                          href="{:url('cms/document/detail', ['id' => $item['id']])}">{$item.title}</a>
-                                    </h4>
+                                    <h4 class="text-uppercase push-10"><a class="text-primary-dark" href="{:url('cms/document/detail', ['id' => $item['id']])}">{$item.title}</a></h4>
                                     {present name="item.summary"}
                                     <p class="push-20">{$item.summary|raw}</p>
                                     {/present}
                                     <div class="btn-group btn-group-sm">
-                                        <a class="btn btn-default"
-                                           href="{:url('cms/document/detail', ['id' => $item['id']])}">继续阅读...</a>
+                                        <a class="btn btn-default" href="{:url('cms/document/detail', ['id' => $item['id']])}">继续阅读...</a>
                                     </div>
                                 </div>
                                 {/notempty}

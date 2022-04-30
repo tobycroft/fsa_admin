@@ -10,8 +10,8 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Document;
 use app\common\builder\ZBuilder;
+use app\cms\model\Document;
 use think\Db;
 
 /**
@@ -22,18 +22,18 @@ class Content extends Admin
 {
     /**
      * 空操作，用于显示各个模型的文档列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function _empty()
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
         $model_name = $this->request->action();
-        $model = Db::name('cms_model')->where('name', $model_name)->find();
+        $model      = Db::name('cms_model')->where('name', $model_name)->find();
         if (!$model) $this->error('找不到该内容');
 
         // 独立模型
@@ -41,15 +41,15 @@ class Content extends Admin
             $table_name = substr($model['table'], strlen(config('database.prefix')));
 
             // 查询
-            $map = $this->getMap();
+            $map   = $this->getMap();
             $map[] = ['trash', '=', 0];
 
             // 排序
             $order = $this->getOrder('update_time desc');
             // 数据列表
             $data_list = Db::view($table_name, true)
-                ->view("cms_column", ['name' => 'column_name'], 'cms_column.id=' . $table_name . '.cid', 'left')
-                ->view("admin_user", 'username', 'admin_user.id=' . $table_name . '.uid', 'left')
+                ->view("cms_column", ['name' => 'column_name'], 'cms_column.id='.$table_name.'.cid', 'left')
+                ->view("admin_user", 'username', 'admin_user.id='.$table_name.'.uid', 'left')
                 ->where($map)
                 ->order($order)
                 ->paginate();
@@ -58,10 +58,10 @@ class Content extends Admin
 
             // 自定义按钮
             $btnRecycle = [
-                'title' => '回收站(' . $trash_count . ')',
-                'icon' => 'fa fa-trash',
+                'title' => '回收站('.$trash_count.')',
+                'icon'  => 'fa fa-trash',
                 'class' => 'btn btn-info',
-                'href' => url('recycle/index', ['model' => $model['id']])
+                'href'  => url('recycle/index', ['model' => $model['id']])
             ];
             $columns = Db::name('cms_column')->where(['model' => $model['id']])->column('id,name');
 

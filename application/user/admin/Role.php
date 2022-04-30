@@ -10,11 +10,11 @@
 namespace app\user\admin;
 
 use app\admin\controller\Admin;
-use app\admin\model\Menu as MenuModel;
 use app\common\builder\ZBuilder;
 use app\user\model\Role as RoleModel;
-use think\Db;
+use app\admin\model\Menu as MenuModel;
 use util\Tree;
+use think\Db;
 
 /**
  * 角色控制器
@@ -24,10 +24,10 @@ class Role extends Admin
 {
     /**
      * 角色列表页
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -54,7 +54,7 @@ class Role extends Admin
                 ['name', '角色名称'],
                 ['pid', '上级角色', $list_role],
                 ['description', '描述'],
-                ['default_module', '默认模块', 'callback', function ($value, $list_module) {
+                ['default_module', '默认模块', 'callback', function($value, $list_module){
                     if ($value == '') {
                         return '未设置';
                     } else {
@@ -75,8 +75,8 @@ class Role extends Admin
 
     /**
      * 新增
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function add()
     {
@@ -92,7 +92,7 @@ class Role extends Admin
             // 验证
             $result = $this->validate($data, 'Role');
             // 验证失败 输出错误信息
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             // 非超级管理员检查可添加角色
             if (session('user_auth.role') != 1) {
@@ -122,12 +122,12 @@ class Role extends Admin
         $menus = cache('access_menus');
         if (!$menus) {
             $modules = Db::name('admin_module')->where('status', 1)->column('name,title');
-            $map = [];
+            $map     = [];
             // 非超级管理员角色，只能分配当前角色所拥有的权限
             if (session('user_auth.role') != 1) {
                 $menu_auth = RoleModel::where('id', session('user_auth.role'))->value('menu_auth');
                 $menu_auth = json_decode($menu_auth, true);
-                $map[] = ['id', 'in', $menu_auth];
+                $map[]     = ['id', 'in', $menu_auth];
             }
 
             // 当前用户能分配的所有菜单
@@ -179,8 +179,8 @@ class Role extends Admin
     /**
      * 编辑
      * @param null $id 角色id
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function edit($id = null)
     {
@@ -214,7 +214,7 @@ class Role extends Admin
             // 验证
             $result = $this->validate($data, 'Role');
             // 验证失败 输出错误信息
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             // 非超级管理员检查可添加角色
             if (session('user_auth.role') != 1) {
@@ -257,12 +257,12 @@ class Role extends Admin
         }
 
         $modules = Db::name('admin_module')->where('status', 1)->column('name,title');
-        $map = [];
+        $map     = [];
         // 非超级管理员角色，只能分配当前角色所拥有的权限
         if (session('user_auth.role') != 1) {
             $menu_auth = RoleModel::where('id', session('user_auth.role'))->value('menu_auth');
             $menu_auth = json_decode($menu_auth, true);
-            $map[] = ['id', 'in', $menu_auth];
+            $map[]     = ['id', 'in', $menu_auth];
         }
 
         // 当前用户能分配的所有菜单
@@ -303,17 +303,17 @@ class Role extends Admin
      * 构建jstree代码
      * @param array $menus 菜单节点
      * @param array $user 用户信息
-     * @return string
      * @author 蔡伟明 <314013107@qq.com>
+     * @return string
      */
     private function buildJsTree($menus = [], $user = [])
     {
         $result = '';
         if (!empty($menus)) {
             $option = [
-                'opened' => true,
+                'opened'   => true,
                 'selected' => false,
-                'icon' => '',
+                'icon'     => '',
             ];
             foreach ($menus as $menu) {
                 $option['icon'] = $menu['icon'];
@@ -321,22 +321,22 @@ class Role extends Admin
                     $option['selected'] = in_array($menu['id'], $user['menu_auth']) ? true : false;
                 }
                 if (isset($menu['child'])) {
-                    $result .= '<li id="' . $menu['id'] . '" data-jstree=\'' . json_encode($option) . '\'>' . $menu['title'] . ($menu['url_value'] == '' ? '' : ' (' . $menu['url_value'] . ')') . $this->buildJsTree($menu['child'], $user) . '</li>';
+                    $result .= '<li id="'.$menu['id'].'" data-jstree=\''.json_encode($option).'\'>'.$menu['title'].($menu['url_value'] == '' ? '' : ' ('.$menu['url_value'].')').$this->buildJsTree($menu['child'], $user).'</li>';
                 } else {
-                    $result .= '<li id="' . $menu['id'] . '" data-jstree=\'' . json_encode($option) . '\'>' . $menu['title'] . ($menu['url_value'] == '' ? '' : ' (' . $menu['url_value'] . ')') . '</li>';
+                    $result .= '<li id="'.$menu['id'].'" data-jstree=\''.json_encode($option).'\'>'.$menu['title'].($menu['url_value'] == '' ? '' : ' ('.$menu['url_value'].')').'</li>';
                 }
             }
         }
 
-        return '<ul>' . $result . '</ul>';
+        return '<ul>'.$result.'</ul>';
     }
 
     /**
      * 删除角色
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
@@ -346,9 +346,9 @@ class Role extends Admin
     /**
      * 启用角色
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -358,9 +358,9 @@ class Role extends Admin
     /**
      * 禁用角色
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -371,9 +371,9 @@ class Role extends Admin
      * 设置角色状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
@@ -395,33 +395,33 @@ class Role extends Admin
             // 非超级管理员检查可管理角色
             if (session('user_auth.role') != 1) {
                 if (!in_array($id, $role_list)) {
-                    $this->error('权限不足，禁止操作角色ID：' . $id);
+                    $this->error('权限不足，禁止操作角色ID：'.$id);
                 }
             }
 
             switch ($type) {
                 case 'enable':
                     if (false === RoleModel::where('id', $id)->setField('status', 1)) {
-                        $this->error('启用失败，角色ID：' . $id);
+                        $this->error('启用失败，角色ID：'.$id);
                     }
                     break;
                 case 'disable':
                     if (false === RoleModel::where('id', $id)->setField('status', 0)) {
-                        $this->error('禁用失败，角色ID：' . $id);
+                        $this->error('禁用失败，角色ID：'.$id);
                     }
                     break;
                 case 'delete':
                     $all_id = array_merge([$id], RoleModel::getChildsId($id));
 
                     if (false === RoleModel::where('id', 'in', $all_id)->delete()) {
-                        $this->error('删除失败，角色ID：' . $id);
+                        $this->error('删除失败，角色ID：'.$id);
                     }
                     break;
                 default:
                     $this->error('非法操作');
             }
 
-            action_log('role_' . $type, 'admin_role', $id, UID);
+            action_log('role_'.$type, 'admin_role', $id, UID);
         }
 
         $this->success('操作成功');
@@ -430,14 +430,14 @@ class Role extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
 
         // 非超级管理员检查可操作的角色
         if (session('user_auth.role') != 1) {
@@ -447,7 +447,7 @@ class Role extends Admin
             }
         }
 
-        $config = RoleModel::where('id', $id)->value($field);
+        $config  = RoleModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $config . ')，新值：(' . $value . ')';
         return parent::quickEdit(['role_edit', 'admin_role', $id, UID, $details]);
     }

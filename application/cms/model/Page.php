@@ -25,8 +25,8 @@ class Page extends ThinkModel
 
     /**
      * 获取单页标题列表
-     * @return array|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|mixed
      */
     public static function getTitleList()
     {

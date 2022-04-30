@@ -22,7 +22,7 @@ class AdvertType extends Validate
 {
     // 定义验证规则
     protected $rule = [
-        'name|分类名称' => 'require|length:1,30|unique:cms_advert_type'
+        'name|分类名称'  => 'require|length:1,30|unique:cms_advert_type'
     ];
 
     // 定义验证场景

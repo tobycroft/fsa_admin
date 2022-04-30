@@ -10,8 +10,8 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Support as SupportModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\Support as SupportModel;
 
 /**
  * 客服控制器
@@ -29,30 +29,30 @@ class Support extends Admin
         $data_list = SupportModel::where($map)->order($order)->paginate();
 
         $search = [
-            'name' => '客服名称',
-            'qq' => 'QQ',
-            'msn' => 'MSN',
-            'taobao' => '淘宝旺旺',
+            'name'    => '客服名称',
+            'qq'      => 'QQ',
+            'msn'     => 'MSN',
+            'taobao'  => '淘宝旺旺',
             'alibaba' => '阿里旺旺',
-            'skype' => 'SKYPE'
+            'skype'   => 'SKYPE'
         ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
-            ->setPageTips('添加的QQ需要到【shang.qq.com】登录后在【商家沟通组建—设置】开启QQ的在线状态，否则将显示“未启用”<br>开启和关闭在线客服功能，以及更多设置，请在 <a class="alert-link link-effect" href="' . url('admin/system/index', ['group' => 'cms']) . '">系统设置</a> 中操作。')
+            ->setPageTips('添加的QQ需要到【shang.qq.com】登录后在【商家沟通组建—设置】开启QQ的在线状态，否则将显示“未启用”<br>开启和关闭在线客服功能，以及更多设置，请在 <a class="alert-link link-effect" href="'.url('admin/system/index', ['group' => 'cms']).'">系统设置</a> 中操作。')
             ->setSearch($search) // 设置搜索框
             ->addColumns([ // 批量添加数据列
-                ['id', 'ID'],
-                ['name', '客服名称', 'text.edit'],
-                ['qq', 'QQ'],
-                ['msn', 'MSN'],
-                ['taobao', '淘宝旺旺'],
-                ['alibaba', '阿里旺旺'],
-                ['skype', 'SKYPE'],
-                ['create_time', '创建时间', 'datetime'],
-                ['sort', '排序', 'text.edit'],
-                ['status', '状态', 'switch'],
-                ['right_button', '操作', 'btn']
+               ['id', 'ID'],
+               ['name', '客服名称', 'text.edit'],
+               ['qq', 'QQ'],
+               ['msn', 'MSN'],
+               ['taobao', '淘宝旺旺'],
+               ['alibaba', '阿里旺旺'],
+               ['skype', 'SKYPE'],
+               ['create_time', '创建时间', 'datetime'],
+               ['sort', '排序', 'text.edit'],
+               ['status', '状态', 'switch'],
+               ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('add,enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons(['edit', 'delete' => ['data-tips' => '删除后无法恢复。']]) // 批量添加右侧按钮
@@ -64,9 +64,9 @@ class Support extends Admin
 
     /**
      * 新增
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -77,7 +77,7 @@ class Support extends Admin
 
             // 验证
             $result = $this->validate($data, 'Support');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($support = SupportModel::create($data)) {
                 // 记录行为
@@ -106,9 +106,9 @@ class Support extends Admin
     /**
      * 编辑
      * @param null $id 客服id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = null)
     {
@@ -121,7 +121,7 @@ class Support extends Admin
 
             // 验证
             $result = $this->validate($data, 'Support');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if (SupportModel::update($data)) {
                 // 记录行为
@@ -154,9 +154,9 @@ class Support extends Admin
     /**
      * 删除客服
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
@@ -166,9 +166,9 @@ class Support extends Admin
     /**
      * 启用客服
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -178,9 +178,9 @@ class Support extends Admin
     /**
      * 禁用客服
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -191,28 +191,28 @@ class Support extends Admin
      * 设置客服状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids           = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $support_title = SupportModel::where('id', 'in', $ids)->column('name');
-        return parent::setStatus($type, ['support_' . $type, 'cms_support', 0, UID, implode('、', $support_title)]);
+        return parent::setStatus($type, ['support_'.$type, 'cms_support', 0, UID, implode('、', $support_title)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
         $support = SupportModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $support . ')，新值：(' . $value . ')';
         return parent::quickEdit(['support_edit', 'cms_support', $id, UID, $details]);

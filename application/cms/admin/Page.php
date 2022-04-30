@@ -10,8 +10,8 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\Page as PageModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\Page as PageModel;
 
 /**
  * 单页控制器
@@ -21,10 +21,10 @@ class Page extends Admin
 {
     /**
      * 单页列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -56,9 +56,9 @@ class Page extends Admin
 
     /**
      * 新增
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -69,7 +69,7 @@ class Page extends Admin
 
             // 验证
             $result = $this->validate($data, 'Page');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($page = PageModel::create($data)) {
                 // 记录行为
@@ -98,9 +98,9 @@ class Page extends Admin
     /**
      * 编辑
      * @param null $id 单页id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = null)
     {
@@ -113,7 +113,7 @@ class Page extends Admin
 
             // 验证
             $result = $this->validate($data, 'Page');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if (PageModel::update($data)) {
                 // 记录行为
@@ -146,9 +146,9 @@ class Page extends Admin
     /**
      * 删除单页
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
@@ -158,9 +158,9 @@ class Page extends Admin
     /**
      * 启用单页
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -170,9 +170,9 @@ class Page extends Admin
     /**
      * 禁用单页
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -183,29 +183,29 @@ class Page extends Admin
      * 设置单页状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids        = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $page_title = PageModel::where('id', 'in', $ids)->column('title');
-        return parent::setStatus($type, ['page_' . $type, 'cms_page', 0, UID, implode('、', $page_title)]);
+        return parent::setStatus($type, ['page_'.$type, 'cms_page', 0, UID, implode('、', $page_title)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $page = PageModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $page    = PageModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $page . ')，新值：(' . $value . ')';
         return parent::quickEdit(['page_edit', 'cms_page', $id, UID, $details]);
     }

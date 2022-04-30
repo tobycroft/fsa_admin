@@ -22,8 +22,8 @@ class Column extends Validate
 {
     // 定义验证规则
     protected $rule = [
-        'pid|所属栏目' => 'require',
-        'name|栏目名称' => 'require|unique:cms_column,name^pid',
-        'model|内容模型' => 'require',
+        'pid|所属栏目'    => 'require',
+        'name|栏目名称'   => 'require|unique:cms_column,name^pid',
+        'model|内容模型'  => 'require',
     ];
 }

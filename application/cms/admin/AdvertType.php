@@ -10,8 +10,8 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\cms\model\AdvertType as AdvertTypeModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\AdvertType as AdvertTypeModel;
 
 /**
  * 广告分类控制器
@@ -21,10 +21,10 @@ class AdvertType extends Admin
 {
     /**
      * 广告列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -58,9 +58,9 @@ class AdvertType extends Admin
 
     /**
      * 新增
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -71,7 +71,7 @@ class AdvertType extends Admin
 
             // 验证
             $result = $this->validate($data, 'AdvertType');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if ($type = AdvertTypeModel::create($data)) {
                 // 记录行为
@@ -95,9 +95,9 @@ class AdvertType extends Admin
     /**
      * 编辑
      * @param null $id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = null)
     {
@@ -110,7 +110,7 @@ class AdvertType extends Admin
 
             // 验证
             $result = $this->validate($data, 'AdvertType');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if (AdvertTypeModel::update($data)) {
                 // 记录行为
@@ -138,9 +138,9 @@ class AdvertType extends Admin
     /**
      * 删除广告分类
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
@@ -150,9 +150,9 @@ class AdvertType extends Admin
     /**
      * 启用广告分类
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -162,9 +162,9 @@ class AdvertType extends Admin
     /**
      * 禁用广告分类
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -175,29 +175,29 @@ class AdvertType extends Admin
      * 设置广告分类状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record 日志记录
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids       = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $type_name = AdvertTypeModel::where('id', 'in', $ids)->column('name');
-        return parent::setStatus($type, ['advert_type_' . $type, 'cms_advert_type', 0, UID, implode('、', $type_name)]);
+        return parent::setStatus($type, ['advert_type_'.$type, 'cms_advert_type', 0, UID, implode('、', $type_name)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $type = AdvertTypeModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $type    = AdvertTypeModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $type . ')，新值：(' . $value . ')';
         return parent::quickEdit(['advert_type_edit', 'cms_advert_type', $id, UID, $details]);
     }

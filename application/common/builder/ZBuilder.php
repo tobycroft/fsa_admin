@@ -40,16 +40,15 @@ class ZBuilder extends Common
      * @author 蔡伟明 <314013107@qq.com>
      */
     public function initialize()
-    {
-    }
+    {}
 
     /**
      * 创建各种builder的入口
      * @param string $type 构建器名称，'Form', 'Table', 'View' 或其他自定义构建器
      * @param string $action 动作
+     * @author 蔡伟明 <314013107@qq.com>
      * @return table\Builder|form\Builder|aside\Builder
      * @throws Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function make($type = '', $action = '')
     {
@@ -60,7 +59,7 @@ class ZBuilder extends Common
         }
 
         // 构造器类路径
-        $class = '\\app\\common\\builder\\' . $type . '\\Builder';
+        $class = '\\app\\common\\builder\\'. $type .'\\Builder';
         if (!class_exists($class)) {
             throw new Exception($type . '构建器不存在', 8002);
         }
@@ -77,10 +76,10 @@ class ZBuilder extends Common
     /**
      * 加载模板输出
      * @param string $template 模板文件名
-     * @param array $vars 模板输出变量
-     * @param array $config 模板参数
-     * @return mixed
+     * @param array  $vars     模板输出变量
+     * @param array  $config   模板参数
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function fetch($template = '', $vars = [], $config = [])
     {

@@ -43,8 +43,8 @@ class Builder extends ZBuilder
      * 设置Tab按钮列表
      * @param array $tab_list Tab列表 如：['tab1' => '标题', 'tab2' => '标题2']
      * @param string $curr_tab 当前tab名
-     * @return $this
      * @author 蔡伟明 <314013107@qq.com>
+     * @return $this
      */
     public function setTabNav($tab_list = [], $curr_tab = '')
     {
@@ -68,12 +68,12 @@ class Builder extends ZBuilder
      * 追加Tab按钮列表
      * @param string $tab tab名称
      * @param string $content tab内容
-     * @return $this
      * @author 蔡伟明 <314013107@qq.com>
+     * @return $this
      */
     public function addTabNav($tab = '', $content = '')
     {
-        if ($tab != '' && $content != '') {
+        if ($tab != '' && $content !='') {
             static::$vars['aside']['tab_nav']['tab_list'][$tab] = $content;
             if (!isset(static::$vars['aside']['tab_con'][$tab])) {
                 static::$vars['aside']['tab_con'][$tab] = [];
@@ -85,8 +85,8 @@ class Builder extends ZBuilder
     /**
      * 设置当前tab
      * @param string $tab tab名称
-     * @return $this
      * @author 蔡伟明 <314013107@qq.com>
+     * @return $this
      */
     public function setCurrTab($tab = '')
     {
@@ -100,8 +100,8 @@ class Builder extends ZBuilder
      * 设置单个tab内容
      * @param string $tab tab名称
      * @param array $content tab内容
-     * @return $this
      * @author 蔡伟明 <314013107@qq.com>
+     * @return $this
      */
     public function setTabCon($tab = '', $content = [])
     {
@@ -119,8 +119,8 @@ class Builder extends ZBuilder
     /**
      * 一次性设置多个tab内容
      * @param array $content tab内容 ['tab' => ['block1', 'block2'..]]
-     * @return $this
      * @author 蔡伟明 <314013107@qq.com>
+     * @return $this
      */
     public function setTabCons($content = [])
     {
@@ -135,8 +135,8 @@ class Builder extends ZBuilder
      * 追加tab内容
      * @param string $tab tab名称
      * @param array $content tab内容
-     * @return $this
      * @author 蔡伟明 <314013107@qq.com>
+     * @return $this
      */
     public function addTabCon($tab = '', $content = [])
     {
@@ -158,8 +158,8 @@ class Builder extends ZBuilder
      * @param string $type 类型：recent/online/switch/html
      * @param string $title 标题
      * @param array $list 列表
-     * @return $this|array
      * @author 蔡伟明 <314013107@qq.com>
+     * @return $this|array
      */
     public function addBlock($type = '', $title = '', $list = [])
     {
@@ -168,9 +168,9 @@ class Builder extends ZBuilder
                 $title = $this->display($title, $list);
             }
             $block = [
-                'type' => $type,
+                'type'  => $type,
                 'title' => $title,
-                'list' => $list
+                'list'  => $list
             ];
 
             if ($this->_return) {

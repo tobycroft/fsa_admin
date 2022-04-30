@@ -8,8 +8,7 @@
         <section class="content content-full content-boxed overflow-hidden">
             <!-- Section Content -->
             <div class="push-100-t push-50 text-center">
-                <h1 class="h2 text-white push-10 visibility-hidden" data-toggle="appear"
-                    data-class="animated fadeInDown">{$document.title}</h1>
+                <h1 class="h2 text-white push-10 visibility-hidden" data-toggle="appear" data-class="animated fadeInDown">{$document.title}</h1>
             </div>
             <!-- END Section Content -->
         </section>
@@ -42,12 +41,10 @@
                     <nav>
                         <ul class="pager">
                             <li class="previous {$prev.url|default='disabled'}">
-                                <a href="{$prev.url|default='javascript:void(0)'}" data-toggle="tooltip"
-                                   data-original-title="{$prev.title|default='已经没有上一篇了'}">上一篇</a>
+                                <a href="{$prev.url|default='javascript:void(0)'}" data-toggle="tooltip" data-original-title="{$prev.title|default='已经没有上一篇了'}">上一篇</a>
                             </li>
                             <li class="next {$next.url|default='disabled'}">
-                                <a href="{$next.url|default='javascript:void(0)'}" data-toggle="tooltip"
-                                   data-original-title="{$next.title|default='已经没有下一篇了'}">下一篇</a>
+                                <a href="{$next.url|default='javascript:void(0)'}" data-toggle="tooltip" data-original-title="{$next.title|default='已经没有下一篇了'}">下一篇</a>
                             </li>
                         </ul>
                     </nav>
@@ -75,8 +72,7 @@
                                     <td>
                                         <i class="fa fa-fw fa-tags push-10-r"></i>
                                         {volist name="document.tags" id="tag"}
-                                        <a class="label label-primary"
-                                           href="{:url('search/index', ['keyword' => $tag])}">{$tag}</a>
+                                        <a class="label label-primary" href="{:url('search/index', ['keyword' => $tag])}">{$tag}</a>
                                         {/volist}
                                     </td>
                                 </tr>

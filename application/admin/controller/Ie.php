@@ -19,11 +19,10 @@ class Ie extends Common
 {
     /**
      * 显示ie提示
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
-    public function index()
-    {
+    public function index(){
         // ie浏览器判断
         if (get_browser_type() == 'ie') {
             return $this->fetch();

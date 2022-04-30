@@ -23,7 +23,7 @@ class Link extends Validate
     // 定义验证规则
     protected $rule = [
         'title|链接标题' => 'require|length:1,30',
-        'url|链接地址' => 'require|url',
+        'url|链接地址'   => 'require|url',
         'logo|链接LOGO' => 'requireIf:type,2',
     ];
 
@@ -35,6 +35,6 @@ class Link extends Validate
     // 定义验证场景
     protected $scene = [
         'title' => ['title'],
-        'url' => ['url' => 'require'],
+        'url'   => ['url' => 'require'],
     ];
 }

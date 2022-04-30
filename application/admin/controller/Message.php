@@ -20,10 +20,10 @@ class Message extends Admin
 {
     /**
      * 消息中心
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -56,9 +56,9 @@ class Message extends Admin
     /**
      * 设置已阅读
      * @param array $ids
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($ids = [])
     {

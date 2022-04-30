@@ -9,8 +9,8 @@
 
 namespace app\cms\model;
 
-use think\Db;
 use think\Model as ThinkModel;
+use think\Db;
 
 /**
  * 字段模型
@@ -30,8 +30,8 @@ class Field extends ThinkModel
     /**
      * 创建字段
      * @param null $field 字段数据
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public function newField($field = null)
     {
@@ -67,7 +67,7 @@ EOF;
 
         try {
             Db::execute($sql);
-        } catch (\Exception $e) {
+        } catch(\Exception $e) {
             $this->error = '字段添加失败';
             return false;
         }
@@ -78,8 +78,8 @@ EOF;
     /**
      * 更新字段
      * @param null $field 字段数据
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public function updateField($field = null)
     {
@@ -97,7 +97,7 @@ EOF;
 EOF;
             try {
                 Db::execute($sql);
-            } catch (\Exception $e) {
+            } catch(\Exception $e) {
                 return false;
             }
             return true;
@@ -109,8 +109,8 @@ EOF;
     /**
      * 删除字段
      * @param null $field 字段数据
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public function deleteField($field = null)
     {
@@ -125,7 +125,7 @@ EOF;
 EOF;
             try {
                 Db::execute($sql);
-            } catch (\Exception $e) {
+            } catch(\Exception $e) {
                 return false;
             }
             return true;
@@ -137,8 +137,8 @@ EOF;
     /**
      * 检查表是否存在
      * @param string $model 文档模型id
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     private function tableExist($model = '')
     {

@@ -31,11 +31,11 @@ class Hook
      */
     public function run()
     {
-        if (defined('BIND_MODULE') && BIND_MODULE === 'install') return;
+        if(defined('BIND_MODULE') && BIND_MODULE === 'install') return;
 
         $hook_plugins = Cache::get('hook_plugins');
-        $hooks = Cache::get('hooks');
-        $plugins = Cache::get('plugins');
+        $hooks        = Cache::get('hooks');
+        $plugins      = Cache::get('plugins');
 
         if (!$hook_plugins) {
             // 所有钩子

@@ -25,8 +25,8 @@ class Message extends Model
 
     /**
      * 获取当前用户未读消息数量
-     * @return int|string
      * @author 蔡伟明 <314013107@qq.com>
+     * @return int|string
      */
     public static function getMessageCount()
     {

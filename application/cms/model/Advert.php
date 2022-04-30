@@ -28,17 +28,14 @@ class Advert extends ThinkModel
     {
         return $value != '' ? strtotime($value) : 0;
     }
-
     public function setEndTimeAttr($value)
     {
         return $value != '' ? strtotime($value) : 0;
     }
-
     public function getStartTimeAttr($value)
     {
         return $value != 0 ? date('Y-m-d', $value) : '';
     }
-
     public function getEndTimeAttr($value)
     {
         return $value != 0 ? date('Y-m-d', $value) : '';

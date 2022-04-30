@@ -9,9 +9,9 @@
 
 namespace app\user\model;
 
-use app\admin\model\Menu as MenuModel;
 use think\Model;
 use util\Tree;
+use app\admin\model\Menu as MenuModel;
 
 /**
  * 角色模型
@@ -42,12 +42,12 @@ class Role extends Model
      * @param null $id 需要隐藏的角色id
      * @param string $default 默认第一个菜单项，默认为“顶级角色”，如果为false则不显示，也可传入其他名称
      * @param null $filter 角色id，过滤显示指定角色及其子角色
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public static function getTree($id = null, $default = '', $filter = null)
     {
-        $result[0] = '顶级角色';
+        $result[0]       = '顶级角色';
         $where = [
             ['status', '=', 1]
         ];
@@ -76,7 +76,7 @@ class Role extends Model
 
         // 获取菜单
         $roles = self::where($where)->column('id,pid,name');
-        $pid = self::where($where)->order('pid')->value('pid');
+        $pid   = self::where($where)->order('pid')->value('pid');
         $roles = Tree::config(['title' => 'name'])->toList($roles, $pid);
         foreach ($roles as $role) {
             $result[$role['id']] = $role['title_display'];
@@ -97,8 +97,8 @@ class Role extends Model
     /**
      * 获取所有子角色id
      * @param string $pid 父级id
-     * @return array
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array
      */
     public static function getChildsId($pid = '')
     {
@@ -113,9 +113,9 @@ class Role extends Model
      * 检查访问权限
      * @param int $id 需要检查的节点ID，默认检查当前操作节点
      * @param bool $url 是否为节点url，默认为节点id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return bool
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function checkAuth($id = 0, $url = false)
     {
@@ -137,7 +137,7 @@ class Role extends Model
             }
             // 获取当前操作的id
             $location = MenuModel::getLocation();
-            $action = end($location);
+            $action   = end($location);
 
             return $url === false ? isset($menu_auth[$action['id']]) : in_array($action['url_value'], $menu_auth);
         }
@@ -148,12 +148,12 @@ class Role extends Model
 
     /**
      * 读取当前角色权限
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function roleAuth()
     {
-        $menu_auth = cache('role_menu_auth_' . session('user_auth.role'));
+        $menu_auth = cache('role_menu_auth_'.session('user_auth.role'));
         if (!$menu_auth) {
             $menu_auth = self::where('id', session('user_auth.role'))->value('menu_auth');
             $menu_auth = json_decode($menu_auth, true);
@@ -161,7 +161,7 @@ class Role extends Model
         }
         // 非开发模式，缓存数据
         if (config('develop_mode') == 0) {
-            cache('role_menu_auth_' . session('user_auth.role'), $menu_auth);
+            cache('role_menu_auth_'.session('user_auth.role'), $menu_auth);
         }
         return $menu_auth;
     }
@@ -170,23 +170,23 @@ class Role extends Model
      * 根据节点id获取所有角色id和权限
      * @param string $menu_id 节点id
      * @param bool $menu_auth 是否返回所有节点权限
-     * @return array
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array
      */
     public static function getRoleWithMenu($menu_id = '', $menu_auth = false)
     {
         if ($menu_auth) {
-            return self::where('menu_auth', 'like', '%"' . $menu_id . '"%')->column('id,menu_auth');
+            return self::where('menu_auth', 'like', '%"'.$menu_id.'"%')->column('id,menu_auth');
         } else {
-            return self::where('menu_auth', 'like', '%"' . $menu_id . '"%')->column('id');
+            return self::where('menu_auth', 'like', '%"'.$menu_id.'"%')->column('id');
         }
     }
 
     /**
      * 根据角色id获取权限
      * @param array $role 角色id
-     * @return array
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array
      */
     public static function getAuthWithRole($role = [])
     {

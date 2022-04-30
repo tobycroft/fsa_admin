@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<!--[if IE 9]>
-<html class="ie9 no-focus" lang="zh"> <![endif]-->
-<!--[if gt IE 9]><!-->
-<html class="no-focus" lang="zh"> <!--<![endif]-->
+<!--[if IE 9]> <html class="ie9 no-focus" lang="zh"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-focus" lang="zh"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
 
@@ -32,8 +30,7 @@
 
     {block name="style"}{/block}
 </head>
-<body id="{$Request.module|strtolower}-{$Request.controller|strtolower}-{$Request.action|strtolower}"
-      class="{$Request.module|strtolower}-{$Request.controller|strtolower}-{$Request.action|strtolower}">
+<body id="{$Request.module|strtolower}-{$Request.controller|strtolower}-{$Request.action|strtolower}" class="{$Request.module|strtolower}-{$Request.controller|strtolower}-{$Request.action|strtolower}">
 {block name="page-container"}
 <!-- Page Container -->
 <div id="page-container" class="header-navbar-fixed header-navbar-transparent">
@@ -44,8 +41,7 @@
             <!-- Header Navigation Right -->
             <ul class="nav-header pull-right">
                 <li class="hidden-md hidden-lg">
-                    <button class="btn btn-link text-white pull-right" data-toggle="class-toggle"
-                            data-target=".js-nav-main-header" data-class="nav-main-header-o" type="button">
+                    <button class="btn btn-link text-white pull-right" data-toggle="class-toggle" data-target=".js-nav-main-header" data-class="nav-main-header-o" type="button">
                         <i class="fa fa-navicon"></i>
                     </button>
                 </li>
@@ -55,15 +51,13 @@
             <!-- Main Header Navigation -->
             <ul class="js-nav-main-header nav-main-header pull-right">
                 <li class="text-right hidden-md hidden-lg">
-                    <button class="btn btn-link text-white" data-toggle="class-toggle" data-target=".js-nav-main-header"
-                            data-class="nav-main-header-o" type="button">
+                    <button class="btn btn-link text-white" data-toggle="class-toggle" data-target=".js-nav-main-header" data-class="nav-main-header-o" type="button">
                         <i class="fa fa-times"></i>
                     </button>
                 </li>
                 {volist name="main_nav" id="menu"}
                 <li class="{$menu.css|default=''}">
-                    <a href="{$menu.url}" rel="{$menu.rel|default=''}" target="{$menu.target}">{$menu.title} {notempty
-                        name="menu.child"} <i class="fa fa-fw fa-angle-down"></i>{/notempty}</a>
+                    <a href="{$menu.url}" rel="{$menu.rel|default=''}" target="{$menu.target}">{$menu.title} {notempty name="menu.child"} <i class="fa fa-fw fa-angle-down"></i>{/notempty}</a>
                     {notempty name="menu.child"}
                     <ul>
                         {volist name="menu.child" id="sub_menu"}
@@ -105,8 +99,7 @@
                     <ul class="list list-simple-mini font-s13">
                         {volist name="about_nav" id="menu"}
                         <li class="{$menu.css|default=''}">
-                            <a class="font-w600" rel="{$menu.rel|default=''}" href="{$menu.url}"
-                               target="{$menu.target}">{$menu.title}</a>
+                            <a class="font-w600" rel="{$menu.rel|default=''}" href="{$menu.url}" target="{$menu.target}">{$menu.title}</a>
                         </li>
                         {/volist}
                     </ul>
@@ -116,8 +109,7 @@
                     <ul class="list list-simple-mini font-s13">
                         {volist name="support_nav" id="menu"}
                         <li class="{$menu.css|default=''}">
-                            <a class="font-w600" rel="{$menu.rel|default=''}" href="{$menu.url}"
-                               target="{$menu.target}">{$menu.title}</a>
+                            <a class="font-w600" rel="{$menu.rel|default=''}" href="{$menu.url}" target="{$menu.target}">{$menu.title}</a>
                         </li>
                         {/volist}
                     </ul>
@@ -133,13 +125,10 @@
             <div class="font-s12 push-20 clearfix">
                 <hr class="remove-margin-t">
                 <div class="pull-right">
-                    Crafted with <i class="fa fa-heart text-city"></i> by <a class="font-w600"
-                                                                             href="http://www.zrthink.com"
-                                                                             target="_blank">卓锐软件</a>
+                    Crafted with <i class="fa fa-heart text-city"></i> by <a class="font-w600" href="http://www.zrthink.com" target="_blank">卓锐软件</a>
                 </div>
                 <div class="pull-left">
-                    <a class="font-w600" href="http://www.dolphinphp.com"
-                       target="_blank">{:config('web_site_title')}</a> &copy; <span class="js-year-copy"></span>
+                    <a class="font-w600" href="http://www.dolphinphp.com" target="_blank">{:config('web_site_title')}</a> &copy; <span class="js-year-copy"></span>
                 </div>
             </div>
             <!-- END Copyright Info -->
@@ -159,9 +148,7 @@
 
 {eq name="Think.config.cms_config.support_status" value="1"}
 <div id="support" class="support">
-    <div class="support-tag" style="background-color: {$Think.config.cms_config.support_color}"><i
-            class="fa fa-fw fa-commenting"></i>在线客服
-    </div>
+    <div class="support-tag" style="background-color: {$Think.config.cms_config.support_color}"><i class="fa fa-fw fa-commenting"></i>在线客服</div>
     <div class="support-content" style="background-color: {$Think.config.cms_config.support_color}">
         <div class="support-content-inner">
             {volist name="support" id="item"}
@@ -175,9 +162,7 @@
                     {/notempty}
                     {notempty name="item.taobao"}
                     <a href="http://www.taobao.com/webww/ww.php?ver=3&touid={$item.taobao}&siteid=cntaobao&status=2&charset=utf-8">
-                        <img border="0"
-                             src="http://amos.alicdn.com/online.aw?v=2&uid={$item.taobao}&site=cntaobao&s=2&charset=utf-8"
-                             alt="{$item.name}">
+                        <img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid={$item.taobao}&site=cntaobao&s=2&charset=utf-8" alt="{$item.name}">
                     </a>
                     {/notempty}
                     {notempty name="item.skype"}
@@ -187,15 +172,11 @@
                     {/notempty}
                     {notempty name="item.alibaba"}
                     <a href="http://amos.alicdn.com/msg.aw?v=2&uid={$item.alibaba}&site=cnalichn&s=10&charset=UTF-8">
-                        <img border="0"
-                             src="http://amos.alicdn.com/online.aw?v=2&uid={$item.alibaba}&site=cnalichn&s=10&charset=UTF-8"
-                             alt="{$item.name}">
+                        <img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid={$item.alibaba}&site=cnalichn&s=10&charset=UTF-8" alt="{$item.name}">
                     </a>
                     {/notempty}
                     {notempty name="item.msn"}
-                    <a href="msnim:chat?contact={$item.msn}"><img border="0"
-                                                                  src="http://metinfo.io/public/images/msn/msn_1.gif"
-                                                                  alt="{$item.name}"></a>
+                    <a href="msnim:chat?contact={$item.msn}"><img border="0" src="http://metinfo.io/public/images/msn/msn_1.gif" alt="{$item.name}"></a>
                     {/notempty}
                 </p>
             </div>

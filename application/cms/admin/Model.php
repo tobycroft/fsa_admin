@@ -10,9 +10,9 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\admin\model\Menu as MenuModel;
-use app\cms\model\Model as DocumentModel;
 use app\common\builder\ZBuilder;
+use app\cms\model\Model as DocumentModel;
+use app\admin\model\Menu as MenuModel;
 use think\Db;
 use think\facade\Cache;
 
@@ -36,24 +36,24 @@ class Model extends Admin
         // 字段管理按钮
         $btnField = [
             'title' => '字段管理',
-            'icon' => 'fa fa-fw fa-navicon',
-            'href' => url('field/index', ['id' => '__id__'])
+            'icon'  => 'fa fa-fw fa-navicon',
+            'href'  => url('field/index', ['id' => '__id__'])
         ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['name' => '标识', 'title' => '标题']) // 设置搜索框
             ->addColumns([ // 批量添加数据列
-                ['id', 'ID'],
-                ['icon', '图标', 'icon'],
-                ['title', '标题'],
-                ['name', '标识'],
-                ['table', '附加表'],
-                ['type', '模型', 'text', '', ['系统', '普通', '独立']],
-                ['create_time', '创建时间', 'datetime'],
-                ['sort', '排序', 'text.edit'],
-                ['status', '状态', 'switch'],
-                ['right_button', '操作', 'btn']
+               ['id', 'ID'],
+               ['icon', '图标', 'icon'],
+               ['title', '标题'],
+               ['name', '标识'],
+               ['table', '附加表'],
+               ['type', '模型', 'text', '', ['系统', '普通', '独立']],
+               ['create_time', '创建时间', 'datetime'],
+               ['sort', '排序', 'text.edit'],
+               ['status', '状态', 'switch'],
+               ['right_button', '操作', 'btn']
             ])
             ->addFilter('type', ['系统', '普通', '独立'])
             ->addTopButtons('add,enable,disable') // 批量添加顶部按钮
@@ -64,9 +64,9 @@ class Model extends Admin
 
     /**
      * 新增内容模型
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -82,7 +82,7 @@ class Model extends Admin
 
             // 验证
             $result = $this->validate($data, 'Model');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
             // 严格验证附加表是否存在
             if (table_exist($data['table'])) {
                 $this->error('附加表已存在');
@@ -96,18 +96,18 @@ class Model extends Admin
                 // 创建菜单节点
                 $map = [
                     'module' => 'cms',
-                    'title' => '内容管理'
+                    'title'  => '内容管理'
                 ];
                 $menu_data = [
-                    "module" => "cms",
-                    "pid" => Db::name('admin_menu')->where($map)->value('id'),
-                    "title" => $data['title'],
-                    "url_type" => "module_admin",
-                    "url_value" => "cms/content/{$data['name']}",
-                    "url_target" => "_self",
-                    "icon" => "fa fa-fw fa-list",
+                    "module"      => "cms",
+                    "pid"         => Db::name('admin_menu')->where($map)->value('id'),
+                    "title"       => $data['title'],
+                    "url_type"    => "module_admin",
+                    "url_value"   => "cms/content/{$data['name']}",
+                    "url_target"  => "_self",
+                    "icon"        => "fa fa-fw fa-list",
                     "online_hide" => "0",
-                    "sort" => "100",
+                    "sort"        => "100",
                 ];
                 MenuModel::create($menu_data);
 
@@ -127,7 +127,7 @@ class Model extends Admin
             ->addFormItems([
                 ['text', 'name', '模型标识', '由小写字母、数字或下划线组成，不能以数字开头'],
                 ['text', 'title', '模型标题', '可填写中文'],
-                ['text', 'table', '附加表', '创建后不可更改。由小写字母、数字或下划线组成，如果不填写默认为 <code>' . config('database.prefix') . 'cms_document_模型标识</code>，如果需要自定义，请务必填写系统表前缀，<code>#@__</code>表示当前系统表前缀'],
+                ['text', 'table', '附加表', '创建后不可更改。由小写字母、数字或下划线组成，如果不填写默认为 <code>'. config('database.prefix') . 'cms_document_模型标识</code>，如果需要自定义，请务必填写系统表前缀，<code>#@__</code>表示当前系统表前缀'],
                 ['radio', 'type', '模型类别', $type_tips, ['系统模型', '普通模型', '独立模型(不使用主表)'], 1],
                 ['icon', 'icon', '图标'],
                 ['radio', 'status', '立即启用', '', ['否', '是'], 1],
@@ -139,12 +139,11 @@ class Model extends Admin
     /**
      * 编辑内容模型
      * @param null $id 模型id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         if ($id === null) $this->error('参数错误');
 
         // 保存数据
@@ -153,7 +152,7 @@ class Model extends Admin
 
             // 验证
             $result = $this->validate($data, 'Model.edit');
-            if (true !== $result) $this->error($result);
+            if(true !== $result) $this->error($result);
 
             if (DocumentModel::update($data)) {
                 cache('cms_model_list', null);
@@ -192,12 +191,12 @@ class Model extends Admin
     /**
      * 删除内容模型
      * @param null $ids 内容模型id
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($ids = null)
     {
@@ -216,7 +215,7 @@ class Model extends Admin
             }
             // 删除菜单节点
             $map = [
-                'module' => 'cms',
+                'module'    => 'cms',
                 'url_value' => "cms/content/{$model['name']}"
             ];
             if (false === Db::name('admin_menu')->where($map)->delete()) {

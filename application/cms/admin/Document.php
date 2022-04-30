@@ -10,10 +10,10 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
+use app\common\builder\ZBuilder;
 use app\cms\model\Column as ColumnModel;
 use app\cms\model\Document as DocumentModel;
 use app\cms\model\Field as FieldModel;
-use app\common\builder\ZBuilder;
 use think\Db;
 use util\Tree;
 
@@ -31,7 +31,7 @@ class Document extends Admin
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
         // 查询
-        $map = $this->getMap();
+        $map   = $this->getMap();
         $map[] = ['cms_document.trash', '=', 0];
         // 排序
         $order = $this->getOrder('update_time desc');
@@ -65,9 +65,9 @@ class Document extends Admin
      * 添加文档
      * @param int $cid 栏目id
      * @param string $model 模型id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add($cid = 0, $model = '')
     {
@@ -120,7 +120,7 @@ class Document extends Admin
                         $value['level'] = $value['level'] == 0 ? 12 : $value['level'];
                         break;
                     case 'colorpicker':
-                        $value['mode'] = 'rgba';
+                        $value['mode']  = 'rgba';
                         break;
                 }
             }
@@ -147,7 +147,7 @@ class Document extends Admin
             // 获取相同内容模型的栏目
             $columns = Db::name('cms_column')->where('model', $model)->order('pid,id')->column('id,name,pid');
             $columns = Tree::config(['title' => 'name'])->toList($columns, current($columns)['pid']);
-            $result = [];
+            $result  = [];
             foreach ($columns as $column) {
                 $result[$column['id']] = $column['title_display'];
             }
@@ -165,9 +165,9 @@ class Document extends Admin
      * 编辑文档
      * @param null $id 文档id
      * @param string $model 模型id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = null, $model = '')
     {
@@ -222,7 +222,7 @@ class Document extends Admin
                     $value['level'] = $value['level'] == 0 ? 12 : $value['level'];
                     break;
                 case 'colorpicker':
-                    $value['mode'] = 'rgba';
+                    $value['mode']  = 'rgba';
                     break;
             }
         }
@@ -230,7 +230,7 @@ class Document extends Admin
         // 获取相同内容模型的栏目
         $columns = Db::name('cms_column')->where($map)->whereOr('model', $info['model'])->order('pid,id')->column('id,name,pid');
         $columns = Tree::config(['title' => 'name'])->toList($columns, current($columns)['pid']);
-        $result = [];
+        $result  = [];
         foreach ($columns as $column) {
             $result[$column['id']] = $column['title_display'];
         }
@@ -262,7 +262,7 @@ class Document extends Admin
     {
         if ($ids === null) $this->error('参数错误');
 
-        $document_id = is_array($ids) ? '' : $ids;
+        $document_id    = is_array($ids) ? '' : $ids;
         $document_title = Db::name($table)->where('id', 'in', $ids)->column('title');
 
         // 移动文档到回收站
@@ -278,9 +278,9 @@ class Document extends Admin
     /**
      * 启用文档
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -290,9 +290,9 @@ class Document extends Admin
     /**
      * 禁用文档
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -303,43 +303,43 @@ class Document extends Admin
      * 设置文档状态：删除、禁用、启用
      * @param string $type 类型：enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
         $table_token = input('param._t', '');
         $table_token == '' && $this->error('缺少参数');
-        !session('?' . $table_token) && $this->error('参数错误');
+        !session('?'.$table_token) && $this->error('参数错误');
 
-        $table_data = session($table_token);
-        $table_name = $table_data['table'];
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
-        $document_id = is_array($ids) ? '' : $ids;
+        $table_data     = session($table_token);
+        $table_name     = $table_data['table'];
+        $ids            = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $document_id    = is_array($ids) ? '' : $ids;
         $document_title = Db::name($table_name)->where('id', 'in', $ids)->column('title');
-        return parent::setStatus($type, ['document_' . $type, 'cms_document', $document_id, UID, implode('、', $document_title)]);
+        return parent::setStatus($type, ['document_'.$type, 'cms_document', $document_id, UID, implode('、', $document_title)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
         $table_token = input('param._t', '');
         $table_token == '' && $this->error('缺少参数');
-        !session('?' . $table_token) && $this->error('参数错误');
+        !session('?'.$table_token) && $this->error('参数错误');
 
         $table_data = session($table_token);
-        $table = $table_data['table'];
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $document = Db::name($table)->where('id', $id)->value($field);
-        $details = '表名(' . $table . ')，字段(' . $field . ')，原值(' . $document . ')，新值：(' . $value . ')';
+        $table      = $table_data['table'];
+        $id         = input('post.pk', '');
+        $field      = input('post.name', '');
+        $value      = input('post.value', '');
+        $document   = Db::name($table)->where('id', $id)->value($field);
+        $details    = '表名(' . $table . ')，字段(' . $field . ')，原值(' . $document . ')，新值：(' . $value . ')';
         return parent::quickEdit(['document_edit', 'cms_document', $id, UID, $details]);
     }
 }

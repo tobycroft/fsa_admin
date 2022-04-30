@@ -10,9 +10,9 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
+use app\common\builder\ZBuilder;
 use app\cms\model\Advert as AdvertModel;
 use app\cms\model\AdvertType as AdvertTypeModel;
-use app\common\builder\ZBuilder;
 use think\facade\Validate;
 
 /**
@@ -23,10 +23,10 @@ class Advert extends Admin
 {
     /**
      * 广告列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -40,8 +40,8 @@ class Advert extends Admin
         $btnType = [
             'class' => 'btn btn-info',
             'title' => '广告分类',
-            'icon' => 'fa fa-fw fa-sitemap',
-            'href' => url('advert_type/index')
+            'icon'  => 'fa fa-fw fa-sitemap',
+            'href'  => url('advert_type/index')
         ];
 
         $list_type = AdvertTypeModel::where('status', 1)->column('id,name');
@@ -72,9 +72,9 @@ class Advert extends Admin
 
     /**
      * 新增
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -97,25 +97,25 @@ class Advert extends Admin
                     $data['content'] = $data['code'];
                     break;
                 case 1: // 文字
-                    $data['content'] = '<a href="' . $data['link'] . '" target="_blank" style="';
+                    $data['content'] = '<a href="'.$data['link'].'" target="_blank" style="';
                     if ($data['size'] != '') {
-                        $data['content'] .= 'font-size:' . $data['size'] . 'px;';
+                        $data['content'] .= 'font-size:'.$data['size'].'px;';
                     }
                     if ($data['color'] != '') {
-                        $data['content'] .= 'color:' . $data['color'];
+                        $data['content'] .= 'color:'.$data['color'];
                     }
-                    $data['content'] .= '">' . $data['title'] . '</a>';
+                    $data['content'] .= '">'.$data['title'].'</a>';
                     break;
                 case 2: // 图片
-                    $data['content'] = '<a href="' . $data['link'] . '" target="_blank"><img src="' . get_file_path($data['src']) . '" style="';
+                    $data['content'] = '<a href="'.$data['link'].'" target="_blank"><img src="'.get_file_path($data['src']).'" style="';
                     if ($data['width'] != '') {
-                        $data['content'] .= 'width:' . $data['width'] . 'px;';
+                        $data['content'] .= 'width:'.$data['width'].'px;';
                     }
                     if ($data['height'] != '') {
-                        $data['content'] .= 'height:' . $data['height'] . 'px;';
+                        $data['content'] .= 'height:'.$data['height'].'px;';
                     }
                     if ($data['alt'] != '') {
-                        $data['content'] .= '" alt="' . $data['alt'];
+                        $data['content'] .= '" alt="'.$data['alt'];
                     }
                     $data['content'] .= '" /></a>';
                     break;
@@ -123,18 +123,18 @@ class Advert extends Admin
                     $data['content'] = '';
                     $data['content'] = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"';
                     if ($data['width'] != '') {
-                        $data['content'] .= ' width="' . $data['width'] . '"';
+                        $data['content'] .= ' width="'.$data['width'].'"';
                     }
                     if ($data['height'] != '') {
-                        $data['content'] .= ' height="' . $data['height'] . '"';
+                        $data['content'] .= ' height="'.$data['height'].'"';
                     }
-                    $data['content'] .= '><param name="quality" value="high" /><param name="movie" value="' . $data['link'] . '" /><embed allowfullscreen="true"';
+                    $data['content'] .= '><param name="quality" value="high" /><param name="movie" value="'.$data['link'].'" /><embed allowfullscreen="true"';
                     if ($data['height'] != '') {
-                        $data['content'] .= ' height="' . $data['height'] . '"';
+                        $data['content'] .= ' height="'.$data['height'].'"';
                     }
-                    $data['content'] .= ' pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="' . $data['link'] . '" type="application/x-shockwave-flash"';
+                    $data['content'] .= ' pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="'.$data['link'].'" type="application/x-shockwave-flash"';
                     if ($data['width'] != '') {
-                        $data['content'] .= ' width="' . $data['width'] . '"';
+                        $data['content'] .= ' width="'.$data['width'].'"';
                     }
                     $data['content'] .= '></embed></object>';
                     break;
@@ -167,7 +167,7 @@ class Advert extends Admin
                 ['text', 'title', '文字内容', '<code>必填</code>'],
                 ['text', 'link', '链接', '<code>必填</code>'],
                 ['colorpicker', 'color', '文字颜色', '', '', 'rgb'],
-                ['text', 'size', '文字大小', '只需填写数字，例如:12，表示12px', '', ['', 'px']],
+                ['text', 'size', '文字大小', '只需填写数字，例如:12，表示12px', '',  ['', 'px']],
                 ['text', 'width', '宽度', '不用填写单位，只需填写具体数字'],
                 ['text', 'height', '高度', '不用填写单位，只需填写具体数字'],
                 ['text', 'alt', '图片描述', '即图片alt的值'],
@@ -185,9 +185,9 @@ class Advert extends Admin
     /**
      * 编辑
      * @param null $id 广告id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function edit($id = null)
     {
@@ -240,9 +240,9 @@ class Advert extends Admin
     /**
      * 删除广告
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($record = [])
     {
@@ -252,9 +252,9 @@ class Advert extends Admin
     /**
      * 启用广告
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function enable($record = [])
     {
@@ -264,9 +264,9 @@ class Advert extends Admin
     /**
      * 禁用广告
      * @param array $record 行为日志
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function disable($record = [])
     {
@@ -277,29 +277,29 @@ class Advert extends Admin
      * 设置广告状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setStatus($type = '', $record = [])
     {
-        $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
+        $ids         = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $advert_name = AdvertModel::where('id', 'in', $ids)->column('name');
-        return parent::setStatus($type, ['advert_' . $type, 'cms_advert', 0, UID, implode('、', $advert_name)]);
+        return parent::setStatus($type, ['advert_'.$type, 'cms_advert', 0, UID, implode('、', $advert_name)]);
     }
 
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
-        $field = input('post.name', '');
-        $value = input('post.value', '');
-        $advert = AdvertModel::where('id', $id)->value($field);
+        $id      = input('post.pk', '');
+        $field   = input('post.name', '');
+        $value   = input('post.value', '');
+        $advert  = AdvertModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $advert . ')，新值：(' . $value . ')';
         return parent::quickEdit(['advert_edit', 'cms_advert', $id, UID, $details]);
     }

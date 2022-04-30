@@ -1,7 +1,7 @@
 {extend name="$_admin_base_layout" /}
 
 {block name="plugins-css"}
-<link href="__LIBS__/jstree/themes/default/style.min.css" rel="stylesheet"/>
+<link href="__LIBS__/jstree/themes/default/style.min.css" rel="stylesheet" />
 {/block}
 
 {block name="content"}
@@ -17,8 +17,7 @@
             {notempty name="tab_nav.tab_list"}
             <ul class="nav nav-tabs">
                 {volist name="tab_nav['tab_list']" id="vo"}
-                <li {eq name="tab_nav.curr_tab" value="$key" }class="active" {
-                /eq}>
+                <li {eq name="tab_nav.curr_tab" value="$key"}class="active"{/eq}>
                 <a href="{$vo.url}">{$vo.title}</a>
                 </li>
                 {/volist}
@@ -28,15 +27,13 @@
                             <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                         </li>
                         <li>
-                            <button type="button" data-toggle="block-option" data-action="refresh_toggle"
-                                    data-action-mode="demo"><i class="si si-refresh"></i></button>
+                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                         </li>
                         <li>
                             <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
                         </li>
                         <li>
-                            <button type="button" data-toggle="block-option" data-action="close"><i
-                                    class="si si-close"></i></button>
+                            <button type="button" data-toggle="block-option" data-action="close"><i class="si si-close"></i></button>
                         </li>
                     </ul>
                 </li>
@@ -48,15 +45,13 @@
                         <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="refresh_toggle"
-                                data-action-mode="demo"><i class="si si-refresh"></i></button>
+                        <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                     </li>
                     <li>
                         <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="close"><i class="si si-close"></i>
-                        </button>
+                        <button type="button" data-toggle="block-option" data-action="close"><i class="si si-close"></i></button>
                     </li>
                 </ul>
                 <h3 class="block-title">{$page_title}</h3>
@@ -72,26 +67,17 @@
                         <div class="row data-table-toolbar">
                             <div class="col-sm-12">
                                 <div class="toolbar-btn-action">
-                                    <button title="全选" type="button" class="btn btn-info" id="check-all"><i
-                                            class="fa fa-check-circle-o"></i> 全选
-                                    </button>
-                                    <button title="取消全选" type="button" class="btn btn-danger" id="uncheck-all"><i
-                                            class="fa fa-ban"></i> 取消全选
-                                    </button>
-                                    <button title="展开所有节点" type="button" class="btn btn-success" id="expand-all"><i
-                                            class="fa fa-plus"></i> 展开所有节点
-                                    </button>
-                                    <button title="收起所有节点" type="button" class="btn btn-warning" id="collapse-all"><i
-                                            class="fa fa-minus"></i> 收起所有节点
-                                    </button>
+                                    <button title="全选" type="button" class="btn btn-info" id="check-all"><i class="fa fa-check-circle-o"></i> 全选</button>
+                                    <button title="取消全选" type="button" class="btn btn-danger" id="uncheck-all"><i class="fa fa-ban"></i> 取消全选</button>
+                                    <button title="展开所有节点" type="button" class="btn btn-success" id="expand-all"><i class="fa fa-plus"></i> 展开所有节点</button>
+                                    <button title="收起所有节点" type="button" class="btn btn-warning" id="collapse-all"><i class="fa fa-minus"></i> 收起所有节点</button>
                                 </div>
                             </div>
                         </div>
                         <div class="block block-bordered">
                             <ul class="nav nav-tabs">
                                 {volist name="access" id="vo"}
-                                <li {eq name="key" value="$tab" }class="active" {
-                                /eq}>
+                                <li {eq name="key" value="$tab"}class="active"{/eq}>
                                 <a href="{$vo.url|default=''}">{$vo.title|default=''}</a>
                                 </li>
                                 {/volist}
@@ -130,21 +116,21 @@
 {block name="script"}
 <script src="__LIBS__/jstree/jstree.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function(){
         $('#jstree').jstree({
             plugins: ["checkbox", "search"],
-            "checkbox": {
-                "keep_selected_style": false,
-                "three_state": false,
-                "cascade": 'down+up'
+            "checkbox" : {
+                "keep_selected_style" : false,
+                "three_state" : false,
+                "cascade" : 'down+up'
             },
-            "search": {
-                'show_only_matches': true,
-                'show_only_matches_children': true
+            "search" : {
+                'show_only_matches' : true,
+                'show_only_matches_children' : true
             },
-            "core": {
-                "themes": {
-                    'icons': false
+            "core" : {
+                "themes" : {
+                    'icons' : false
                 }
             }
         });
@@ -170,7 +156,7 @@
         $('#form').submit(function () {
             var nodes = $('#jstree').jstree(true).get_checked();
 
-            $.post('{:url("access", ["module" => $module, "uid" => $uid, "tag" => $tab])}', {nodes: nodes}).success(function (res) {
+            $.post('{:url("access", ["module" => $module, "uid" => $uid, "tag" => $tab])}', {nodes:nodes}).success(function (res) {
                 if (res.code) {
                     Dolphin.notify(res.msg, 'success');
                     setTimeout(function () {

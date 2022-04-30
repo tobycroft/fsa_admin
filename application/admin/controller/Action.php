@@ -9,9 +9,9 @@
 
 namespace app\admin\controller;
 
+use app\common\builder\ZBuilder;
 use app\admin\model\Action as ActionModel;
 use app\admin\model\Module as ModuleModel;
-use app\common\builder\ZBuilder;
 
 /**
  * 行为管理控制器
@@ -21,10 +21,10 @@ class Action extends Admin
 {
     /**
      * 首页
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -56,7 +56,7 @@ class Action extends Admin
                 ['name', '标识'],
                 ['title', '名称'],
                 ['remark', '描述'],
-                ['module', '所属模块', 'callback', function ($module, $list_module) {
+                ['module', '所属模块', 'callback', function($module, $list_module){
                     return isset($list_module[$module]) ? $list_module[$module] : '未知';
                 }, $list_module],
                 ['status', '状态', 'switch'],

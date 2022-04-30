@@ -33,23 +33,23 @@ class Common extends Controller
 
     /**
      * 获取筛选条件
-     * @return array
      * @author 蔡伟明 <314013107@qq.com>
      * @alter 小乌 <82950492@qq.com>
+     * @return array
      */
     final protected function getMap()
     {
-        $search_field = input('param.search_field/s', '', 'trim');
-        $keyword = input('param.keyword/s', '', 'trim');
-        $filter = input('param._filter/s', '', 'trim');
-        $filter_content = input('param._filter_content/s', '', 'trim');
-        $filter_time = input('param._filter_time/s', '', 'trim');
+        $search_field     = input('param.search_field/s', '', 'trim');
+        $keyword          = input('param.keyword/s', '', 'trim');
+        $filter           = input('param._filter/s', '', 'trim');
+        $filter_content   = input('param._filter_content/s', '', 'trim');
+        $filter_time      = input('param._filter_time/s', '', 'trim');
         $filter_time_from = input('param._filter_time_from/s', '', 'trim');
-        $filter_time_to = input('param._filter_time_to/s', '', 'trim');
-        $select_field = input('param._select_field/s', '', 'trim');
-        $select_value = input('param._select_value/s', '', 'trim');
-        $search_area = input('param._s', '', 'trim');
-        $search_area_op = input('param._o', '', 'trim');
+        $filter_time_to   = input('param._filter_time_to/s', '', 'trim');
+        $select_field     = input('param._select_field/s', '', 'trim');
+        $select_value     = input('param._select_value/s', '', 'trim');
+        $search_area      = input('param._s', '', 'trim');
+        $search_area_op   = input('param._o', '', 'trim');
 
         $map = [];
 
@@ -71,12 +71,12 @@ class Common extends Controller
 
         // 时间段搜索
         if ($filter_time != '' && $filter_time_from != '' && $filter_time_to != '') {
-            $map[] = [$filter_time, 'between time', [$filter_time_from . ' 00:00:00', $filter_time_to . ' 23:59:59']];
+            $map[] = [$filter_time, 'between time', [$filter_time_from.' 00:00:00', $filter_time_to.' 23:59:59']];
         }
 
         // 表头筛选
         if ($filter != '') {
-            $filter = array_filter(explode('|', $filter), 'strlen');
+            $filter         = array_filter(explode('|', $filter), 'strlen');
             $filter_content = array_filter(explode('|', $filter_content), 'strlen');
             foreach ($filter as $key => $item) {
                 if (isset($filter_content[$key])) {
@@ -92,7 +92,7 @@ class Common extends Controller
             foreach ($search_area as $key => $item) {
                 list($field, $value) = explode('=', $item);
                 $value = trim($value);
-                $op = explode('=', $search_area_op[$key]);
+                $op    = explode('=', $search_area_op[$key]);
                 if ($value != '') {
                     switch ($op[1]) {
                         case 'like':
@@ -102,8 +102,8 @@ class Common extends Controller
                         case 'not between time':
                             $value = explode(' - ', $value);
                             if ($value[0] == $value[1]) {
-                                $value[0] = date('Y-m-d', strtotime($value[0])) . ' 00:00:00';
-                                $value[1] = date('Y-m-d', strtotime($value[1])) . ' 23:59:59';
+                                $value[0] = date('Y-m-d', strtotime($value[0])). ' 00:00:00';
+                                $value[1] = date('Y-m-d', strtotime($value[1])). ' 23:59:59';
                             }
                         default:
                             $map[] = [$field, $op[1], $value];
@@ -118,23 +118,23 @@ class Common extends Controller
      * 获取字段排序
      * @param string $extra_order 额外的排序字段
      * @param bool $before 额外排序字段是否前置
-     * @return string
      * @author 蔡伟明 <314013107@qq.com>
+     * @return string
      */
     final protected function getOrder($extra_order = '', $before = false)
     {
         $order = input('param._order/s', '');
-        $by = input('param._by/s', '');
+        $by    = input('param._by/s', '');
         if ($order == '' || $by == '') {
             return $extra_order;
         }
         if ($extra_order == '') {
-            return $order . ' ' . $by;
+            return $order. ' '. $by;
         }
         if ($before) {
-            return $extra_order . ',' . $order . ' ' . $by;
+            return $extra_order. ',' .$order. ' '. $by;
         } else {
-            return $order . ' ' . $by . ',' . $extra_order;
+            return $order. ' '. $by . ',' . $extra_order;
         }
     }
 
@@ -142,8 +142,8 @@ class Common extends Controller
      * 渲染插件模板
      * @param string $template 模板名称
      * @param string $suffix 模板后缀
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     /**
      * 渲染插件模板
@@ -151,8 +151,8 @@ class Common extends Controller
      * @param string $suffix 模板后缀
      * @param array $vars 模板输出变量
      * @param array $config 模板参数
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     final protected function pluginView($template = '', $suffix = '', $vars = [], $config = [])
     {
@@ -167,7 +167,7 @@ class Common extends Controller
         }
         $suffix = $suffix == '' ? 'html' : $suffix;
         $template = $template == '' ? $action : $template;
-        $template_path = config('plugin_path') . "{$plugin}/view/{$template}.{$suffix}";
+        $template_path = config('plugin_path'). "{$plugin}/view/{$template}.{$suffix}";
         return parent::fetch($template_path, $vars, $config);
     }
 }

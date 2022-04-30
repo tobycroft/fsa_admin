@@ -9,10 +9,10 @@
 
 namespace app\user\model;
 
+use think\Model;
+use think\helper\Hash;
 use app\user\model\Role as RoleModel;
 use think\Db;
-use think\helper\Hash;
-use think\Model;
 
 /**
  * 后台用户模型
@@ -43,8 +43,8 @@ class User extends Model
      * @param string $username 用户名
      * @param string $password 密码
      * @param bool $rememberme 记住登录
-     * @return bool|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool|mixed
      */
     public function login($username = '', $password = '', $rememberme = false)
     {
@@ -87,7 +87,7 @@ class User extends Model
 
                 // 更新登录信息
                 $user['last_login_time'] = request()->time();
-                $user['last_login_ip'] = request()->ip(1);
+                $user['last_login_ip']   = request()->ip(1);
                 if ($user->save()) {
                     // 自动登录
                     return $this->autoLogin($this::get($uid), $rememberme);
@@ -105,22 +105,22 @@ class User extends Model
      * 自动登录
      * @param object $user 用户对象
      * @param bool $rememberme 是否记住登录，默认7天
-     * @return bool|int
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool|int
      */
     public function autoLogin($user, $rememberme = false)
     {
         // 记录登录SESSION和COOKIES
         $auth = array(
-            'uid' => $user->id,
-            'group' => $user->group,
-            'role' => $user->role,
-            'role_name' => Db::name('admin_role')->where('id', $user->role)->value('name'),
-            'avatar' => $user->avatar,
-            'username' => $user->username,
-            'nickname' => $user->nickname,
+            'uid'             => $user->id,
+            'group'           => $user->group,
+            'role'            => $user->role,
+            'role_name'       => Db::name('admin_role')->where('id', $user->role)->value('name'),
+            'avatar'          => $user->avatar,
+            'username'        => $user->username,
+            'nickname'        => $user->nickname,
             'last_login_time' => $user->last_login_time,
-            'last_login_ip' => get_client_ip(1),
+            'last_login_ip'   => get_client_ip(1),
         );
         session('user_auth', $auth);
         session('user_auth_sign', data_auth_sign($auth));
@@ -139,7 +139,7 @@ class User extends Model
 
         // 记住登录
         if ($rememberme) {
-            $signin_token = $user->username . $user->id . $user->last_login_time;
+            $signin_token = $user->username.$user->id.$user->last_login_time;
             cookie('uid', $user->id, 24 * 3600 * 7);
             cookie('signin_token', data_auth_sign($signin_token), 24 * 3600 * 7);
         }

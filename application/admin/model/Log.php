@@ -27,9 +27,9 @@ class Log extends Model
      * 获取所有日志
      * @param array $map 条件
      * @param string $order 排序
+     * @author 蔡伟明 <314013107@qq.com>
      * @return \think\Paginator
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function getAll($map = [], $order = '')
     {

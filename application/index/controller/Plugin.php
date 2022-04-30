@@ -17,15 +17,15 @@ class Plugin extends Home
 {
     /**
      * 执行插件内部方法
-     * @return mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return mixed
      */
     public function execute()
     {
-        $plugin = input('param._plugin');
+        $plugin     = input('param._plugin');
         $controller = input('param._controller');
-        $action = input('param._action');
-        $params = $this->request->except(['_plugin', '_controller', '_action'], 'param');
+        $action     = input('param._action');
+        $params     = $this->request->except(['_plugin', '_controller', '_action'], 'param');
 
         if (empty($plugin) || empty($controller) || empty($action)) {
             $this->error('没有指定插件名称、控制器名称或操作名称');

@@ -9,9 +9,9 @@
 
 namespace app\admin\controller;
 
+use app\common\builder\ZBuilder;
 use app\admin\model\Icon as IconModel;
 use app\admin\model\IconList as IconListModel;
-use app\common\builder\ZBuilder;
 
 /**
  * 图标控制器
@@ -21,10 +21,10 @@ class Icon extends Admin
 {
     /**
      * 图标列表
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -36,14 +36,14 @@ class Icon extends Admin
             ->addTopButtons('add,enable,disable,delete')
             ->addRightButton('list', [
                 'title' => '图标列表',
-                'icon' => 'fa fa-list',
-                'href' => url('items', ['id' => '__id__'])
+                'icon'  => 'fa fa-list',
+                'href'  => url('items', ['id' => '__id__'])
             ])
             ->addRightButton('reload', [
                 'title' => '更新图标',
-                'icon' => 'fa fa-refresh',
+                'icon'  => 'fa fa-refresh',
                 'class' => 'btn btn-xs btn-default ajax-get confirm',
-                'href' => url('reload', ['id' => '__id__'])
+                'href'  => url('reload', ['id' => '__id__'])
             ])
             ->addRightButton('delete')
             ->setSearch('name')
@@ -61,10 +61,10 @@ class Icon extends Admin
 
     /**
      * 新增
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function add()
     {
@@ -76,7 +76,7 @@ class Icon extends Admin
             $data['update_time'] = $this->request->time();
 
             // 获取图标信息
-            $url = substr($data['url'], 0, 4) == 'http' ? $data['url'] : 'http:' . $data['url'];
+            $url = substr($data['url'], 0, 4) == 'http' ? $data['url'] : 'http:'.$data['url'];
             $content = file_get_contents($url);
 
             // 获取字体名
@@ -97,9 +97,9 @@ class Icon extends Admin
                     foreach ($matches[1] as $match) {
                         $icon_list[] = [
                             'icon_id' => $id,
-                            'title' => $match,
-                            'class' => $font_family . ' ' . $match,
-                            'code' => $match,
+                            'title'   => $match,
+                            'class'   => $font_family . ' ' . $match,
+                            'code'    => $match,
                         ];
                     }
                     $IconListModel = new IconListModel();
@@ -127,10 +127,10 @@ class Icon extends Admin
     /**
      * 图标列表
      * @param string $id
+     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function items($id = '')
     {
@@ -144,14 +144,14 @@ class Icon extends Admin
             ->addTopButtons('back')
             ->addTopButton('add', [
                 'title' => '更新图标',
-                'icon' => 'fa fa-refresh',
+                'icon'  => 'fa fa-refresh',
                 'class' => 'btn btn-primary ajax-get confirm',
-                'href' => url('reload', ['id' => $id])
+                'href'  => url('reload', ['id' => $id])
             ])
             ->setSearch('title,code')
             ->addColumns([
-                ['icon', '图标', 'callback', function ($data) {
-                    return '<i class="' . $data['class'] . '"></i>';
+                ['icon', '图标', 'callback', function($data){
+                    return '<i class="'.$data['class'].'"></i>';
                 }, '__data__'],
                 ['title', '图标标题', 'text.edit'],
                 ['code', '图标关键词', 'text.edit'],
@@ -164,15 +164,15 @@ class Icon extends Admin
     /**
      * 更新图标
      * @param string $id
+     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function reload($id = '')
     {
         $icon = IconModel::get($id);
         // 获取图标信息
-        $url = substr($icon['url'], 0, 4) == 'http' ? $icon['url'] : 'http:' . $icon['url'];
+        $url = substr($icon['url'], 0, 4) == 'http' ? $icon['url'] : 'http:'.$icon['url'];
         $content = file_get_contents($url);
 
         // 获取字体名
@@ -191,9 +191,9 @@ class Icon extends Admin
             foreach ($matches[1] as $match) {
                 $icon_list[] = [
                     'icon_id' => $id,
-                    'title' => $match,
-                    'class' => $font_family . ' ' . $match,
-                    'code' => $match,
+                    'title'   => $match,
+                    'class'   => $font_family . ' ' . $match,
+                    'code'    => $match,
                 ];
             }
             $IconListModel = new IconListModel();

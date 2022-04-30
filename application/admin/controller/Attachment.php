@@ -97,7 +97,7 @@ class Attachment extends Admin
         }
 
         if ($from == 'ueditor') {
-            return $this->ueditor($module);
+            return $this->ueditor();
         }
 
         if ($from == 'jcrop') {
@@ -267,11 +267,10 @@ class Attachment extends Admin
 
     /**
      * 处理ueditor上传
-     * @param string $module 来自哪个模块
      * @return string|\think\response\Json
      * @author 蔡伟明 <314013107@qq.com>
      */
-    private function ueditor($module = '')
+    private function ueditor()
     {
         $action = $this->request->get('action');
         $config_file = './static/libs/ueditor/php/config.json';
@@ -284,21 +283,21 @@ class Attachment extends Admin
 
             /* 上传图片 */
             case 'uploadimage':
-                return $this->saveFile('images', 'ueditor', $module);
+                return $this->saveFile('images', 'ueditor');
                 break;
             /* 上传涂鸦 */
             case 'uploadscrawl':
-                return $this->saveFile('images', 'ueditor_scrawl', $module);
+                return $this->saveFile('images', 'ueditor_scrawl');
                 break;
 
             /* 上传视频 */
             case 'uploadvideo':
-                return $this->saveFile('videos', 'ueditor', $module);
+                return $this->saveFile('videos', 'ueditor');
                 break;
 
             /* 上传附件 */
             case 'uploadfile':
-                return $this->saveFile('files', 'ueditor', $module);
+                return $this->saveFile('files', 'ueditor');
                 break;
 
             /* 列出图片 */
@@ -365,7 +364,7 @@ class Attachment extends Admin
             'size' => $file->getSize(),
             'md5' => $file->hash('md5'),
             'sha1' => $file->hash('sha1'),
-            'module' => $this->request->param('module', ''),
+            'module' => $this->request->module(),
             'width' => $img->width(),
             'height' => $img->height(),
         ];

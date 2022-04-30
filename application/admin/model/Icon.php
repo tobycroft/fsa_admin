@@ -25,8 +25,8 @@ class Icon extends Model
 
     /**
      * 图标列表
-     * @return \think\model\relation\HasMany
      * @author 蔡伟明 <314013107@qq.com>
+     * @return \think\model\relation\HasMany
      */
     public function icons()
     {
@@ -35,11 +35,11 @@ class Icon extends Model
 
     /**
      * 获取图标css链接
+     * @author 蔡伟明 <314013107@qq.com>
      * @return array|string|\think\Collection
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function getUrls()
     {
@@ -49,7 +49,7 @@ class Icon extends Model
                 if ($item['icons']) {
                     $html = '<ul class="js-icon-list items-push-2x text-center">';
                     foreach ($item['icons'] as $icon) {
-                        $html .= '<li title="' . $icon['title'] . '"><i class="' . $icon['class'] . '"></i> <code>' . $icon['code'] . '</code></li>';
+                        $html .= '<li title="'.$icon['title'].'"><i class="'.$icon['class'].'"></i> <code>'.$icon['code'].'</code></li>';
                     }
                     $html .= '</ul>';
                 } else {

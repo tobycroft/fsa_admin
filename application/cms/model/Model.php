@@ -9,8 +9,8 @@
 
 namespace app\cms\model;
 
-use think\Db;
 use think\Model as ThinkModel;
+use think\Db;
 
 /**
  * 内容模型
@@ -26,8 +26,8 @@ class Model extends ThinkModel
 
     /**
      * 获取内容模型列表
-     * @return array|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|mixed
      */
     public static function getList()
     {
@@ -45,8 +45,8 @@ class Model extends ThinkModel
     /**
      * 获取内容模型标题列表（只含id和title）
      * @param array $map 筛选条件
-     * @return array|mixed
      * @author 蔡伟明 <314013107@qq.com>
+     * @return array|mixed
      */
     public static function getTitleList($map = [])
     {
@@ -56,8 +56,8 @@ class Model extends ThinkModel
     /**
      * 删除附加表
      * @param null $model 内容模型id
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public static function deleteTable($model = null)
     {
@@ -72,8 +72,8 @@ class Model extends ThinkModel
     /**
      * 创建独立模型表
      * @param mixed $data 模型数据
-     * @return bool
      * @author 蔡伟明 <314013107@qq.com>
+     * @return bool
      */
     public static function createTable($data)
     {
@@ -121,107 +121,107 @@ EOF;
 
         try {
             Db::execute($sql);
-        } catch (\Exception $e) {
+        } catch(\Exception $e) {
             return false;
         }
 
         if ($data['type'] == 2) {
             // 添加默认字段
             $default = [
-                'model' => $data['id'],
-                'level' => '',
+                'model'       => $data['id'],
+                'level'       => '',
                 'create_time' => request()->time(),
                 'update_time' => request()->time(),
-                'status' => 1
+                'status'      => 1
             ];
             $data = [
                 [
-                    'name' => 'id',
-                    'title' => '文档id',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'text',
-                    'show' => 0
+                    'name'        => 'id',
+                    'title'       => '文档id',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'text',
+                    'show'        => 0
                 ],
                 [
-                    'name' => 'cid',
-                    'title' => '栏目',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'static',
-                    'show' => 0,
-                    'value' => 0,
+                    'name'        => 'cid',
+                    'title'       => '栏目',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'static',
+                    'show'        => 0,
+                    'value'       => 0,
                 ],
                 [
-                    'name' => 'uid',
-                    'title' => '用户id',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'text',
-                    'show' => 0,
-                    'value' => 0,
+                    'name'        => 'uid',
+                    'title'       => '用户id',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'text',
+                    'show'        => 0,
+                    'value'       => 0,
                 ],
                 [
-                    'name' => 'model',
-                    'title' => '文档模型',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'text',
-                    'show' => 0,
-                    'value' => 0,
+                    'name'        => 'model',
+                    'title'       => '文档模型',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'text',
+                    'show'        => 0,
+                    'value'       => 0,
                 ],
                 [
-                    'name' => 'title',
-                    'title' => '标题',
-                    'define' => 'varchar(256) NOT NULL',
-                    'type' => 'text',
-                    'show' => 1
+                    'name'        => 'title',
+                    'title'       => '标题',
+                    'define'      => 'varchar(256) NOT NULL',
+                    'type'        => 'text',
+                    'show'        => 1
                 ],
                 [
-                    'name' => 'create_time',
-                    'title' => '创建时间',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'datetime',
-                    'show' => 0,
-                    'value' => 0,
+                    'name'        => 'create_time',
+                    'title'       => '创建时间',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'datetime',
+                    'show'        => 0,
+                    'value'       => 0,
                 ],
                 [
-                    'name' => 'update_time',
-                    'title' => '更新时间',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'datetime',
-                    'show' => 0,
-                    'value' => 0,
+                    'name'        => 'update_time',
+                    'title'       => '更新时间',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'datetime',
+                    'show'        => 0,
+                    'value'       => 0,
                 ],
                 [
-                    'name' => 'sort',
-                    'title' => '排序',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'text',
-                    'show' => 1,
-                    'value' => 100,
+                    'name'        => 'sort',
+                    'title'       => '排序',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'text',
+                    'show'        => 1,
+                    'value'       => 100,
                 ],
                 [
-                    'name' => 'status',
-                    'title' => '状态',
-                    'define' => 'tinyint(2) NOT NULL',
-                    'type' => 'radio',
-                    'show' => 1,
-                    'value' => 1,
-                    'options' => '0:禁用
+                    'name'        => 'status',
+                    'title'       => '状态',
+                    'define'      => 'tinyint(2) NOT NULL',
+                    'type'        => 'radio',
+                    'show'        => 1,
+                    'value'       => 1,
+                    'options'     => '0:禁用
 1:启用'
                 ],
                 [
-                    'name' => 'view',
-                    'title' => '点击量',
-                    'define' => 'int(11) UNSIGNED NOT NULL',
-                    'type' => 'text',
-                    'show' => 0,
-                    'value' => 0
+                    'name'        => 'view',
+                    'title'       => '点击量',
+                    'define'      => 'int(11) UNSIGNED NOT NULL',
+                    'type'        => 'text',
+                    'show'        => 0,
+                    'value'       => 0
                 ],
                 [
-                    'name' => 'trash',
-                    'title' => '回收站',
-                    'define' => 'tinyint(2) NOT NULL',
-                    'type' => 'radio',
-                    'show' => 0,
-                    'value' => 0
+                    'name'        => 'trash',
+                    'title'       => '回收站',
+                    'define'      => 'tinyint(2) NOT NULL',
+                    'type'        => 'radio',
+                    'show'        => 0,
+                    'value'       => 0
                 ]
             ];
 

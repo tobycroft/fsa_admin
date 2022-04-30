@@ -9,9 +9,9 @@
 
 namespace app\cms\model;
 
-use app\cms\model\Field as FieldModel;
-use think\Db;
 use think\Model as ThinkModel;
+use think\Db;
+use app\cms\model\Field as FieldModel;
 
 /**
  * 文档模型
@@ -29,9 +29,9 @@ class Document extends ThinkModel
      * 获取文档列表
      * @param array $map 筛选条件
      * @param array $order 排序
+     * @author 蔡伟明 <314013107@qq.com>
      * @return \think\Paginator
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function getList($map = [], $order = [])
     {
@@ -49,21 +49,21 @@ class Document extends ThinkModel
      * @param string $id 文档id
      * @param string $model 独立模型id
      * @param array $map 查询条件
+     * @author 蔡伟明 <314013107@qq.com>
      * @return array|string|ThinkModel|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public static function getOne($id = '', $model = '', $map = [])
     {
         if ($model == '') {
-            $document = self::get($id);
+            $document    = self::get($id);
             $extra_table = get_model_table($document['model']);
 
             $data = self::view('cms_document', true);
             if ($extra_table != '') {
-                $data = $data->view($extra_table, true, 'cms_document.id=' . $extra_table . '.aid', 'left');
+                $data = $data->view($extra_table, true, 'cms_document.id='.$extra_table.'.aid', 'left');
             }
 
             return $data->view("cms_column", ['name' => 'column_name', 'list_template', 'detail_template'], 'cms_column.id=cms_document.cid', 'left')
@@ -74,8 +74,8 @@ class Document extends ThinkModel
         } else {
             $table = get_model_table($model);
             return Db::view($table, true)
-                ->view("cms_column", ['name' => 'column_name', 'list_template', 'detail_template'], 'cms_column.id=' . $table . '.cid', 'left')
-                ->where($table . '.id', $id)
+                ->view("cms_column", ['name' => 'column_name', 'list_template', 'detail_template'], 'cms_column.id='.$table.'.cid', 'left')
+                ->where($table.'.id', $id)
                 ->where($map)
                 ->find();
         }
@@ -83,13 +83,13 @@ class Document extends ThinkModel
 
     /**
      * 新增或更新文档
+     * @author 蔡伟明 <314013107@qq.com>
      * @return bool
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function saveData()
     {

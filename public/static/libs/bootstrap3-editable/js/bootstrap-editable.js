@@ -662,7 +662,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         * see http://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
         */        
         setCursorPosition: function(elem, pos) {
-            if (elem.setSelectionRange && elem.type != "number") {
+            if (elem.setSelectionRange) {
                 elem.setSelectionRange(pos, pos);
             } else if (elem.createTextRange) {
                 var range = elem.createTextRange();
