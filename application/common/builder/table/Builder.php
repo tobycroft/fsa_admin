@@ -2190,15 +2190,8 @@ class Builder extends ZBuilder
                                     if ($param === '__data__') $param = $row;
                                 }
                             }
-                            try {
-                                print_r(call_user_func_array($column['default'], $params));
-                                exit();
 
-                                $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
-
-                            } catch (Exception $e) {
-
-                            }
+                            $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
                             break;
                         case 'popover':
                             $length = empty($column['default']) ? 10 : $column['default'];
