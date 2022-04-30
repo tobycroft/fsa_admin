@@ -652,7 +652,11 @@ class Builder extends ZBuilder
             });
         }
 
-        return $menu['url_type'] == 'module_home' ? home_url($url, $params) : url($url, $params);
+        if ($menu['url_type']) {
+            return $menu['url_type'] == 'module_home' ? home_url($url, $params) : url($url, $params);
+        } else {
+            return url($url, $params);
+        }
     }
 
     /**
