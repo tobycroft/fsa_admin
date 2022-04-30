@@ -152,7 +152,7 @@ class Index extends Controller
 
             // 创建数据库
             $sql = "CREATE DATABASE IF NOT EXISTS `{$db_name}` DEFAULT CHARACTER SET utf8";
-            $db_instance->execute($sql);
+            $db_instance->execute($sql) || $this->error($db_instance->getError());
 
             // 跳转到数据库安装页面
             $this->success('参数正确开始安装', $this->request->baseFile() . '?s=/index/step4.html');
