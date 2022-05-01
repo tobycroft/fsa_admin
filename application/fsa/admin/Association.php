@@ -47,15 +47,17 @@ class Association extends Admin
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
-            ->addColumn('id', 'id')
-            ->addColumn('uid', 'uid')
-            ->addColumn('domain', '域名主体', 'text.edit')
-            ->addColumn('name', '机构名称', 'text.edit')
-            ->addColumn('info', '工会信息', 'text.edit')
-            ->addColumn('img', '背景图', 'img_url')
-            ->addColumn('logo', 'LOGO', 'text.edit')
-            ->addColumn('poster', 'poster', 'text.edit')
-            ->addColumn("right_button", "功能")
+            ->addColumns([
+                ["id", "id"],
+                ["uid", "uid"],
+                ['domain', '域名主体', 'text.edit'],
+                ['name', '机构名称', 'text.edit'],
+                ['info', '工会信息', 'text.edit'],
+                ['img', '背景图', 'img_url'],
+                ['logo', 'LOGO', 'text.edit'],
+                ['poster', 'poster', 'text.edit'],
+                ["right_button", "功能"],
+            ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
