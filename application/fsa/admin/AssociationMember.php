@@ -53,7 +53,7 @@ class AssociationMember extends Admin
                 ["mtids", "member_title_ids"],
                 ["uid", "uid"],
                 ['iid', '讲师id', 'text.edit'],
-                ['is_admin', '是否是机构管理员', 'radio'],
+                ['is_admin', '是否是机构管理员', 'onoff'],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
