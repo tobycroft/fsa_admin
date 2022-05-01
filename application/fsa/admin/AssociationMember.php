@@ -54,7 +54,7 @@ class AssociationMember extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
-                ["assoc_info", "机构ID"],
+                ["assoc_info.name", "机构ID"],
                 ["mtids", "member_title_ids"],
                 ["uid", "uid"],
                 ['iid', '讲师id', 'text.edit'],
