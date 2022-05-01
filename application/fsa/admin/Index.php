@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\fbcct\admin;
+namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
