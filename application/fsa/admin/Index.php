@@ -37,6 +37,7 @@ class Index extends Admin
         $num1 = UserModel::where("date", ">", $todaytime)->count();
         $num2 = UserModel::count();
 
+
         $btn_access = [
             'title' => '用户地址',
             'icon' => 'fa fa-fw fa-key',
