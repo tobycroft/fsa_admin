@@ -5,8 +5,8 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fbcct\model\RoundingModel;
-use app\fbcct\model\User as UserModel;
+use app\fsa\model\RoundingModel;
+use app\fsa\model\User as UserModel;
 use app\user\model\Role;
 use util\Tree;
 use think\Db;

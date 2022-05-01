@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\fbcct\model;
+namespace app\fsa\model;
 
 use think\Model;
 use think\helper\Hash;
