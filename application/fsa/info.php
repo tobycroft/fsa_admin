@@ -6,7 +6,7 @@
  */
 return [
     // 模块名[必填]
-    'name'        => 'FamilyEducation',
+    'name'        => 'fsa',
     // 模块标题[必填]
     // 模块唯一标识[必填]，格式：模块名.开发者标识.module
     'identifier'  => 'fsa.fsa.module',
