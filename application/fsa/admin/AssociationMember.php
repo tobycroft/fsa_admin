@@ -49,13 +49,11 @@ class AssociationMember extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
+                ["aid", "机构ID"],
+                ["mtids", "member_title_ids"],
                 ["uid", "uid"],
-                ['domain', '域名主体', 'text.edit'],
-                ['name', '机构名称', 'text.edit'],
-                ['info', '工会信息', 'text.edit'],
-                ['img', '背景图', 'img_url'],
-                ['logo', 'LOGO', 'text.edit'],
-                ['poster', 'poster', 'text.edit'],
+                ['iid', '讲师id', 'text.edit'],
+                ['is_admin', '是否是机构管理员', 'checkbox'],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
