@@ -14,17 +14,17 @@
  */
 return [
     // 模块名[必填]
-    'name'        => 'fsa',
+    'name'        => 'FamilyEducation',
     // 模块标题[必填]
-    'title'       => 'fsa',
+    'title'       => 'Family Education',
     // 模块唯一标识[必填]，格式：模块名.开发者标识.module
     'identifier'  => 'fsa.fsa.module',
     // 模块图标[选填]
     'icon'        => 'fa fa-fw fa-newspaper-o',
     // 模块描述[选填]
-    'description' => 'fsa',
+    'description' => 'FamilyEducation',
     // 开发者[必填]
-    'author'      => 'fsa',
+    'author'      => 'FamilyEducation',
     // 开发者网址[选填]
     'author_url'  => 'fsa',
     // 版本[必填],格式采用三段式：主版本号.次版本号.修订版本号
