@@ -104,7 +104,7 @@ class Association extends Admin
                 ["text", 'info', '工会信息'],
                 ["image", 'img', '背景图'],
                 ["image", 'logo', 'LOGO'],
-                ["text", 'poster', 'poster'],
+                ["image", 'poster', '海报图'],
             ])
             ->fetch();
     }
