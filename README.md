@@ -1,4 +1,4 @@
-DolphinPHP
+DThinkphp
 ===============
 
 DophinPHP（海豚PHP）是一个基于ThinkPHP5.1.34 LTS开发的一套开源PHP快速开发框架，DophinPHP秉承极简、极速、极致的开发理念，为开发集成了基于数据-角色的权限管理机制，集成多种灵活快速构建工具，可方便快速扩展的模块、插件、钩子、数据包。统一了模块、插件、钩子、数据包之间的版本和依赖关系，进一步降低了代码和数据的沉余，以方便开发者快速构建自己的应用。
@@ -17,11 +17,11 @@ DophinPHP（海豚PHP）集成BootStrap、JQuery、Xeditable、Select2等优秀�
 感谢[ThinkPHP](http://www.thinkphp.cn)、[JQuery](http://jquery.com/)、[Bootstrap](http://getbootstrap.com/)、[Xeditable](http://vitalets.github.io/x-editable)、[Select2](https://github.com/select2/select2)等优秀开源项目。
 
 ## 官方网站
-[www.dolphinphp.com](http://www.dolphinphp.com)
+[www.DThinkphp.com](http://www.DThinkphp.com)
 
 ## 版权信息
 
-DolphinPHP提供个人非商业用途免费使用，商业需授权。
+DThinkphp提供个人非商业用途免费使用，商业需授权。
 
 本项目包含的第三方源码和二进制文件之版权信息另行标注。
 

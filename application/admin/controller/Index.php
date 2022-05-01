@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | 海豚PHP框架 [ DolphinPHP ]
+// | 海豚PHP框架 [ DThinkphp ]
 // +----------------------------------------------------------------------
 // | 版权所有 2016~2019 广东卓锐软件有限公司 [ http://www.zrthink.com ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://dolphinphp.com
+// | 官方网站: http://DThinkphp.com
 // +----------------------------------------------------------------------
 
 namespace app\admin\controller;
@@ -152,7 +152,7 @@ class Index extends Admin
 
         if ($result['code'] == 1) {
             return json([
-                'update' => '<a class="badge badge-primary" href="http://www.dolphinphp.com/download" target="_blank">有新版本：'.$result["version"].'</a>',
+                'update' => '<a class="badge badge-primary" href="http://www.DThinkphp.com/download" target="_blank">有新版本：'.$result["version"].'</a>',
                 'auth'   => $result['auth']
             ]);
         } else {
