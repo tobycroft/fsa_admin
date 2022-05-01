@@ -5,6 +5,7 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
+use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
 use app\fsa\model\AssociationMemberModel;
 use app\user\model\Role;
@@ -35,7 +36,10 @@ class AssociationMember extends Admin
         // 读取用户数据
         $data_list = AssociationMemberModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
-
+        foreach ($data_list as $key => $item) {
+            $item["assoc_info"] = AssociationModel::find($item["aid"]);
+            $data_list[$key] = $item;
+        }
 
         $btn_access = [
             'title' => '回复',
