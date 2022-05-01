@@ -37,7 +37,7 @@ class AssociationMember extends Admin
         $data_list = AssociationMemberModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
-            $item = AssociationModel::where("id", $item["aid"])->allowField("name")->find();
+            $item = AssociationModel::where("id", $item["aid"])->setField("name");
             $data_list[$key] = $item;
         }
         $btn_access = [
