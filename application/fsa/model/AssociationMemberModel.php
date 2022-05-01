@@ -32,7 +32,7 @@ class AssociationMemberModel extends Model
             } else {
                 $data[$field] = $value;
             }
-            print_r( gettype($value));
+            print_r( gettype($data[$field]));
             exit();
         }
 
