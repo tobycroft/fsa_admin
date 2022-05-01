@@ -20,22 +20,5 @@ class AssociationMemberModel extends Model
 
     // 自动写入时间戳
 //    protected $autoWriteTimestamp = true;
-    public function setField($field, $value = '')
-    {
-        if (is_array($field)) {
-            $data = $field;
-        } else {
-            if ($value == "true") {
-                $data[$field] = 1;
-            } elseif ($value == "false") {
-                $data[$field] = 0;
-            } else {
-                $data[$field] = $value;
-            }
-            print_r( gettype($data[$field]));
-            exit();
-        }
 
-        return $this->update($data);
-    }
 }
