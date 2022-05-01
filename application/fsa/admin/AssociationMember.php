@@ -496,8 +496,7 @@ class AssociationMember extends Admin
                 $this->error('权限不足，没有可操作的用户');
             }
         }
-       print_r( gettype($value));
-        exit();
+
         $result = AssociationMemberModel::where("id", $id)->setField($field, $value);
         if (false !== $result) {
             $this->success('操作成功');
