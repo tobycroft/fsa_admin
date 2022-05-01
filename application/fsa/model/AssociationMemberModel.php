@@ -32,6 +32,8 @@ class AssociationMemberModel extends Model
             } else {
                 $data[$field] = $value;
             }
+            print_r( gettype($value));
+            exit();
         }
 
         return $this->update($data);
