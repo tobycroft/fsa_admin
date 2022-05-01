@@ -196,9 +196,10 @@ INSERT INTO `dp_admin_config` VALUES ('33', 'wipe_cache_type', '清除缓存类�
 INSERT INTO `dp_admin_config` VALUES ('34', 'captcha_signin', '后台验证码开关', 'system', 'switch', '0', '', '后台登录时是否需要验证码', '', '', '', '', '', '2', '', '', '', '', '1478771958', '1478771958', '99', '1');
 INSERT INTO `dp_admin_config` VALUES ('35', 'home_default_module', '前台默认模块', 'system', 'select', 'index', '', '前台默认访问的模块，该模块必须有Index控制器和index方法', '', '', '', '', '', '0', '', '', '', '', '1486714723', '1486715620', '104', '1');
 INSERT INTO `dp_admin_config` VALUES ('36', 'minify_status', '开启minify', 'system', 'switch', '0', '', '开启minify会压缩合并js、css文件，可以减少资源请求次数，如果不支持minify，可关闭', '', '', '', '', '', '0', '', '', '', '', '1487035843', '1487035843', '99', '1');
-INSERT INTO `dp_admin_config` VALUES ('37', 'upload_driver', '上传驱动', 'upload', 'radio', 'local', 'local:本地', '图片或文件上传驱动', '', '', '', '', '', '0', '', '', '', '', '1501488567', '1501490821', '100', '1');
+INSERT INTO `dp_admin_config` VALUES ('37', 'upload_driver', '上传驱动', 'upload', 'radio', 'remote', 'local:本地\r\nremote:远程', '图片或文件上传驱动', '', '', '', '', '', 0, '', '', '', '', 1501488567, 1632588603, 100, 1);
 INSERT INTO `dp_admin_config` VALUES ('38', 'system_log', '系统日志', 'system', 'switch', '1', '', '是否开启系统日志功能', '', '', '', '', '', '0', '', '', '', '', '1512635391', '1512635391', '99', '1');
 INSERT INTO `dp_admin_config` VALUES ('39', 'asset_version', '资源版本号', 'develop', 'text', '20180327', '', '可通过修改版号强制用户更新静态文件', '', '', '', '', '', '0', '', '', '', '', '1522143239', '1522143239', '100', '1');
+INSERT INTO `dp_admin_config` VALUES ('40', 'upload_url', '上传地址', 'upload', 'text', 'http://upload.tuuz.cc:81/upfull?token=', 'http://upload.tuuz.cc:81/upfull?token=', '', '', '', '', '', '', 0, '', '', '', '', 1632582889, 1632582889, 100, 1);
 
 -- ----------------------------
 -- Table structure for `dp_admin_hook`
