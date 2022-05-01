@@ -14,7 +14,7 @@ use think\Db;
 class ForumThreadReplyModel extends Model
 {
     // 设置当前模型对应的完整数据表名称
-    protected $table = 'fraforum_thread_reply';
+    protected $table = 'fra_forum_thread_reply';
 
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;

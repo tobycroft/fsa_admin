@@ -13,7 +13,7 @@ use think\Db;
  */
 class User extends Model {
 	// 设置当前模型对应的完整数据表名称
-	protected $table = 'frauser';
+	protected $table = 'fra_user';
 
 	// 设置当前模型对应的完整数据表名称
 
