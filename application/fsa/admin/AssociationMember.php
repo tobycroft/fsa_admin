@@ -40,8 +40,6 @@ class AssociationMember extends Admin
             $item["assoc_info"] = AssociationModel::find($item["aid"]);
             $data_list[$key] = $item;
         }
-        print_r($item["assoc_info"]);
-exit();
         $btn_access = [
             'title' => '回复',
             'icon' => 'fa fa-fw fa-key',
@@ -55,7 +53,7 @@ exit();
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
-                ["assoc_info", "机构名称"],
+                ["assoc_info.name", "机构名称"],
                 ["mtids", "member_title_ids"],
                 ["uid", "uid"],
                 ['iid', '讲师id', 'text.edit'],
