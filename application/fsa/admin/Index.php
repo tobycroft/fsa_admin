@@ -5,8 +5,6 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\TransferInModel;
-use app\fsa\model\TransferRecordModel;
 use app\fsa\model\User as UserModel;
 use util\Tree;
 use think\Db;
@@ -38,10 +36,6 @@ class Index extends Admin
 
         $num1 = UserModel::where("date", ">", $todaytime)->count();
         $num2 = UserModel::count();
-        $sum_amount = TransferInModel::sum("amount");
-        $out_amount = TransferRecordModel::sum("amount");
-        $out_today = TransferRecordModel::where("date", ">", $todaytime)->sum("amount");
-        $in_today = TransferInModel::sum("amount");
 
         $btn_access = [
             'title' => '用户地址',
@@ -53,10 +47,6 @@ class Index extends Admin
         return ZBuilder::make('form')
             ->addStatic('today', '今日注册数量', "", $num1)
             ->addStatic('today', '全部注册数量', "", $num2)
-            ->addStatic('today', '总入金', "", $sum_amount)
-            ->addStatic('today', '总出金', "", $out_amount)
-            ->addStatic('today', '今日入', "", $in_today)
-            ->addStatic('today', '今日出', "", $out_today)
             ->hideBtn('submit,back')
             ->fetch();
     }
