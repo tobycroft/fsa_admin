@@ -195,8 +195,8 @@ class User extends Admin
                 ['text', 'phone', 'phone', '必填，6-20位'],
                 ['text', 'wx_id', 'wx_id', '必填，6-20位'],
                 ['text', 'wx_token', 'wx_token', '必填，6-20位'],
-                ['checkbox', 'admin', 'admin'],
-                ['checkbox', 'active', 'active'],
+                ['checkbox', 'admin', 'admin', '', ['禁用', '启用'], 1],
+                ['checkbox', 'active', 'active', '', ['禁用', '启用'], 1],
 
             ])
             ->setFormData($info) // 设置表单数据
