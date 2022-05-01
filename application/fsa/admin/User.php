@@ -185,9 +185,9 @@ class User extends Admin {
 				['hidden', 'id'],
 				['static', 'username', '用户名', '不可更改'],
 				['text', 'password', '密码', '必填，6-20位'],
-				['text', 'share', '共享码', '必填，6-20位'],
-				['text', 'share', '共享码', '必填，6-20位'],
-				['text', 'share', '共享码', '必填，6-20位'],
+				['text', 'phone', 'phone', '必填，6-20位'],
+				['text', 'wx_id', 'wx_id', '必填，6-20位'],
+				['text', 'wx_token', 'wx_token', '必填，6-20位'],
 
 			])
 			->setFormData($info) // 设置表单数据
