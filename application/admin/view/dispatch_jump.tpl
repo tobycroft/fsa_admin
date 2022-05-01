@@ -45,7 +45,6 @@
 <div class="content pulldown text-muted text-center">
     极简 · 极速 · 极致<br>
     海豚PHP，让开发更简单！<br>
-    由 <a class="link-effect" href="http://www.DThinkphp.com">DThinkphp</a> 强力驱动 <a class="link-effect" href="http://www.zrthink.com">卓锐软件</a> 倾情奉献
 </div>
 <!-- END Error Footer -->
 

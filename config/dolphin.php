@@ -11,6 +11,6 @@ return [
 	'develop_team' => 'DThinkphp',
 
 	// 公司信息
-	'company_name' => '广东卓锐软件有限公司',
-	'company_website' => 'http://www.zrthink.com',
+	'company_name' => '',
+	'company_website' => '',
 ];
