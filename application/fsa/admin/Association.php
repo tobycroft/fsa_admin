@@ -102,8 +102,8 @@ class Association extends Admin
                 ["text", 'domain', '域名主体'],
                 ["text", 'name', '机构名称'],
                 ["text", 'info', '工会信息'],
-                ["img", 'img', '背景图'],
-                ["img", 'logo', 'LOGO'],
+                ["image", 'img', '背景图'],
+                ["image", 'logo', 'LOGO'],
                 ["text", 'poster', 'poster'],
             ])
             ->fetch();
