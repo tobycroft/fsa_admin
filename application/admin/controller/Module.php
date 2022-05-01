@@ -100,6 +100,8 @@ class Module extends Admin
 
         // 模块配置信息
         $module_info = ModuleModel::getInfoFromFile($name);
+        print_r($module_info);
+        exit();
 
         if ($confirm == 0) {
             $need_module = [];
