@@ -96,8 +96,6 @@ class Association extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-
-                ["text", "id", "id"],
                 ["text", "uid", "uid"],
                 ["text", 'domain', '域名主体'],
                 ["text", 'name', '机构名称'],
@@ -153,7 +151,6 @@ class Association extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["text", "id", "id"],
                 ["text", "uid", "uid"],
                 ["text", 'domain', '域名主体'],
                 ["text", 'name', '机构名称'],
