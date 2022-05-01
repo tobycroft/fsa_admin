@@ -197,7 +197,8 @@ class Menu extends Admin
         $info = MenuModel::get($id);
         // 拥有该节点权限的角色
         $info['role'] = RoleModel::getRoleWithMenu($id);
-print_r($info['role']);
+        print_r($info['role']);
+
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑节点')
