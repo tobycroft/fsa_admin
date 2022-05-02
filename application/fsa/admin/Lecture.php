@@ -137,8 +137,17 @@ class Lecture extends Admin
         foreach ($host as $item) {
             $hosts[$item["id"]] = $item["name"];
         }
-        $tag=TagModel::select();
-        // 使用ZBuilder快速创建表单
+        $fields = [
+            'SFMC' => '省份',
+            'XSPCMC' => '批次',
+            'XSKLMC' => '科类',
+            'ZKZH' => '准考证号',
+            'XH' => '学号',
+            'XM' => '姓名',
+            'CYM' => '曾用名',
+            'XB' => '性别',
+            'CSNY' => '出生年月',
+        ];        // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
@@ -146,7 +155,7 @@ class Lecture extends Admin
                 ["select", "iid", "讲师", "", $inss],
                 ["select", "hid", "主办方", "", $hosts],
                 ["text", 'title', '讲座主题',],
-                ["transfer", 'tag_ids', '可选字段', '导出字段', '默认导出所有字段', $tag],
+                ["transfer", 'tag_ids', '可选字段', '导出字段', '默认导出所有字段', $fields],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
                 ["text", 'start_date', '讲座开始时间',],
                 ["number", 'duration', '时长(秒)',],
