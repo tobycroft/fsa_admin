@@ -61,6 +61,11 @@ class Lecture extends Admin
         foreach ($ins as $item) {
             $inss[$item["id"]] = $item["name"];
         }
+        $host = HostModel::select();
+        $hosts = [];
+        foreach ($host as $item) {
+            $hosts[$item["id"]] = $item["name"];
+        }
 
 
         $btn_access = [
@@ -77,7 +82,7 @@ class Lecture extends Admin
                 ["id", "id"],
                 ["aid", "公会名称"],
                 ["iid", "讲师", "select", $inss],
-                ["host", "主办方", ""],
+                ["hid", "主办方", "select", $hosts],
                 ['title', '讲座主题', 'text.edit'],
                 ['tags', '标签ids'],
                 ['dataunits', '标签数据归属方ids'],
