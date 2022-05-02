@@ -62,8 +62,8 @@ class Lecture extends Admin
                 ['gift_ids', '礼包id', 'text.edit'],
                 ['poster_img', '讲座海报', 'picture'],
                 ['visitor', '学员人数', 'number'],
-                ['file1', '文件地址1', 'file'],
-                ['file2', '文件地址2', 'file'],
+                ['file1', '文件地址1', 'picture'],
+                ['file2', '文件地址2', 'picture'],
                 ['is_del', '软删除', 'switch'],
                 ["right_button", "功能"],
             ])
