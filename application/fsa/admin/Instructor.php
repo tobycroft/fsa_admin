@@ -157,7 +157,7 @@ class Instructor extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ["aid", "机构ID"],
+                ["number", "aid", "机构ID"],
                 ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
                 ["image", "img", "头像字段",],
