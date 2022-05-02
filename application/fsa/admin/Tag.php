@@ -52,7 +52,6 @@ class Tag extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID"],
                 ["association_name", "机构名称"],
                 ["name", "头衔", "text"],
                 ["right_button", "功能"],
