@@ -69,7 +69,7 @@ class Lecture extends Admin
                 ['title', '讲座主题', 'text.edit'],
                 ['tags', '标签ids'],
                 ['dataunits', '标签数据归属方ids'],
-                ['start_date', '讲座开始时间', 'datetime'],
+                ['start_date', '讲座开始时间', 'text.edit'],
                 ['duration', '时长(秒)', 'text.edit'],
                 ['location', '讲座地点', 'text.edit'],
                 ['can_gift', '礼包开关', 'text.edit'],
