@@ -51,7 +51,7 @@ class SystemParam extends Admin
                 ["id", "id"],
                 ["info", "info"],
                 ['key', 'Key', 'text.edit'],
-                ['param', 'Value', 'text.edit'],
+                ['val', 'Value', 'text.edit'],
             ])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
