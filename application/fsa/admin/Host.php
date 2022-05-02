@@ -37,10 +37,10 @@ class Host extends Admin
         $data_list = HostModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
         $btn_access = [
-            'title' => '讲师信息',
+            'title' => '讲座信息',
             'icon' => 'fa fa-fw fa-user',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('forum_thread_reply/index', ['search_field' => 'uid', 'keyword' => '__id__'])
+            'href' => url('lecture/index', ['search_field' => 'uid', 'keyword' => '__id__'])
         ];
 
         return ZBuilder::make('table')
