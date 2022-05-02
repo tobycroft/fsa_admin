@@ -47,8 +47,8 @@ class Tag extends Admin
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
-                ["id", "id"],
-                ["name", "头衔", "text"],
+                ["id", "id", "number"],
+                ["name", "头衔", "text.edit"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["delete" => "删除",])
