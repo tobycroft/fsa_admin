@@ -58,8 +58,8 @@ class AssociationMember extends Admin
                 ["association_name", "机构名称"],
                 ["mtids", "MTIDS"],
                 ["association_member_title", "用户身份MTIDS"],
-                ["uid", "uid"],
-                ['iid', '讲师id', 'text.edit'],
+                ["uid", "uid", "number"],
+                ['iid', '讲师id', 'number'],
                 ['is_admin', '是否是机构管理员', 'switch'],
                 ["right_button", "功能"],
             ])
