@@ -7,7 +7,7 @@ use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
-use app\fsa\model\AssociationTitleMemberModel;
+use app\fsa\model\AssociationMemberTitleModel;
 use app\user\model\Role;
 use util\Tree;
 use think\Db;
@@ -18,7 +18,7 @@ use think\facade\Hook;
  * 用户默认控制器
  * @package app\user\admin
  */
-class AssociationTitleMember extends Admin
+class AssociationMemberTitle extends Admin
 {
     /**
      * 用户首页
@@ -34,7 +34,7 @@ class AssociationTitleMember extends Admin
         $map = $this->getMap();
 
         // 读取用户数据
-        $data_list = AssociationTitleMemberModel::where($map)->order($order)->paginate();
+        $data_list = AssociationMemberTitleModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
             $item["name"] = AssociationModel::where("id", $item["aid"])->value("name");
@@ -82,7 +82,7 @@ class AssociationTitleMember extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            if ($user = AssociationTitleMemberModel::create($data)) {
+            if ($user = AssociationMemberTitleModel::create($data)) {
                 $this->success('新增成功', url('index'));
             } else {
                 $this->error('新增失败');
@@ -132,7 +132,7 @@ class AssociationTitleMember extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = AssociationTitleMemberModel::where('role', 'in', $role_list)->column('id');
+            $user_list = AssociationMemberTitleModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($id, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -145,7 +145,7 @@ class AssociationTitleMember extends Admin
             // 非超级管理需要验证可选择角色
 
 
-            if (AssociationTitleMemberModel::update($data)) {
+            if (AssociationMemberTitleModel::update($data)) {
                 $this->success('编辑成功');
             } else {
                 $this->error('编辑失败');
@@ -153,7 +153,7 @@ class AssociationTitleMember extends Admin
         }
 
         // 获取数据
-        $info = AssociationTitleMemberModel::where('id', $id)->find();
+        $info = AssociationMemberTitleModel::where('id', $id)->find();
 
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
@@ -194,7 +194,7 @@ class AssociationTitleMember extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = AssociationTitleMemberModel::where('role', 'in', $role_list)->column('id');
+            $user_list = AssociationMemberTitleModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($uid, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -457,17 +457,17 @@ class AssociationTitleMember extends Admin
 
         switch ($type) {
             case 'enable':
-                if (false === AssociationTitleMemberModel::where('id', 'in', $ids)->setField('status', 1)) {
+                if (false === AssociationMemberTitleModel::where('id', 'in', $ids)->setField('status', 1)) {
                     $this->error('启用失败');
                 }
                 break;
             case 'disable':
-                if (false === AssociationTitleMemberModel::where('id', 'in', $ids)->setField('status', 0)) {
+                if (false === AssociationMemberTitleModel::where('id', 'in', $ids)->setField('status', 0)) {
                     $this->error('禁用失败');
                 }
                 break;
             case 'delete':
-                if (false === AssociationTitleMemberModel::where('id', 'in', $ids)->delete()) {
+                if (false === AssociationMemberTitleModel::where('id', 'in', $ids)->delete()) {
                     $this->error('删除失败');
                 }
                 break;
@@ -501,7 +501,7 @@ class AssociationTitleMember extends Admin
             }
         }
 
-        $result = AssociationTitleMemberModel::where("id", $id)->setField($field, $value);
+        $result = AssociationMemberTitleModel::where("id", $id)->setField($field, $value);
         if (false !== $result) {
             $this->success('操作成功');
         } else {
