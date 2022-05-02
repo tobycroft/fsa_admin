@@ -49,13 +49,17 @@ class LectureRecord extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["uid", "uid"],
-                ['domain', '域名主体', 'text.edit'],
-                ['name', '机构名称', 'text.edit'],
-                ['info', '工会信息', 'text.edit'],
-                ['img', '背景图', 'picture'],
-                ['logo', 'LOGO', 'picture'],
-                ['poster', '展示图', 'picture'],
+                ["lid", "讲座ID"],
+                ["title", "讲座ID"],
+                ["img1", "图片1"],
+                ["img2", "图片2"],
+                ["img3", "图片3"],
+                ["img4", "图片4"],
+                ["img5", "图片5"],
+                ["img6", "图片6"],
+                ["img7", "图片7"],
+                ["img8", "图片8"],
+                ["img9", "图片9"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
