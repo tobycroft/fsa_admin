@@ -145,7 +145,7 @@ class Lecture extends Admin
                 ["select", "iid", "讲师", "", $inss],
                 ["select", "hid", "主办方", "", $hosts],
                 ["text", 'title', '讲座主题',],
-                ["text", 'tag_ids', '标签ids'],
+                ["transfer", 'tag_ids', '可选字段', '导出字段', '默认导出所有字段', $host],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
                 ["text", 'start_date', '讲座开始时间',],
                 ["number", 'duration', '时长(秒)',],
