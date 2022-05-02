@@ -126,18 +126,24 @@ class Lecture extends Admin
             }
         }
 
-        $data = ForumModel::select();
-        $arr = [];
-        foreach ($data as $item) {
-            $arr[$item["id"]] = $item["name"];
+
+        $ins = InstructorModel::select();
+        $inss = [];
+        foreach ($ins as $item) {
+            $inss[$item["id"]] = $item["name"];
+        }
+        $host = HostModel::select();
+        $hosts = [];
+        foreach ($host as $item) {
+            $hosts[$item["id"]] = $item["name"];
         }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["number", "aid", "公会名称"],
-                ["number", "iid", "讲师"],
-                ["number", "host", "主办方", ""],
+                ["select", "iid", "讲师", "", $inss],
+                ["select", "host", "主办方", "", $hosts],
                 ["text", 'title', '讲座主题',],
                 ["text", 'tag_ids', '标签ids'],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
