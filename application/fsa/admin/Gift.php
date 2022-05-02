@@ -54,10 +54,11 @@ class Gift extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["mtids", "member_title_ids"],
-                ["uid", "uid"],
-                ['iid', '讲师id', 'text.edit'],
-                ['is_admin', '是否是机构管理员', 'switch'],
+                ["type", "课程类型"],
+                ["title", "标题", 'text.edit'],
+                ["content", "内容", 'text.textarea'],
+                ["img", "图片字段", 'picture'],
+                ['must_choice', '是否必选', 'switch'],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
