@@ -5,6 +5,7 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
+use app\fsa\model\AssociationMemberTitleModel;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
 use app\fsa\model\AssociationMemberModel;
@@ -38,6 +39,7 @@ class AssociationMember extends Admin
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
+            $item["association_member_title"] = AssociationMemberTitleModel::whereIn("id", $item["mtids"])->value("name");
             $data_list[$key] = $item;
         }
         $btn_access = [
