@@ -36,10 +36,6 @@ class Tag extends Admin
         // 读取用户数据
         $data_list = TagModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
-        foreach ($data_list as $key => $item) {
-            $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $data_list[$key] = $item;
-        }
         $btn_access = [
             'title' => '回复',
             'icon' => 'fa fa-fw fa-key',
@@ -52,7 +48,6 @@ class Tag extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["association_name", "机构名称"],
                 ["name", "头衔", "text"],
                 ["right_button", "功能"],
             ])
