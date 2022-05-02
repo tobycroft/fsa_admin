@@ -44,7 +44,7 @@ class Lecture extends Admin
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
             $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
             $item["host"] = HostModel::where("id", $item["hid"])->value("name");
-            $item["tags"] = join(",", TagModel::whereIn("id", $item["tag_ids"])->value("name"));
+            $item["tags"] = join(",", TagModel::whereIn("id", $item["tag_ids"])->column("name"));
             $item["dataunits"] = join(",", TagDataunitModel::whereIn("id", $item["tag_dataunit_ids"])->value("name"));
             $data_list[$key] = $item;
         }
