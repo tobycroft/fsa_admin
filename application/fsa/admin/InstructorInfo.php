@@ -53,12 +53,11 @@ class InstructorInfo extends Admin
                 ["mail", "邮箱地址"],
                 ["job", "职务"],
                 ["title", "职称", "text.edit"],
-                ["location", "所在区域", "text.edit"],
-                ["address", "地址", "text.edit"],
                 ["work_address", "头像字段", "picture"],
                 ["cert", "身份证号", "number"],
                 ["tel", "电话号码", "number"],
-                ["status", "是否通过审核", "switch"],
+                ["location", "所在区域", "text.edit"],
+                ["address", "地址", "text.edit"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["delete" => "删除",])
@@ -99,19 +98,15 @@ class InstructorInfo extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['select', 'type', '类型', '', ['normal' => 'normal', 'feedback' => 'feedback', 'other' => 'other']],
-                ['select', 'fid', '板块id', '', $arr],
-                ['text', 'uid', 'uid'],
-                ['text', 'tag', '标签'],
-                ['text', 'title', '标题'],
-                ['ueditor', 'content', '内容'],
-                ['image', 'img', '图片字段'],
-                ['text', 'extra', '附加字段'],
-                ['text', 'view', '查看数量'],
-                ['radio', 'is_public', '是否公开', '', ['禁用', '启用'], 1],
-                ['radio', 'is_hot', '是否设为热门', '', ['禁用', '启用'], 1],
-                ['radio', 'can_reply', '是否可以回复', '', ['禁用', '启用'], 1],
-
+                ["number", "aid", "机构ID"],
+                ["mail", "mail", "邮箱地址"],
+                ["text", "job", "职务"],
+                ["text", "title", "职称",],
+                ["text", "work_address", "头像字段"],
+                ["number", "cert", "身份证号",],
+                ["text", "tel", "电话号码",],
+                ["text", "location", "所在区域",],
+                ["text", "address", "地址",],
             ])
             ->fetch();
     }
