@@ -8,6 +8,8 @@ use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
 use app\fsa\model\GiftModel;
+use app\fsa\model\HostModel;
+use app\fsa\model\LectureModel;
 use app\user\model\Role;
 use util\Tree;
 use think\Db;
@@ -36,10 +38,15 @@ class Gift extends Admin
         // 读取用户数据
         $data_list = GiftModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
-        foreach ($data_list as $key => $item) {
-            $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $data_list[$key] = $item;
+
+
+        $acc = AssociationModel::select();
+        $accs = [];
+        foreach ($acc as $item) {
+            $accs[$item["id"]] = $item["name"];
         }
+
+
         $btn_access = [
             'title' => '讲师信息',
             'icon' => 'fa fa-fw fa-user',
@@ -52,8 +59,7 @@ class Gift extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID"],
-                ["association_name", "机构名称"],
+                ["select", "aid", "机构ID", "", $accs],
                 ["type", "课程类型", 'select', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
                 ["title", "标题", 'text.edit'],
                 ["content", "内容", 'text.textarea'],
