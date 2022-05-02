@@ -104,7 +104,7 @@ class Gift extends Admin
                 ["text", "association_name", "机构名称"],
                 ["text", "title", "标题"],
                 ["ueditor", "content", "内容"],
-                ["image", "图片字段", 'picture'],
+                ["image", "picture", "图片字段"],
                 ["switch", 'must_choice', '是否必选'],
             ])
             ->fetch();
@@ -160,7 +160,7 @@ class Gift extends Admin
                 ["text", "association_name", "机构名称"],
                 ["text", "title", "标题"],
                 ["ueditor", "content", "内容"],
-                ["image", "图片字段", 'picture'],
+                ["image", "picture", "图片字段"],
                 ["switch", 'must_choice', '是否必选'],
             ])
             ->setFormData($info) // 设置表单数据
