@@ -65,7 +65,7 @@ class Lecture extends Admin
                 ["instructor", "讲师"],
                 ["host", "主办方", ""],
                 ['title', '讲座主题', 'text.edit'],
-                ['tag_ids', '标签ids', 'text.edit'],
+                ['tags', '标签ids', 'text.edit'],
                 ['tag_dataunit_ids', '标签数据归属方ids', 'text.edit'],
                 ['start_date', '讲座开始时间', 'datetime'],
                 ['duration', '时长(秒)', 'text.edit'],
