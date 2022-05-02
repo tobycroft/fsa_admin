@@ -50,7 +50,7 @@ class LectureRecord extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["lid", "讲座ID"],
-                ["title", "讲座ID", "text.edit"],
+                ["title", "标题", "text.edit"],
                 ["img1", "图片1", "picture"],
                 ["img2", "图片2", "picture"],
                 ["img3", "图片3", "picture"],
@@ -65,7 +65,6 @@ class LectureRecord extends Admin
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
-            ->setColumnWidth('title', 300)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
