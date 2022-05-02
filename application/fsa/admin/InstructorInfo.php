@@ -49,7 +49,7 @@ class InstructorInfo extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID"],
+                ["iid", "讲师ID"],
                 ["mail", "邮箱地址"],
                 ["job", "职务"],
                 ["title", "职称", "text.edit"],
@@ -98,7 +98,7 @@ class InstructorInfo extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["number", "aid", "机构ID"],
+                ["number", "iid", "讲师ID"],
                 ["mail", "mail", "邮箱地址"],
                 ["text", "job", "职务"],
                 ["text", "title", "职称",],
@@ -156,7 +156,7 @@ class InstructorInfo extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ["number", "aid", "机构ID"],
+                ["number", "iid", "讲师ID"],
                 ["mail", "mail", "邮箱地址"],
                 ["text", "job", "职务"],
                 ["text", "title", "职称",],
