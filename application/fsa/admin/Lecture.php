@@ -143,7 +143,7 @@ class Lecture extends Admin
             ->addFormItems([ // 批量添加表单项
                 ["number", "aid", "公会名称"],
                 ["select", "iid", "讲师", "", $inss],
-                ["select", "host", "主办方", "", $hosts],
+                ["select", "hid", "主办方", "", $hosts],
                 ["text", 'title', '讲座主题',],
                 ["text", 'tag_ids', '标签ids'],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
@@ -217,7 +217,7 @@ class Lecture extends Admin
                 ["hidden", "id"],
                 ["number", "aid", "公会名称"],
                 ["select", "iid", "讲师", "", $inss],
-                ["select", "host", "主办方", "", $hosts],
+                ["select", "hid", "主办方", "", $hosts],
                 ["text", 'title', '讲座主题',],
                 ["text", 'tag_ids', '标签ids'],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
