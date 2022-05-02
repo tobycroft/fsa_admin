@@ -53,7 +53,7 @@ class AssociationMemberTitle extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
-                ["name", "机构名称"],
+                ["name", "头衔"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
@@ -95,7 +95,7 @@ class AssociationMemberTitle extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["text", "aid", "机构ID"],
-                ["text", "name", "机构名称"],
+                ["text", "name", "头衔"],
             ])
             ->fetch();
     }
@@ -146,7 +146,7 @@ class AssociationMemberTitle extends Admin
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
                 ["text", "aid", "机构ID"],
-                ["text", "name", "机构名称"],
+                ["text", "name", "头衔"],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
