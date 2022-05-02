@@ -54,7 +54,7 @@ class LectureAuth extends Admin
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
-//            ->addRightButton("custom", $btn_access)
+            ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
 //            ->setColumnWidth('title', 300)
             ->setRowList($data_list) // 设置表格数据
