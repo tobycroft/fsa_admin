@@ -54,7 +54,7 @@ class Gift extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["type", "课程类型"],
+                ["type", "课程类型", 'select', ['normal' => 'normal', 'feedback' => 'feedback', 'other' => 'other']],
                 ["title", "标题", 'text.edit'],
                 ["content", "内容", 'text.textarea'],
                 ["img", "图片字段", 'picture'],
@@ -99,19 +99,13 @@ class Gift extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['select', 'type', '类型', '', ['normal' => 'normal', 'feedback' => 'feedback', 'other' => 'other']],
-                ['select', 'fid', '板块id', '', $arr],
-                ['text', 'uid', 'uid'],
-                ['text', 'tag', '标签'],
-                ['text', 'title', '标题'],
-                ['ueditor', 'content', '内容'],
-                ['image', 'img', '图片字段'],
-                ['text', 'extra', '附加字段'],
-                ['text', 'view', '查看数量'],
-                ['radio', 'is_public', '是否公开', '', ['禁用', '启用'], 1],
-                ['radio', 'is_hot', '是否设为热门', '', ['禁用', '启用'], 1],
-                ['radio', 'can_reply', '是否可以回复', '', ['禁用', '启用'], 1],
-
+                ['select', 'type', '课程类型', '', ['normal' => 'normal', 'feedback' => 'feedback', 'other' => 'other']],
+                ["aid", "机构ID"],
+                ["association_name", "机构名称"],
+                ["title", "标题", 'text.edit'],
+                ["content", "内容", 'text.textarea'],
+                ["img", "图片字段", 'picture'],
+                ['must_choice', '是否必选', 'switch'],
             ])
             ->fetch();
     }
