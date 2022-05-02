@@ -53,7 +53,7 @@ class GiftLog extends Admin
                 ["gid", "礼物ID"],
                 ["right_button", "功能"],
             ])
-            ->addRightButtons(["edit" => "修改", "delete" => "删除",])
+            ->addRightButtons(["delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
             ->setColumnWidth('title', 300)
