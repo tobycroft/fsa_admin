@@ -54,7 +54,7 @@ class AssociationMemberTitle extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["name", "头衔"],
+                ["name", "头衔", "text"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
