@@ -36,10 +36,6 @@ class TagDataunit extends Admin
         // 读取用户数据
         $data_list = TagDataunitModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
-        foreach ($data_list as $key => $item) {
-            $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $data_list[$key] = $item;
-        }
         $btn_access = [
             'title' => '回复',
             'icon' => 'fa fa-fw fa-key',
@@ -52,8 +48,6 @@ class TagDataunit extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID"],
-                ["association_name", "机构名称"],
                 ["name", "头衔", "text"],
                 ["right_button", "功能"],
             ])
@@ -95,7 +89,6 @@ class TagDataunit extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["text", "aid", "机构ID"],
                 ["text", "name", "头衔"],
             ])
             ->fetch();
@@ -146,7 +139,6 @@ class TagDataunit extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ["text", "aid", "机构ID"],
                 ["text", "name", "头衔"],
             ])
             ->setFormData($info) // 设置表单数据
