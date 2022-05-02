@@ -54,8 +54,8 @@ class Association extends Admin
                 ['name', '机构名称', 'text.edit'],
                 ['info', '工会信息', 'text.edit'],
                 ['img', '背景图', 'img_url'],
-                ['logo', 'LOGO', 'text.edit'],
-                ['poster', 'poster', 'text.edit'],
+                ['logo', 'LOGO', 'img_url'],
+                ['poster', '展示图', 'img_url'],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
