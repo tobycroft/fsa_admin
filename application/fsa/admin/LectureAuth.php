@@ -92,7 +92,7 @@ class LectureAuth extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["number", "lid", "讲座ID"],
-                ['select', '讲座类型', '', ["none" => "无", "instructor" => "讲师", "association" => "协会", "host" => "主板单位", "platform" => "平台"]],
+                ['select', 'type', '讲座类型', '', ["none" => "无", "instructor" => "讲师", "association" => "协会", "host" => "主板单位", "platform" => "平台"]],
             ])
             ->fetch();
     }
@@ -143,7 +143,7 @@ class LectureAuth extends Admin
             ->addFormItems([ // 批量添加表单项
                 ["hidden", "id"],
                 ["number", "lid", "讲座ID"],
-                ['select', '讲座类型', '', ["none" => "无", "instructor" => "讲师", "association" => "协会", "host" => "主板单位", "platform" => "平台"]],
+                ['select', 'type', '讲座类型', '', ["none" => "无", "instructor" => "讲师", "association" => "协会", "host" => "主板单位", "platform" => "平台"]],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
