@@ -52,7 +52,6 @@ class SystemParam extends Admin
                 ["info", "info"],
                 ['key', 'Key', 'text.edit'],
                 ['param', 'Value', 'text.edit'],
-                ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
