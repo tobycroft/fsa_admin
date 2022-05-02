@@ -58,7 +58,7 @@ class Lecture extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["aid", "公会名称"],
-                ["instructor", "讲师", "number"],
+                ["instructor", "讲师"],
                 ["hid", "hid", "number"],
                 ['title', '讲座主题', 'text.edit'],
                 ['tag_ids', '标签ids', 'text.edit'],
