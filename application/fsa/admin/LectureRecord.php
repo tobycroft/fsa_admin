@@ -41,7 +41,7 @@ class LectureRecord extends Admin
             'title' => '回复',
             'icon' => 'fa fa-fw fa-key',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('forum_thread_reply/index', ['search_field' => 'uid', 'keyword' => '__id__'])
+            'href' => url('lecture/index', ['search_field' => 'id', 'keyword' => '__lid__'])
         ];
 
         return ZBuilder::make('table')
