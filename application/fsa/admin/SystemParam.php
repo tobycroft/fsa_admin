@@ -48,7 +48,7 @@ class SystemParam extends Admin
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
-                ["id", "id"],
+                ["id", "id","hidden"],
                 ["info", "info"],
                 ['key', 'Key', 'text.edit'],
                 ['val', 'Value', 'text.edit'],
