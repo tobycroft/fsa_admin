@@ -160,13 +160,18 @@ class LectureRecord extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["hidden", "id"],
-                ["text", "uid", "uid"],
-                ["text", 'domain', '域名主体'],
-                ["text", 'name', '机构名称'],
-                ["text", 'info', '工会信息'],
-                ["image", 'img', '背景图'],
-                ["image", 'logo', 'LOGO'],
-                ["image", 'poster', '海报图'],
+                ["number", "lid", "讲座ID"],
+                ["text", "title", "标题"],
+                ["textarea", "content", "标题"],
+                ["image", "img1", "图片1"],
+                ["image", "img2", "图片2"],
+                ["image", "img3", "图片3"],
+                ["image", "img4", "图片4"],
+                ["image", "img5", "图片5"],
+                ["image", "img6", "图片6"],
+                ["image", "img7", "图片7"],
+                ["image", "img8", "图片8"],
+                ["image", "img9", "图片9"],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
