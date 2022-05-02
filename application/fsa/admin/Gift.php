@@ -105,7 +105,7 @@ class Gift extends Admin
                 ["text", "title", "标题"],
                 ["ueditor", "content", "内容"],
                 ["img", "图片字段", 'picture'],
-                ['must_choice', '是否必选', 'switch'],
+                ["switch", 'must_choice', '是否必选'],
             ])
             ->fetch();
     }
