@@ -100,10 +100,10 @@ class Gift extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["aid", "机构ID"],
-                ["association_name", "机构名称"],
-                ["title", "标题", 'text.edit'],
-                ["content", "内容", 'text.textarea'],
+                ["text", "aid", "机构ID"],
+                ["text", "association_name", "机构名称"],
+                ["text", "title", "标题"],
+                ["ueditor", "content", "内容"],
                 ["img", "图片字段", 'picture'],
                 ['must_choice', '是否必选', 'switch'],
             ])
