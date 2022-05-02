@@ -45,7 +45,7 @@ class Lecture extends Admin
             $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
             $item["host"] = HostModel::where("id", $item["hid"])->value("name");
             $item["tags"] = TagModel::whereIn("id", $item["tag_ids"])->value("name");
-            $item["dataunits"] = TagDataunitModel::whereIn("id", $item["tag_ids"])->value("name");
+            $item["dataunits"] = TagDataunitModel::whereIn("id", $item["tag_dataunit_ids"])->value("name");
             $data_list[$key] = $item;
         }
         $page = $data_list->render();
@@ -68,7 +68,7 @@ class Lecture extends Admin
                 ["host", "主办方", ""],
                 ['title', '讲座主题', 'text.edit'],
                 ['tags', '标签ids'],
-                ['tag_dataunit_ids', '标签数据归属方ids'],
+                ['dataunits', '标签数据归属方ids'],
                 ['start_date', '讲座开始时间', 'datetime'],
                 ['duration', '时长(秒)', 'text.edit'],
                 ['location', '讲座地点', 'text.edit'],
