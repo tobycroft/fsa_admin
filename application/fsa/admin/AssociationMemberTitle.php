@@ -44,7 +44,7 @@ class AssociationMemberTitle extends Admin
             'title' => '回复',
             'icon' => 'fa fa-fw fa-key',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('forum_thread_reply/index', ['search_field' => 'uid', 'keyword' => '__id__'])
+            'href' => url('association_member_title/index', ['search_field' => 'mtid', 'keyword' => '__id__'])
         ];
 
         return ZBuilder::make('table')
