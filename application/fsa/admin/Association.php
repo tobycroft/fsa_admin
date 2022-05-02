@@ -53,9 +53,9 @@ class Association extends Admin
                 ['domain', '域名主体', 'text.edit'],
                 ['name', '机构名称', 'text.edit'],
                 ['info', '工会信息', 'text.edit'],
-                ['img', '背景图', 'img_url'],
-                ['logo', 'LOGO', 'img_url'],
-                ['poster', '展示图', 'img_url'],
+                ['img', '背景图', 'picture'],
+                ['logo', 'LOGO', 'picture'],
+                ['poster', '展示图', 'picture'],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
