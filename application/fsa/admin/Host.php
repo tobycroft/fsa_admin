@@ -52,15 +52,10 @@ class Host extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID"],
-                ["association_name", "机构名称"],
-                ["mtids", "member_title_ids"],
-                ["uid", "uid"],
-                ['iid', '讲师id', 'text.edit'],
-                ['is_admin', '是否是机构管理员', 'switch'],
+                ['name', '主办方', 'text.edit'],
                 ["right_button", "功能"],
             ])
-            ->addRightButtons(["edit" => "修改", "delete" => "删除",])
+            ->addRightButtons(["delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
             ->setColumnWidth('title', 300)
