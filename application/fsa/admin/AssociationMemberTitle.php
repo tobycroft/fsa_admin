@@ -85,8 +85,6 @@ class AssociationMemberTitle extends Admin
                 $this->error('新增失败');
             }
         }
-
-Lecture
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
