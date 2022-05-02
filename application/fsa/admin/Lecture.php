@@ -200,15 +200,24 @@ class Lecture extends Admin
 
         // 获取数据
         $info = LectureModel::where('id', $id)->find();
-
+        $ins = InstructorModel::select();
+        $inss = [];
+        foreach ($ins as $item) {
+            $inss[$item["id"]] = $item["name"];
+        }
+        $host = HostModel::select();
+        $hosts = [];
+        foreach ($host as $item) {
+            $hosts[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["hidden", "id"],
                 ["number", "aid", "公会名称"],
-                ["number", "iid", "讲师"],
-                ["number", "host", "主办方", ""],
+                ["select", "iid", "讲师", "", $inss],
+                ["select", "host", "主办方", "", $hosts],
                 ["text", 'title', '讲座主题',],
                 ["text", 'tag_ids', '标签ids'],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
