@@ -41,7 +41,7 @@ class AssociationMember extends Admin
             $data_list[$key] = $item;
         }
         $btn_access = [
-            'title' => '回复',
+            'title' => '讲师信息',
             'icon' => 'fa fa-fw fa-key',
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('forum_thread_reply/index', ['search_field' => 'uid', 'keyword' => '__id__'])
