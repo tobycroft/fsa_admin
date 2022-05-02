@@ -54,7 +54,7 @@ class Gift extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["type", "课程类型", 'select', ['normal' => 'normal', 'feedback' => 'feedback', 'other' => 'other']],
+                ["type", "课程类型", 'select', ['无', '体验课', '资料', '学习群', '课程']],
                 ["title", "标题", 'text.edit'],
                 ["content", "内容", 'text.textarea'],
                 ["img", "图片字段", 'picture'],
