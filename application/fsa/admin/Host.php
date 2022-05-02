@@ -40,7 +40,7 @@ class Host extends Admin
             'title' => '讲座信息',
             'icon' => 'fa fa-fw fa-user',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('lecture/index', ['search_field' => 'uid', 'keyword' => '__id__'])
+            'href' => url('lecture/index', ['search_field' => 'hid', 'keyword' => '__id__'])
         ];
 
         return ZBuilder::make('table')
