@@ -104,7 +104,7 @@ class Gift extends Admin
                 ["text", "association_name", "机构名称"],
                 ["text", "title", "标题"],
                 ["ueditor", "content", "内容"],
-                ["img", "图片字段", 'picture'],
+                ["picture", "图片字段", 'picture'],
                 ["switch", 'must_choice', '是否必选'],
             ])
             ->fetch();
