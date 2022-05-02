@@ -50,7 +50,7 @@ class LectureAuth extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["lid", "讲座ID"],
-                ['type', '讲座类型', 'select', ["none" => "无", "instructor"=>"instructor", "association"=>"", "host"=>"", "platform"=>""]],
+                ['type', '讲座类型', 'select', ["无" => "none", "讲师" => "instructor", "协会" => "association", "host" => "host", "平台" => "platform"]],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
