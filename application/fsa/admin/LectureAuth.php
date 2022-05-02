@@ -82,11 +82,6 @@ class LectureAuth extends Admin
             }
         }
 
-        $data = ForumModel::select();
-        $arr = [];
-        foreach ($data as $item) {
-            $arr[$item["id"]] = $item["name"];
-        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
