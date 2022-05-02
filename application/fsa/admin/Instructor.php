@@ -54,6 +54,7 @@ class Instructor extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
+                ["association_name", "机构名称"],
                 ["uid", "用户ID"],
                 ["name", "姓名", "text.edit"],
                 ["img", "头像字段", "picture"],
