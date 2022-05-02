@@ -72,13 +72,13 @@ class Lecture extends Admin
             'title' => '现场记录',
             'icon' => 'fa fa-fw fa-key',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('lecture_record/index', ['search_field' => 'iid', 'keyword' => '__id__'])
+            'href' => url('lecture_record/index', ['search_field' => 'lid', 'keyword' => '__id__'])
         ];
         $btn_access1 = [
             'title' => '权限',
             'icon' => 'fa fa-fw fa-key',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('lecture_auth/index', ['search_field' => 'iid', 'keyword' => '__id__'])
+            'href' => url('lecture_auth/index', ['search_field' => 'lid', 'keyword' => '__id__'])
         ];
 
         return ZBuilder::make('table')
