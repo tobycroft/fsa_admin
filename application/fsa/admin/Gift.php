@@ -54,7 +54,7 @@ class Gift extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["type", "课程类型", 'select', ['无', '体验课', '资料', '学习群', '课程']],
+                ["type", "课程类型", 'select', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
                 ["title", "标题", 'text.edit'],
                 ["content", "内容", 'text.textarea'],
                 ["img", "图片字段", 'picture'],
@@ -99,7 +99,7 @@ class Gift extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['select', 'type', '课程类型', '', ['normal' => 'normal', 'feedback' => 'feedback', 'other' => 'other']],
+                ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
                 ["title", "标题", 'text.edit'],
