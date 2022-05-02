@@ -59,7 +59,7 @@ class Gift extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["select", "aid", "机构ID", "", $accs],
+                ["aid", "机构ID", "select", $accs],
                 ["type", "课程类型", 'select', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
                 ["title", "标题", 'text.edit'],
                 ["content", "内容", 'text.textarea'],
