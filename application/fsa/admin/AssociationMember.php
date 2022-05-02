@@ -42,7 +42,7 @@ class AssociationMember extends Admin
         }
         $btn_access = [
             'title' => '讲师信息',
-            'icon' => 'fa fa-fw fa-key',
+            'icon' => 'fa fa-fw fa-user',
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('forum_thread_reply/index', ['search_field' => 'uid', 'keyword' => '__id__'])
         ];
