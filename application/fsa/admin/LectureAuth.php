@@ -51,11 +51,6 @@ class LectureAuth extends Admin
                 ["id", "id"],
                 ["lid", "讲座ID"],
                 ['type', '讲座类型', 'select', ["none" => "无", "instructor"=>"instructor", "association"=>"", "host"=>"", "platform"=>""]],
-                ['name', '机构名称', 'text.edit'],
-                ['info', '工会信息', 'text.edit'],
-                ['img', '背景图', 'picture'],
-                ['logo', 'LOGO', 'picture'],
-                ['poster', '展示图', 'picture'],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
