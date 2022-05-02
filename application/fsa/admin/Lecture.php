@@ -59,7 +59,7 @@ class Lecture extends Admin
                 ["id", "id"],
                 ["aid", "公会名称"],
                 ["instructor", "讲师"],
-                ["hid", "hid", "number"],
+                ["hid", "主办方", ""],
                 ['title', '讲座主题', 'text.edit'],
                 ['tag_ids', '标签ids', 'text.edit'],
                 ['tag_dataunit_ids', '标签数据归属方ids', 'text.edit'],
@@ -290,7 +290,8 @@ class Lecture extends Admin
                         } else {
                             $model_name = $curr_access_nodes['model_name'];
                         }
-                        $class = "app\\{$module}\\model\\" . $model_name;
+                        $class = "app\\{
+        $module}\\model\\" . $model_name;
                         $model = new $class;
                         try {
                             $model->afterAccessUpdate($post);
@@ -322,7 +323,8 @@ class Lecture extends Admin
                     } else {
                         $model_name = $curr_access_nodes['model_name'];
                     }
-                    $class = "app\\{$module}\\model\\" . $model_name;
+                    $class = "app\\{
+        $module}\\model\\" . $model_name;
                     $model = new $class;
 
                     try {
