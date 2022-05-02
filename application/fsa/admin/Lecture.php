@@ -5,7 +5,10 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
+use app\fsa\model\AssociationMemberTitleModel;
+use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
+use app\fsa\model\InstructorModel;
 use app\fsa\model\LectureModel;
 use app\user\model\Role;
 use util\Tree;
@@ -34,6 +37,11 @@ class Lecture extends Admin
 
         // 读取用户数据
         $data_list = LectureModel::where($map)->order($order)->paginate();
+        foreach ($data_list as $key => $item) {
+            $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
+            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
+            $data_list[$key] = $item;
+        }
         $page = $data_list->render();
 
 
@@ -49,9 +57,9 @@ class Lecture extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "aid"],
-                ["iid", "iid"],
-                ["hid", "hid"],
+                ["aid", "公会名称"],
+                ["instructor", "讲师", "number"],
+                ["hid", "hid", "number"],
                 ['title', '讲座主题', 'text.edit'],
                 ['tag_ids', '标签ids', 'text.edit'],
                 ['tag_dataunit_ids', '标签数据归属方ids', 'text.edit'],
