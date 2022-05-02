@@ -37,7 +37,7 @@ class AssociationMember extends Admin
         $data_list = AssociationMemberModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
-            $item["name"] = AssociationModel::where("id", $item["aid"])->value("name");
+            $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
             $data_list[$key] = $item;
         }
         $btn_access = [
@@ -53,7 +53,7 @@ class AssociationMember extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
-                ["name", "机构名称"],
+                ["association_name", "机构名称"],
                 ["mtids", "member_title_ids"],
                 ["uid", "uid"],
                 ['iid', '讲师id', 'text.edit'],
