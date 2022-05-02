@@ -8,6 +8,7 @@ use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationMemberTitleModel;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
+use app\fsa\model\HostModel;
 use app\fsa\model\InstructorModel;
 use app\fsa\model\LectureModel;
 use app\user\model\Role;
@@ -40,6 +41,7 @@ class Lecture extends Admin
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
             $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
+            $item["host"] = HostModel::where("id", $item["hid"])->value("name");
             $data_list[$key] = $item;
         }
         $page = $data_list->render();
@@ -59,7 +61,7 @@ class Lecture extends Admin
                 ["id", "id"],
                 ["aid", "公会名称"],
                 ["instructor", "讲师"],
-                ["hid", "主办方", ""],
+                ["host", "主办方", ""],
                 ['title', '讲座主题', 'text.edit'],
                 ['tag_ids', '标签ids', 'text.edit'],
                 ['tag_dataunit_ids', '标签数据归属方ids', 'text.edit'],
