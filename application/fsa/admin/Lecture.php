@@ -50,6 +50,18 @@ class Lecture extends Admin
         }
         $page = $data_list->render();
 
+//        $lecture = LectureModel::select();
+//        $lectures = [];
+//        foreach ($lecture as $item) {
+//            $lectures[$item["id"]] = $item["name"];
+//        }
+
+        $ins = InstructorModel::select();
+        $inss = [];
+        foreach ($ins as $item) {
+            $inss[$item["id"]] = $item["name"];
+        }
+
 
         $btn_access = [
             'title' => '回复',
@@ -64,7 +76,7 @@ class Lecture extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["aid", "公会名称"],
-                ["instructor", "讲师"],
+                ["iid", "讲师", "select", $inss],
                 ["host", "主办方", ""],
                 ['title', '讲座主题', 'text.edit'],
                 ['tags', '标签ids'],
