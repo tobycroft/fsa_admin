@@ -147,7 +147,8 @@ class Lecture extends Admin
             'CYM' => '曾用名',
             'XB' => '性别',
             'CSNY' => '出生年月',
-        ];        // 使用ZBuilder快速创建表单
+        ];
+        // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
