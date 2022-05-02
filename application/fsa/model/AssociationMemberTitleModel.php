@@ -14,7 +14,7 @@ use think\Db;
 class AssociationMemberTitleModel extends Model
 {
     // 设置当前模型对应的完整数据表名称
-    protected $table = 'fra_association_title_member';
+    protected $table = 'fra_association_member_title';
 
     // 设置当前模型对应的完整数据表名称
 
