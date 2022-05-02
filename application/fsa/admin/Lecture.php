@@ -183,13 +183,22 @@ class Lecture extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["hidden", "id"],
-                ["text", "uid", "uid"],
-                ["text", 'domain', '域名主体'],
-                ["text", 'name', '机构名称'],
-                ["text", 'info', '工会信息'],
-                ["image", 'img', '背景图'],
-                ["image", 'logo', 'LOGO'],
-                ["image", 'poster', '海报图'],
+                ["number", "aid", "公会名称"],
+                ["number", "iid", "讲师"],
+                ["number", "host", "主办方", ""],
+                ["text", 'title', '讲座主题',],
+                ["text", 'tags', '标签ids'],
+                ["text", 'dataunits', '标签数据归属方ids'],
+                ["text", 'start_date', '讲座开始时间',],
+                ["number", 'duration', '时长(秒)',],
+                ["text", 'location', '讲座地点',],
+                ["switch", 'can_gift', '礼包开关',],
+                ["number", 'gift_ids', '礼包id',],
+                ["image", 'poster_img', '讲座海报',],
+                ["number", 'visitor', '学员人数',],
+                ["image", 'file1', '文件地址1',],
+                ["image", 'file2', '文件地址2',],
+                ["switch", 'is_del', '软删除',],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
