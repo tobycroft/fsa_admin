@@ -41,10 +41,10 @@ class TagDataunit extends Admin
             $data_list[$key] = $item;
         }
         $btn_access = [
-            'title' => '讲师信息',
-            'icon' => 'fa fa-fw fa-user',
+            'title' => '回复',
+            'icon' => 'fa fa-fw fa-key',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('forum_thread_reply/index', ['search_field' => 'uid', 'keyword' => '__id__'])
+            'href' => url('association_member/index', ['search_field' => 'mtids', 'keyword' => '__id__'])
         ];
 
         return ZBuilder::make('table')
@@ -54,14 +54,10 @@ class TagDataunit extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["type", "课程类型", 'select', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["title", "标题", 'text.edit'],
-                ["content", "内容", 'text.textarea'],
-                ["img", "图片字段", 'picture'],
-                ['must_choice', '是否必选', 'switch'],
+                ["name", "头衔", "text"],
                 ["right_button", "功能"],
             ])
-            ->addRightButtons(["edit" => "修改", "delete" => "删除",])
+            ->addRightButtons(["delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
             ->setColumnWidth('title', 300)
@@ -99,13 +95,8 @@ class TagDataunit extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
                 ["text", "aid", "机构ID"],
-                ["text", "association_name", "机构名称"],
-                ["text", "title", "标题"],
-                ["ueditor", "content", "内容"],
-                ["image", "picture", "图片字段"],
-                ["switch", 'must_choice', '是否必选'],
+                ["text", "name", "头衔"],
             ])
             ->fetch();
     }
@@ -155,13 +146,8 @@ class TagDataunit extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
                 ["text", "aid", "机构ID"],
-                ["text", "association_name", "机构名称"],
-                ["text", "title", "标题"],
-                ["ueditor", "content", "内容"],
-                ["image", "picture", "图片字段"],
-                ["switch", 'must_choice', '是否必选'],
+                ["text", "name", "头衔"],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
