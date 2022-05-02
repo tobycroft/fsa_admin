@@ -11,6 +11,7 @@ use app\fsa\model\ForumModel;
 use app\fsa\model\HostModel;
 use app\fsa\model\InstructorModel;
 use app\fsa\model\LectureModel;
+use app\fsa\model\TagDataunitModel;
 use app\fsa\model\TagModel;
 use app\user\model\Role;
 use util\Tree;
@@ -44,6 +45,7 @@ class Lecture extends Admin
             $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
             $item["host"] = HostModel::where("id", $item["hid"])->value("name");
             $item["tags"] = TagModel::whereIn("id", $item["tag_ids"])->value("name");
+            $item["dataunits"] = TagDataunitModel::whereIn("id", $item["tag_ids"])->value("name");
             $data_list[$key] = $item;
         }
         $page = $data_list->render();
