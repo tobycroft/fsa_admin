@@ -99,13 +99,18 @@ class LectureRecord extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["text", "uid", "uid"],
-                ["text", 'domain', '域名主体'],
-                ["text", 'name', '机构名称'],
-                ["text", 'info', '工会信息'],
-                ["image", 'img', '背景图'],
-                ["image", 'logo', 'LOGO'],
-                ["image", 'poster', '海报图'],
+                ["number", "lid", "讲座ID"],
+                ["text", "title", "标题"],
+                ["textarea", "content", "标题"],
+                ["image", "img1", "图片1"],
+                ["image", "img2", "图片2"],
+                ["image", "img3", "图片3"],
+                ["image", "img4", "图片4"],
+                ["image", "img5", "图片5"],
+                ["image", "img6", "图片6"],
+                ["image", "img7", "图片7"],
+                ["image", "img8", "图片8"],
+                ["image", "img9", "图片9"],
             ])
             ->fetch();
     }
@@ -277,7 +282,8 @@ class LectureRecord extends Admin
                         } else {
                             $model_name = $curr_access_nodes['model_name'];
                         }
-                        $class = "app\\{$module}\\model\\" . $model_name;
+                        $class = "app\\{
+        $module}\\model\\" . $model_name;
                         $model = new $class;
                         try {
                             $model->afterAccessUpdate($post);
@@ -309,7 +315,8 @@ class LectureRecord extends Admin
                     } else {
                         $model_name = $curr_access_nodes['model_name'];
                     }
-                    $class = "app\\{$module}\\model\\" . $model_name;
+                    $class = "app\\{
+        $module}\\model\\" . $model_name;
                     $model = new $class;
 
                     try {
