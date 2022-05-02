@@ -39,7 +39,6 @@ class Instructor extends Admin
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $item["association_member_title"] = InstructorTitleModel::whereIn("id", $item["mtids"])->value("name");
             $data_list[$key] = $item;
         }
         $btn_access = [
@@ -56,8 +55,6 @@ class Instructor extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["mtids", "MTIDS"],
-                ["association_member_title", "用户身份MTIDS"],
                 ["uid", "uid", "number"],
                 ['iid', '讲师id', 'number'],
                 ['is_admin', '是否是机构管理员', 'switch'],
