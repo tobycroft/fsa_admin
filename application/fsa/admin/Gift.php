@@ -96,13 +96,17 @@ class Gift extends Admin
             }
         }
 
-
+        $acc = AssociationModel::select();
+        $accs = [];
+        foreach ($acc as $item) {
+            $accs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["text", "aid", "机构ID"],
+                ["select", "aid", "机构ID", "", $accs],
                 ["text", "association_name", "机构名称"],
                 ["text", "title", "标题"],
                 ["ueditor", "content", "内容"],
@@ -151,15 +155,18 @@ class Gift extends Admin
 
         // 获取数据
         $info = GiftModel::where('id', $id)->find();
-
+        $acc = AssociationModel::select();
+        $accs = [];
+        foreach ($acc as $item) {
+            $accs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
                 ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["text", "aid", "机构ID"],
-                ["text", "association_name", "机构名称"],
+                ["select", "aid", "机构ID", "", $accs],
                 ["text", "title", "标题"],
                 ["ueditor", "content", "内容"],
                 ["image", "picture", "图片字段"],
