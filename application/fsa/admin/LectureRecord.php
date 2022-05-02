@@ -39,7 +39,7 @@ class LectureRecord extends Admin
 
         $btn_access = [
             'title' => '回复',
-            'icon' => 'fa fa-fw fa-key',
+            'icon' => 'fa fa-fw fa-reply-all',
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('lecture/index', ['search_field' => 'id', 'keyword' => '__lid__'])
         ];
