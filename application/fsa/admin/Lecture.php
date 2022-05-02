@@ -133,7 +133,7 @@ class Lecture extends Admin
                 ["number", 'visitor', '学员人数',],
                 ["image", 'file1', '文件地址1',],
                 ["image", 'file2', '文件地址2',],
-                ["number", 'is_del', '软删除',],
+                ["switch", 'is_del', '软删除',],
             ])
             ->fetch();
     }
