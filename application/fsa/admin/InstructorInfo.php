@@ -41,7 +41,7 @@ class InstructorInfo extends Admin
             'title' => '讲师信息',
             'icon' => 'fa fa-fw fa-user',
 //            'class' => 'btn btn-xs btn-default ajax-get',
-            'href' => url('InstructorInfo_info/index', ['search_field' => 'iid', 'keyword' => '__id__'])
+            'href' => url('instructor/index', ['search_field' => 'id', 'keyword' => '__id__'])
         ];
 
         return ZBuilder::make('table')
