@@ -231,13 +231,13 @@ class Lecture extends Admin
                 ["text", 'start_date', '讲座开始时间',],
                 ["number", 'duration', '时长(秒)',],
                 ["text", 'location', '讲座地点',],
-                ["radio", 'can_gift', '礼包开关', ["1" => "开", "0" => "关"]],
+                ["radio", 'can_gift', '礼包开关', "", ["1" => "开", "0" => "关"]],
                 ["number", 'gift_ids', '礼包id',],
                 ["image", 'poster_img', '讲座海报',],
                 ["number", 'visitor', '学员人数',],
                 ["image", 'file1', '文件地址1',],
                 ["image", 'file2', '文件地址2',],
-                ["switch", 'is_del', '软删除',],
+                ["radio", 'is_del', '软删除', "", ["1" => "开", "0" => "关"]],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
