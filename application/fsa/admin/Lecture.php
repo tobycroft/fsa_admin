@@ -95,7 +95,7 @@ class Lecture extends Admin
                 ['start_date', '讲座开始时间', 'text.edit'],
                 ['duration', '时长(秒)', 'text.edit'],
                 ['location', '讲座地点', 'text.edit'],
-                ['can_gift', '礼包开关', 'text.edit'],
+                ['can_gift', '礼包开关', 'switch'],
                 ['gift_ids', '礼包id', 'text.edit'],
                 ['poster_img', '讲座海报', 'picture'],
                 ['visitor', '学员人数', 'number'],
