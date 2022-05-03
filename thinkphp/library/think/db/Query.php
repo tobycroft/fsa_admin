@@ -740,9 +740,9 @@ class Query
         if (is_array($field)) {
             $data = $field;
         } else {
-            if ($value == "true") {
+            if ($value == "true" || $value == "on") {
                 $data[$field] = 1;
-            } elseif ($value == "false") {
+            } elseif ($value == "false" || $value == "off") {
                 $data[$field] = 0;
             } else {
                 $data[$field] = $value;
