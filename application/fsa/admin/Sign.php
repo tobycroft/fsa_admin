@@ -59,12 +59,9 @@ class Sign extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID", "select", $accs],
-                ["type", "课程类型", 'select', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["title", "标题", 'text.edit'],
-                ["content", "内容", 'text.textarea'],
-                ["img", "图片字段", 'picture'],
-                ['must_choice', '是否必选', 'switch'],
+                ["lid", "机构ID", "select", $accs],
+                ["UID", "UID"],
+                ["date", "日期"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
