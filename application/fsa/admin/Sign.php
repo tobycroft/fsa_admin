@@ -59,7 +59,7 @@ class Sign extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["lid", "机构ID", "select", $accs],
+                ["lid", "讲座ID"],
                 ["UID", "UID"],
                 ["date", "日期"],
                 ["right_button", "功能"],
