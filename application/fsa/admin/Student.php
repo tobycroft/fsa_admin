@@ -52,8 +52,7 @@ class Student extends Admin
             ->setSearch(['id' => 'ID', "pid" => "上级UID", 'username' => '用户名']) // 设置搜索参数
             ->addOrder('id')
             ->addColumn('id', '问题ID')
-            ->addColumn('parent_id', '家长id', 'number')
-            ->addColumn('school_id', '学校id', 'number')
+            ->addColumn('uid', 'uid', 'number')
             ->addColumn('gender', '男女', 'number')
             ->addColumn('name', '姓名', 'text.edit')
             ->addColumn('img', '头像', 'picture')
@@ -124,9 +123,8 @@ class Student extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['number', 'parent_id', '家长id', '请确认务必存在'],
-                ['number', 'school_id', '学校id', '请确认务必存在'],
-                ['select', 'gender', '性别', '', \Student\Student::get_student_gender()],
+                ['number', 'uid', 'uid', '请确认务必存在'],
+                ['select', 'gender', '性别', '', ["1"=>"男","2"=>"女"]],
                 ['text', 'name', '姓名', ''],
                 ['image', 'img', '头像', ''],
                 ['number', 'year', '入学年份'],
