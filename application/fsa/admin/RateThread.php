@@ -1,22 +1,20 @@
 <?php
-// +----------------------------------------------------------------------
-// | 海豚PHP框架 [ DThinkPHP ]
-// +----------------------------------------------------------------------
-// | 版权所有 2016~2019 广东卓锐软件有限公司 [ http://www.zrthink.com ]
-// +----------------------------------------------------------------------
-// | 官方网站: http://DThinkPHP.com
-// +----------------------------------------------------------------------
+
 
 namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
+use app\fsa\model\AssociationModel;
+use app\fsa\model\ForumModel;
 use app\fsa\model\RateThreadModel;
-use app\user\model\User;
-use app\user\model\Role as RoleModel;
+use app\fsa\model\HostModel;
+use app\fsa\model\LectureModel;
+use app\user\model\Role;
 use util\Tree;
 use think\Db;
 use think\facade\Hook;
+
 
 /**
  * 用户默认控制器
@@ -36,40 +34,48 @@ class RateThread extends Admin
         // 获取排序
         $order = $this->getOrder("id desc");
         $map = $this->getMap();
+
         // 读取用户数据
         $data_list = RateThreadModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
-//        $todaytime = date('Y-m-d H:i:s', strtotime(date("Y-m-d"), time()));
 
-//        $num1 = RateThreadModel::where("date", ">", $todaytime)->count();
-//        $num2 = RateThreadModel::count();
+
+        $acc = AssociationModel::select();
+        $accs = [];
+        foreach ($acc as $item) {
+            $accs[$item["id"]] = $item["name"];
+        }
+
+
+        $btn_access = [
+            'title' => '讲师信息',
+            'icon' => 'fa fa-fw fa-user',
+//            'class' => 'btn btn-xs btn-default ajax-get',
+            'href' => url('forum_thread_reply/index', ['search_field' => 'uid', 'keyword' => '__id__'])
+        ];
 
         return ZBuilder::make('table')
-//            ->setPageTips("总数量：" . $num2 . "    今日数量：" . $num1, 'danger')
-//            ->setPageTips("总数量：" . $num2, 'danger')
-            ->addTopButton("add")
-            ->setPageTitle('列表')
-            ->setSearch(['id' => 'ID', "pid" => "上级UID", 'username' => '用户名']) // 设置搜索参数
             ->addOrder('id')
-            ->addColumn('id', '问题ID')
-            ->addColumn('uid', 'uid', 'number')
-            ->addColumn('gender', '男女', 'number')
-            ->addColumn('name', '姓名', 'text.edit')
-            ->addColumn('img', '头像', 'picture')
-            ->addColumn('year', '入学年份', 'number')
-            ->addColumn('grade', '年级', 'number')
-            ->addColumn('class', '班级', 'number')
-            ->addColumn('special', '特殊班级', 'text.edit')
-            ->addColumn('callsign', '座号', 'number')
-            ->addColumn('remark', '备注', 'textarea.edit')
-            ->addColumn('date', '创建时间')
-            ->addColumn('right_button', '操作', 'btn')
-            ->addRightButton('edit') // 添加编辑按钮
-            ->addRightButton('delete') //添加删除按钮
+            ->setSearch(['id' => 'id']) // 设置搜索参数
+            ->addColumns([
+                ["id", "id"],
+                ["aid", "机构ID", "select", $accs],
+                ["type", "课程类型", 'select', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
+                ["title", "标题", 'text.edit'],
+                ["content", "内容", 'text.textarea'],
+                ["img", "图片字段", 'picture'],
+                ['must_choice', '是否必选', 'switch'],
+                ["right_button", "功能"],
+            ])
+            ->addRightButtons(["edit" => "修改", "delete" => "删除",])
+            ->addRightButton("custom", $btn_access)
+            ->addTopButtons(["add" => "发帖"])
+            ->setColumnWidth('title', 300)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
     }
+
 
     /**
      * 新增
@@ -82,57 +88,30 @@ class RateThread extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            // 非超级管理需要验证可选择角色
-            if (session('user_auth.role') != 1) {
-                if ($data['role'] == session('user_auth.role')) {
-                    $this->error('禁止创建与当前角色同级的用户');
-                }
-                $role_list = RoleModel::getChildsId(session('user_auth.role'));
-                if (!in_array($data['role'], $role_list)) {
-                    $this->error('权限不足，禁止创建非法角色的用户');
-                }
-
-                if (isset($data['roles'])) {
-                    $deny_role = array_diff($data['roles'], $role_list);
-                    if ($deny_role) {
-                        $this->error('权限不足，附加角色设置错误');
-                    }
-                }
-            }
-
-            $data['roles'] = isset($data['roles']) ? implode(',', $data['roles']) : '';
 
             if ($user = RateThreadModel::create($data)) {
-                Hook::listen('user_add', $user);
-                // 记录行为
-                action_log('user_add', 'admin_user', $user['id'], UID);
                 $this->success('新增成功', url('index'));
             } else {
                 $this->error('新增失败');
             }
         }
 
-        // 角色列表
-        if (session('user_auth.role') != 1) {
-            $role_list = RoleModel::getTree(null, false, session('user_auth.role'));
-        } else {
-            $role_list = RoleModel::getTree(null, false);
+        $acc = AssociationModel::select();
+        $accs = [];
+        foreach ($acc as $item) {
+            $accs[$item["id"]] = $item["name"];
         }
-
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['number', 'uid', 'uid', '请确认务必存在'],
-                ['select', 'gender', '性别', '', ["1"=>"男","2"=>"女"]],
-                ['text', 'name', '姓名', ''],
-                ['image', 'img', '头像', ''],
-                ['number', 'year', '入学年份'],
-                ['number', 'grade', '年段'],
-                ['number', 'class', '班级'],
-                ['text', 'special', '特殊班级'],
-                ['number', 'callsign', '座号'],
-                ['textarea', 'remark', '提示', ''],
+                ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
+                ["select", "aid", "机构ID", "", $accs],
+                ["text", "association_name", "机构名称"],
+                ["text", "title", "标题"],
+                ["ueditor", "content", "内容"],
+                ["image", "picture", "图片字段"],
+                ["switch", 'must_choice', '是否必选'],
             ])
             ->fetch();
     }
@@ -154,7 +133,7 @@ class RateThread extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = User::where('role', 'in', $role_list)->column('id');
+            $user_list = RateThreadModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($id, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -168,9 +147,6 @@ class RateThread extends Admin
 
 
             if (RateThreadModel::update($data)) {
-                $user = RateThreadModel::get($data['id']);
-                // 记录行为
-                action_log('user_edit', 'user', $id, UID);
                 $this->success('编辑成功');
             } else {
                 $this->error('编辑失败');
@@ -179,28 +155,26 @@ class RateThread extends Admin
 
         // 获取数据
         $info = RateThreadModel::where('id', $id)->find();
-
+        $acc = AssociationModel::select();
+        $accs = [];
+        foreach ($acc as $item) {
+            $accs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
-        $data = ZBuilder::make('form')
+        return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['number', 'uid', 'uid', '请确认务必存在'],
-                ['select', 'gender', '性别', '', ["1"=>"男","2"=>"女"]],
-                ['text', 'name', '姓名', ''],
-                ['image', 'img', '头像', ''],
-                ['number', 'year', '入学年份'],
-                ['number', 'grade', '年段'],
-                ['number', 'class', '班级'],
-                ['text', 'special', '特殊班级'],
-                ['number', 'callsign', '座号'],
-                ['textarea', 'remark', '提示', ''],
-            ]);
-        return $data
+                ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
+                ["select", "aid", "机构ID", "", $accs],
+                ["text", "title", "标题"],
+                ["ueditor", "content", "内容"],
+                ["image", "picture", "图片字段"],
+                ["switch", 'must_choice', '是否必选'],
+            ])
             ->setFormData($info) // 设置表单数据
-            ->fetch();;
+            ->fetch();
     }
-
 
     /**
      * 授权
@@ -222,7 +196,7 @@ class RateThread extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = User::where('role', 'in', $role_list)->column('id');
+            $user_list = RateThreadModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($uid, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -439,7 +413,6 @@ class RateThread extends Admin
     public function delete($ids = [])
     {
         Hook::listen('user_delete', $ids);
-        action_log('user_delete', 'user', $ids, UID);
         return $this->setStatus('delete');
     }
 
@@ -481,6 +454,8 @@ class RateThread extends Admin
     {
         $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $ids = (array)$ids;
+
+        // 当前用户所能操作的用户
 
         switch ($type) {
             case 'enable':
@@ -527,9 +502,9 @@ class RateThread extends Admin
                 $this->error('权限不足，没有可操作的用户');
             }
         }
+
         $result = RateThreadModel::where("id", $id)->setField($field, $value);
         if (false !== $result) {
-            action_log('user_edit', 'user', $id, UID);
             $this->success('操作成功');
         } else {
             $this->error('操作失败');
