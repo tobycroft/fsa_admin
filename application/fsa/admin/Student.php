@@ -185,9 +185,8 @@ class Student extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['number', 'parent_id', '家长id', '请确认务必存在'],
-                ['number', 'school_id', '学校id', '请确认务必存在'],
-                ['select', 'gender', '性别', '', \Student\Student::get_student_gender()],
+                ['number', 'uid', 'uid', '请确认务必存在'],
+                ['select', 'gender', '性别', '', ["1"=>"男","2"=>"女"]],
                 ['text', 'name', '姓名', ''],
                 ['image', 'img', '头像', ''],
                 ['number', 'year', '入学年份'],
