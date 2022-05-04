@@ -60,7 +60,7 @@ class Sign extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["lid", "讲座ID"],
-                ["UID", "UID"],
+                ["uid", "UID"],
                 ["date", "日期"],
                 ["right_button", "功能"],
             ])
