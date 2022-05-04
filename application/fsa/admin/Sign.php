@@ -7,7 +7,7 @@ use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
-use app\fsa\model\GiftModel;
+use app\fsa\model\SignModel;
 use app\fsa\model\HostModel;
 use app\fsa\model\LectureModel;
 use app\user\model\Role;
@@ -20,7 +20,7 @@ use think\facade\Hook;
  * 用户默认控制器
  * @package app\user\admin
  */
-class  extends Admin
+class Sign extends Admin
 {
     /**
      * 用户首页
@@ -36,7 +36,7 @@ class  extends Admin
         $map = $this->getMap();
 
         // 读取用户数据
-        $data_list = GiftModel::where($map)->order($order)->paginate();
+        $data_list = SignModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
 
 
@@ -89,7 +89,7 @@ class  extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            if ($user = GiftModel::create($data)) {
+            if ($user = SignModel::create($data)) {
                 $this->success('新增成功', url('index'));
             } else {
                 $this->error('新增失败');
@@ -133,7 +133,7 @@ class  extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = GiftModel::where('role', 'in', $role_list)->column('id');
+            $user_list = SignModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($id, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -146,7 +146,7 @@ class  extends Admin
             // 非超级管理需要验证可选择角色
 
 
-            if (GiftModel::update($data)) {
+            if (SignModel::update($data)) {
                 $this->success('编辑成功');
             } else {
                 $this->error('编辑失败');
@@ -154,7 +154,7 @@ class  extends Admin
         }
 
         // 获取数据
-        $info = GiftModel::where('id', $id)->find();
+        $info = SignModel::where('id', $id)->find();
         $acc = AssociationModel::select();
         $accs = [];
         foreach ($acc as $item) {
@@ -196,7 +196,7 @@ class  extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = GiftModel::where('role', 'in', $role_list)->column('id');
+            $user_list = SignModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($uid, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -459,17 +459,17 @@ class  extends Admin
 
         switch ($type) {
             case 'enable':
-                if (false === GiftModel::where('id', 'in', $ids)->setField('status', 1)) {
+                if (false === SignModel::where('id', 'in', $ids)->setField('status', 1)) {
                     $this->error('启用失败');
                 }
                 break;
             case 'disable':
-                if (false === GiftModel::where('id', 'in', $ids)->setField('status', 0)) {
+                if (false === SignModel::where('id', 'in', $ids)->setField('status', 0)) {
                     $this->error('禁用失败');
                 }
                 break;
             case 'delete':
-                if (false === GiftModel::where('id', 'in', $ids)->delete()) {
+                if (false === SignModel::where('id', 'in', $ids)->delete()) {
                     $this->error('删除失败');
                 }
                 break;
@@ -503,7 +503,7 @@ class  extends Admin
             }
         }
 
-        $result = GiftModel::where("id", $id)->setField($field, $value);
+        $result = SignModel::where("id", $id)->setField($field, $value);
         if (false !== $result) {
             $this->success('操作成功');
         } else {
