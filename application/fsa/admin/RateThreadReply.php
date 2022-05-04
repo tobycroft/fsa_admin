@@ -59,12 +59,14 @@ class RateThreadReply extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID", "select", $accs],
-                ["type", "课程类型", 'select', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["title", "标题", 'text.edit'],
-                ["content", "内容", 'text.textarea'],
-                ["img", "图片字段", 'picture'],
-                ['must_choice', '是否必选', 'switch'],
+                ["lid", "讲座ID", 'text.edit'],
+                ["uid", "uid", 'number'],
+                ["score", "标题", 'number'],
+                ["content", "内容", 'text.edit'],
+                ["img", "图片", 'picture'],
+                ["share", "分享", 'number'],
+                ['like', '喜欢', 'number'],
+                ['comment', '评论', "number"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
@@ -105,13 +107,14 @@ class RateThreadReply extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["select", "aid", "机构ID", "", $accs],
-                ["text", "association_name", "机构名称"],
-                ["text", "title", "标题"],
-                ["ueditor", "content", "内容"],
-                ["image", "picture", "图片字段"],
-                ["switch", 'must_choice', '是否必选'],
+                ["number", "lid", "讲座ID",],
+                ["number", "uid", "uid",],
+                ["text", "score", "标题",],
+                ["textarea", "content", "内容",],
+                ["image", "img", "标题"],
+                ["number", "share", "分享",],
+                ["number", 'like', '喜欢',],
+                ["number", 'comment', '评论'],
             ])
             ->fetch();
     }
@@ -165,12 +168,14 @@ class RateThreadReply extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['select', 'type', '课程类型', '', ['无' => '无', '体验课' => '体验课', '资料' => '资料', '学习群' => '学习群', '课程' => '课程']],
-                ["select", "aid", "机构ID", "", $accs],
-                ["text", "title", "标题"],
-                ["ueditor", "content", "内容"],
-                ["image", "picture", "图片字段"],
-                ["switch", 'must_choice', '是否必选'],
+                ["number", "lid", "讲座ID",],
+                ["number", "uid", "uid",],
+                ["text", "score", "标题",],
+                ["textarea", "content", "内容",],
+                ["image", "img", "标题"],
+                ["number", "share", "分享",],
+                ["number", 'like', '喜欢',],
+                ["number", 'comment', '评论'],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
