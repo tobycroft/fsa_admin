@@ -225,12 +225,12 @@ class Lecture extends Admin
         }
         $form = HostModel::select();
         $forms = [];
-        foreach ($host as $item) {
+        foreach ($forms as $item) {
             $forms[$item["id"]] = $item["name"];
         }
         $role = HostModel::select();
         $roles = [];
-        foreach ($host as $item) {
+        foreach ($role as $item) {
             $roles[$item["id"]] = $item["name"];
         }
         // 使用ZBuilder快速创建表单
