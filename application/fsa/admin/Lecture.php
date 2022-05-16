@@ -12,7 +12,9 @@ use app\fsa\model\HostModel;
 use app\fsa\model\InstructorModel;
 use app\fsa\model\LectureModel;
 use app\fsa\model\TagDataunitModel;
+use app\fsa\model\TagFormModel;
 use app\fsa\model\TagModel;
+use app\fsa\model\TagRoleModel;
 use app\user\model\Role;
 use util\Tree;
 use think\Db;
@@ -66,7 +68,16 @@ class Lecture extends Admin
         foreach ($host as $item) {
             $hosts[$item["id"]] = $item["name"];
         }
-
+        $form = TagFormModel::select();
+        $forms = [];
+        foreach ($form as $item) {
+            $forms[$item["id"]] = $item["name"];
+        }
+        $role = TagRoleModel::select();
+        $roles = [];
+        foreach ($role as $item) {
+            $roles[$item["id"]] = $item["name"];
+        }
 
         $btn_access = [
             'title' => '现场记录',
@@ -89,6 +100,8 @@ class Lecture extends Admin
                 ["aid", "公会名称"],
                 ["iid", "讲师", "select", $inss],
                 ["hid", "主办方", "select", $hosts],
+                ["trid", "角色标签", "select", $roles],
+                ["tfid", "形式标签", "select", $forms],
                 ['title', '讲座主题', 'text.edit'],
                 ['tags', '标签ids'],
                 ['dataunits', '标签数据归属方ids'],
@@ -147,6 +160,16 @@ class Lecture extends Admin
         foreach ($host as $item) {
             $hosts[$item["id"]] = $item["name"];
         }
+        $form = TagFormModel::select();
+        $forms = [];
+        foreach ($form as $item) {
+            $forms[$item["id"]] = $item["name"];
+        }
+        $role = TagRoleModel::select();
+        $roles = [];
+        foreach ($role as $item) {
+            $roles[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
@@ -154,6 +177,8 @@ class Lecture extends Admin
                 ["number", "aid", "公会名称"],
                 ["select", "iid", "讲师", "", $inss],
                 ["select", "hid", "主办方", "", $hosts],
+                ["select", "trid", "角色标签", "", $roles],
+                ["select", "tfid", "形式标签", "", $forms],
                 ["text", 'title', '讲座主题',],
                 ["text", 'tag_ids', '标签ids'],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
@@ -223,12 +248,12 @@ class Lecture extends Admin
         foreach ($host as $item) {
             $hosts[$item["id"]] = $item["name"];
         }
-        $form = HostModel::select();
+        $form = TagFormModel::select();
         $forms = [];
         foreach ($form as $item) {
             $forms[$item["id"]] = $item["name"];
         }
-        $role = HostModel::select();
+        $role = TagRoleModel::select();
         $roles = [];
         foreach ($role as $item) {
             $roles[$item["id"]] = $item["name"];
