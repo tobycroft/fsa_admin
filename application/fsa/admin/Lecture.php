@@ -225,7 +225,7 @@ class Lecture extends Admin
         }
         $form = HostModel::select();
         $forms = [];
-        foreach ($forms as $item) {
+        foreach ($form as $item) {
             $forms[$item["id"]] = $item["name"];
         }
         $role = HostModel::select();
