@@ -223,6 +223,16 @@ class Lecture extends Admin
         foreach ($host as $item) {
             $hosts[$item["id"]] = $item["name"];
         }
+        $form = HostModel::select();
+        $forms = [];
+        foreach ($host as $item) {
+            $forms[$item["id"]] = $item["name"];
+        }
+        $role = HostModel::select();
+        $roles = [];
+        foreach ($host as $item) {
+            $roles[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
@@ -231,6 +241,8 @@ class Lecture extends Admin
                 ["number", "aid", "公会名称"],
                 ["select", "iid", "讲师", "", $inss],
                 ["select", "hid", "主办方", "", $hosts],
+                ["select", "trid", "角色标签", "", $roles],
+                ["select", "tfid", "形式标签", "", $forms],
                 ["text", 'title', '讲座主题',],
                 ["text", 'tag_ids', '标签ids'],
                 ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
