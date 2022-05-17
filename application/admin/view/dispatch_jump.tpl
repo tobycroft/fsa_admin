@@ -44,7 +44,7 @@
 <!-- Error Footer -->
 <div class="content pulldown text-muted text-center">
     极简 · 极速 · 极致<br>
-    海豚PHP，让开发更简单！<br>
+    dthinkphp，让开发更简单！<br>
 </div>
 <!-- END Error Footer -->
 

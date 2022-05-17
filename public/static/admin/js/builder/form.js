@@ -365,7 +365,7 @@ jQuery(document).ready(function() {
 
         editormds[editormd_name] = editormd(editormd_name, {
             height: 500, // 高度
-            placeholder: '海豚PHP，为提升开发效率而生！！',
+            placeholder: 'dthinkphp，为提升开发效率而生！！',
             watch : watch,
             searchReplace : true,
             toolbarAutoFixed: false, // 取消工具栏固定
