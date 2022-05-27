@@ -661,7 +661,7 @@ class Attachment extends Admin
                     'code' => 1,
                     'info' => '上传成功',
                     'class' => 'success',
-                    'id' => $file_id,
+                    'id' => $file_path,
                     'path' => $file_path,
                 ]);
         }
