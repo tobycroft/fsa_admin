@@ -49,7 +49,7 @@ class User extends Admin
             ->setPageTips("总数量：" . $num2 . "    今日数量：" . $num1, 'danger')
 //            ->setPageTips("总数量：" . $num2, 'danger')
             ->setPageTitle('列表')
-            ->setSearch(['id' => 'ID', "pid" => "pid", 'username' => '用户名']) // 设置搜索参数
+            ->setSearch(['id' => 'ID', "phone"=>"手机号", 'username' => '用户名']) // 设置搜索参数
             ->addOrder('id')
             ->addColumn('id', 'UID')
             ->addColumn('username', '用户名')
