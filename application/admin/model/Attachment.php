@@ -63,9 +63,9 @@ class Attachment extends Model
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getThumbPath($id = '')
+    public function getThumbPath($path = '')
     {
-        $result = $this->where('id', $id)->field('path,driver,thumb')->find();
+        $result = $this->where('path', $path)->field('path,driver,thumb')->find();
         if ($result) {
             if ($result['driver'] == 'local') {
                 return $result['thumb'] != '' ? PUBLIC_PATH.$result['thumb'] : PUBLIC_PATH.$result['path'];
