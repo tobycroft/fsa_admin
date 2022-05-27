@@ -30,7 +30,7 @@ class Attachment extends Model
     public function getFilePath($id = '', $type = 0)
     {
         if (is_array($id)) {
-            $data_list = $this->where('id', 'in', $id)->select();
+            $data_list = $this->where('path', $id)->whereOr('id', 'in', $id)->select();
             $paths = [];
             foreach ($data_list as $key => $value) {
                 if ($value['driver'] == 'local') {
