@@ -227,7 +227,7 @@ class Ajax extends Common
                 'code'   => 1,
                 'info'   => '上传成功',
                 'class'  => 'success',
-                'id'     => $file_exists['id'],
+                'id'     => $file_path,
                 'path'   => $file_path
             ]);
         } else {
