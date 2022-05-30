@@ -63,7 +63,7 @@ class Instructor extends Admin
                 ["status", "是否通过审核", "switch"],
                 ["right_button", "功能"],
             ])
-            ->addRightButtons(["delete" => "删除","edit"=>"修改"])
+            ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
             ->setColumnWidth('title', 300)
