@@ -9,6 +9,7 @@ use app\fsa\model\AssociationMemberTitleModel;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
 use app\fsa\model\AssociationMemberModel;
+use app\fsa\model\InstructorModel;
 use app\user\model\Role;
 use util\Tree;
 use think\Db;
@@ -40,6 +41,7 @@ class AssociationMember extends Admin
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
             $item["association_member_title"] = AssociationMemberTitleModel::whereIn("id", $item["mtids"])->value("name");
+            $item["instructor_info"] = InstructorModel::where("id", $item["iid"])->value("name");
             $data_list[$key] = $item;
         }
         $btn_access = [
@@ -59,6 +61,7 @@ class AssociationMember extends Admin
                 ["mtids", "MTIDS"],
                 ["association_member_title", "用户身份MTIDS"],
                 ["uid", "uid", "number"],
+                ['instructor_info', '讲师姓名'],
                 ['iid', '讲师id', 'number'],
                 ['is_admin', '是否是机构管理员', 'switch'],
                 ["right_button", "功能"],
