@@ -94,10 +94,10 @@ class Lecture extends Admin
 
         return ZBuilder::make('table')
             ->addOrder('id')
-            ->setSearch(['id' => 'id',"province"=>"省","city"=>"市","district"=>"县","title"=>"标题"]) // 设置搜索参数
+            ->setSearch(['id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题"]) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "公会名称"],
+                ["association_name", "公会名称"],
                 ["iid", "讲师", "select", $inss],
                 ["hid", "主办方", "select", $hosts],
                 ["trid", "角色标签", "select", $roles],

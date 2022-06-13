@@ -7,6 +7,9 @@ use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\ForumModel;
+use app\fsa\model\HostModel;
+use app\fsa\model\InstructorModel;
+use app\fsa\model\TagDataunitModel;
 use app\fsa\model\TagModel;
 use app\user\model\Role;
 use util\Tree;
@@ -42,12 +45,17 @@ class Tag extends Admin
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('association_member/index', ['search_field' => 'mtids', 'keyword' => '__id__'])
         ];
-
+        $host = AssociationModel::select();
+        $hosts = [];
+        foreach ($host as $item) {
+            $hosts[$item["id"]] = $item["name"];
+        }
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id", "number"],
+                ["aid", "工会id", "number"],
                 ["name", "头衔", "text.edit"],
                 ["right_button", "功能"],
             ])
