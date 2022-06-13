@@ -138,13 +138,18 @@ class Tag extends Admin
 
         // 获取数据
         $info = TagModel::where('id', $id)->find();
-
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
                 ["text", "name", "头衔"],
+                ["select", "aid", "工会", "", $assocs],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();

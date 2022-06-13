@@ -6,12 +6,11 @@ namespace app\fsa\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
-use app\fsa\model\ForumModel;
 use app\fsa\model\TagFormModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -85,11 +84,18 @@ class TagForm extends Admin
                 $this->error('新增失败');
             }
         }
+
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["text", "name", "头衔"],
+                ["select", "aid", "工会", "", $assocs],
             ])
             ->fetch();
     }
@@ -133,13 +139,18 @@ class TagForm extends Admin
 
         // 获取数据
         $info = TagFormModel::where('id', $id)->find();
-
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
                 ["text", "name", "头衔"],
+                ["select", "aid", "工会", "", $assocs],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
