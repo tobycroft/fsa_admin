@@ -45,17 +45,17 @@ class Tag extends Admin
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('association_member/index', ['search_field' => 'mtids', 'keyword' => '__id__'])
         ];
-        $host = AssociationModel::select();
-        $hosts = [];
-        foreach ($host as $item) {
-            $hosts[$item["id"]] = $item["name"];
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
         }
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id", "number"],
-                ["aid", "工会id", "number"],
+                ["aid", "工会", "select", $assocs],
                 ["name", "头衔", "text.edit"],
                 ["right_button", "功能"],
             ])
