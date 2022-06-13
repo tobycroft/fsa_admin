@@ -95,7 +95,6 @@ class Tag extends Admin
             ->addFormItems([ // 批量添加表单项
                 ["text", "name", "头衔"],
                 ["select", "aid", "工会", "", $assocs],
-
             ])
             ->fetch();
     }
