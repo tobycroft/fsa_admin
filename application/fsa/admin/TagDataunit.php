@@ -43,11 +43,17 @@ class TagDataunit extends Admin
             'href' => url('association_member/index', ['search_field' => 'mtids', 'keyword' => '__id__'])
         ];
 
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id", "number"],
+                ["aid", "工会", "select", $assocs],
                 ["name", "归属", "text.edit"],
                 ["right_button", "功能"],
             ])
