@@ -6,15 +6,11 @@ namespace app\fsa\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
-use app\fsa\model\ForumModel;
-use app\fsa\model\HostModel;
-use app\fsa\model\InstructorModel;
-use app\fsa\model\TagDataunitModel;
 use app\fsa\model\TagModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -45,6 +41,7 @@ class Tag extends Admin
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('association_member/index', ['search_field' => 'mtids', 'keyword' => '__id__'])
         ];
+
         $assoc = AssociationModel::select();
         $assocs = [];
         foreach ($assoc as $item) {
@@ -87,11 +84,18 @@ class Tag extends Admin
                 $this->error('新增失败');
             }
         }
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["text", "name", "头衔"],
+                ["select", "aid", "工会", "", $assocs],
+
             ])
             ->fetch();
     }
