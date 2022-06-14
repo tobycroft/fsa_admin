@@ -5,9 +5,9 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\AssociationModel;
 use app\fsa\model\HostMemberModel;
 use app\fsa\model\HostMemberTitleModel;
+use app\fsa\model\HostModel;
 use app\fsa\model\InstructorModel;
 use app\user\model\Role;
 use think\Db;
@@ -38,8 +38,7 @@ class HostMember extends Admin
         $data_list = HostMemberModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
-            $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $item["association_member_title"] = HostMemberTitleModel::whereIn("id", $item["mtids"])->value("name");
+            $item["association_name"] = HostModel::where("id", $item["hid"])->value("name");
             $item["instructor_info"] = InstructorModel::where("id", $item["iid"])->value("name");
             $data_list[$key] = $item;
         }
@@ -55,10 +54,8 @@ class HostMember extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["aid", "机构ID"],
+                ["hid", "单位ID"],
                 ["association_name", "机构名称"],
-                ["mtids", "MTIDS"],
-                ["association_member_title", "用户身份MTIDS"],
                 ["uid", "uid", "number"],
                 ['instructor_info', '讲师姓名'],
                 ['iid', '讲师id', 'number'],
