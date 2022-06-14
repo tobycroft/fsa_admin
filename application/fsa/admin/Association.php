@@ -55,6 +55,7 @@ class Association extends Admin
                 ['img', '背景图', 'picture'],
                 ['logo', 'LOGO', 'picture'],
                 ['poster', '展示图', 'picture'],
+                ['cover_number', '区县数量', "number"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
