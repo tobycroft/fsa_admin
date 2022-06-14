@@ -54,6 +54,7 @@ class Tag extends Admin
                 ["id", "id", "number"],
                 ["aid", "工会", "select", $assocs],
                 ["name", "头衔", "text.edit"],
+                ["is_show", "全局", "switch"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["delete" => "删除",])
