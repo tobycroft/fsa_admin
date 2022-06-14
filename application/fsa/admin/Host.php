@@ -85,6 +85,9 @@ class Host extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['text', 'name', '主办方'],
+                ['text', 'info', '主办方'],
+                ['text', 'employee', '主办方'],
+                ['text', 'student', '学生数量'],
             ])
             ->fetch();
     }
