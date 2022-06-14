@@ -5,15 +5,14 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
+use app\fsa\model\AssociationMemberModel;
 use app\fsa\model\AssociationMemberTitleModel;
 use app\fsa\model\AssociationModel;
-use app\fsa\model\ForumModel;
-use app\fsa\model\AssociationMemberModel;
 use app\fsa\model\InstructorModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -94,23 +93,21 @@ class AssociationMember extends Admin
                 $this->error('新增失败');
             }
         }
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['select', 'type', '类型', '', ['normal' => 'normal', 'feedback' => 'feedback', 'other' => 'other']],
-                ['select', 'fid', '板块id', '', $arr],
-                ['text', 'uid', 'uid'],
-                ['text', 'tag', '标签'],
-                ['text', 'title', '标题'],
-                ['ueditor', 'content', '内容'],
-                ['image', 'img', '图片字段'],
-                ['text', 'extra', '附加字段'],
-                ['text', 'view', '查看数量'],
-                ['radio', 'is_public', '是否公开', '', ['禁用', '启用'], 1],
-                ['radio', 'is_hot', '是否设为热门', '', ['禁用', '启用'], 1],
-                ['radio', 'can_reply', '是否可以回复', '', ['禁用', '启用'], 1],
-
+                ["aid", "机构ID"],
+                ["select", "aid", "协会", "", $assocs],
+                ["mtids", "MTIDS"],
+                ["uid", "uid", "number"],
+                ["number", 'iid', '讲师id',],
+                ["switch", 'is_admin', '是否是机构管理员'],
             ])
             ->fetch();
     }
