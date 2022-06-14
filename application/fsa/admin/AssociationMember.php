@@ -151,21 +151,20 @@ class AssociationMember extends Admin
         // 获取数据
         $info = AssociationMemberModel::where('id', $id)->find();
 
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
-            ->setPageTitle('编辑') // 设置页面标题
+            ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['hidden', 'id'],
-                ['text', 'tag', '标签'],
-                ['text', 'title', '标题'],
-                ['ueditor', 'content', '内容'],
-                ['image', 'img', '图片字段'],
-                ['text', 'extra', '附加字段'],
-                ['text', 'view', '查看数量'],
-                ['radio', 'is_public', '是否公开', '', ['禁用', '启用'], 1],
-                ['radio', 'is_hot', '是否设为热门', '', ['禁用', '启用'], 1],
-                ['radio', 'can_reply', '是否可以回复', '', ['禁用', '启用'], 1],
-            ])
+                ["select", "aid", "协会", "", $assocs],
+                ["text", "mtids", "MTIDS"],
+                ["number", "uid", "uid",],
+                ["number", 'iid', '讲师id',],
+                ["switch", 'is_admin', '是否是机构管理员'],
             ->setFormData($info) // 设置表单数据
             ->fetch();
     }
