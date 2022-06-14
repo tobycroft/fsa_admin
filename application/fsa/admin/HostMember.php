@@ -54,6 +54,8 @@ class HostMember extends Admin
                 ["id", "id"],
                 ["hid", "单位ID"],
                 ["host_name", "单位名称"],
+                ["name", "uid", "text.edit"],
+                ["tel", "uid", "number"],
                 ["uid", "uid", "number"],
                 ['is_admin', '是否是机构管理员', 'switch'],
                 ["right_button", "功能"],
@@ -97,6 +99,8 @@ class HostMember extends Admin
             ->addFormItems([ // 批量添加表单项
                 ["select", "hid", "角色标签", "", $hosts],
                 ["number", "uid", "uid"],
+                ["text", "name", "姓名"],
+                ["number", "tel", "电话"],
                 ["switch", 'is_admin', '是否是机构管理员'],
 
             ])
@@ -151,6 +155,8 @@ class HostMember extends Admin
             ->addFormItems([ // 批量添加表单项
                 ["select", "hid", "角色标签", "", $hosts],
                 ["number", "uid", "uid"],
+                ["text", "name", "姓名"],
+                ["number", "tel", "电话"],
                 ["switch", 'is_admin', '是否是机构管理员'],
 
             ])
