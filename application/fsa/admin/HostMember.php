@@ -102,7 +102,6 @@ class HostMember extends Admin
                 ["text", "name", "姓名"],
                 ["number", "tel", "电话"],
                 ["switch", 'is_admin', '是否是机构管理员'],
-
             ])
             ->fetch();
     }
@@ -158,7 +157,6 @@ class HostMember extends Admin
                 ["text", "name", "姓名"],
                 ["number", "tel", "电话"],
                 ["switch", 'is_admin', '是否是机构管理员'],
-
             ])
             ->fetch();
     }
