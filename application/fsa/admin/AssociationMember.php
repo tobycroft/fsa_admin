@@ -165,6 +165,7 @@ class AssociationMember extends Admin
                 ["number", "uid", "uid",],
                 ["number", 'iid', '讲师id',],
                 ["switch", 'is_admin', '是否是机构管理员'],
+            ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
     }
