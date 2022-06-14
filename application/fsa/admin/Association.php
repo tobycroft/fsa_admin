@@ -91,7 +91,6 @@ class Association extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["text", "uid", "uid"],
-                ["text", "uid", "uid"],
                 ["text", 'domain', '域名主体'],
                 ["text", 'h5_domain', 'h5_domain'],
                 ["text", 'screen_domain', 'screen_domain'],
