@@ -142,6 +142,7 @@ class HostMember extends Admin
                 $this->error('编辑失败');
             }
         }
+        $info = HostMemberModel::where('id', $id)->find();
 
         $host = HostModel::select();
         $hosts = [];
@@ -158,6 +159,7 @@ class HostMember extends Admin
                 ["text", "tel", "电话"],
                 ["switch", 'is_admin', '是否是机构管理员'],
             ])
+            ->setFormData($info)
             ->fetch();
     }
 
