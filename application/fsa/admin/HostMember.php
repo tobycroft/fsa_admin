@@ -52,7 +52,7 @@ class HostMember extends Admin
             ->setSearch(['id' => 'id']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
-                ["hid", "单位ID"],
+                ["hid", "单位ID", "number"],
                 ["host_name", "单位名称"],
                 ["name", "姓名", "text.edit"],
                 ["tel", "电话", "number"],
