@@ -102,12 +102,11 @@ class AssociationMember extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["aid", "机构ID"],
-                ["select", "aid", "协会", "", $assocs],
-                ["mtids", "MTIDS"],
-                ["uid", "uid", "number"],
-                ["number", 'iid', '讲师id',],
-                ["switch", 'is_admin', '是否是机构管理员'],
+//                ["select", "aid", "协会", "", $assocs],
+//                ["mtids", "MTIDS"],
+//                ["uid", "uid", "number"],
+//                ["number", 'iid', '讲师id',],
+//                ["switch", 'is_admin', '是否是机构管理员'],
             ])
             ->fetch();
     }
