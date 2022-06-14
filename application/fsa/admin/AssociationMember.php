@@ -98,12 +98,17 @@ class AssociationMember extends Admin
         foreach ($assoc as $item) {
             $assocs[$item["id"]] = $item["name"];
         }
+        $mt = AssociationMemberTitleModel::select();
+        $mts = [];
+        foreach ($mt as $item) {
+            $mts[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["select", "aid", "协会", "", $assocs],
-                ["text", "mtids", "MTIDS"],
+                ["select", "mtids", "MTIDS", "", $mts],
                 ["number", "uid", "uid",],
                 ["number", 'iid', '讲师id',],
                 ["switch", 'is_admin', '是否是机构管理员'],
@@ -156,12 +161,17 @@ class AssociationMember extends Admin
         foreach ($assoc as $item) {
             $assocs[$item["id"]] = $item["name"];
         }
+        $mt = AssociationMemberTitleModel::select();
+        $mts = [];
+        foreach ($mt as $item) {
+            $mts[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["select", "aid", "协会", "", $assocs],
-                ["text", "mtids", "MTIDS"],
+                ["select", "mtids", "MTIDS", "", $mts],
                 ["number", "uid", "uid",],
                 ["number", 'iid', '讲师id',],
                 ["switch", 'is_admin', '是否是机构管理员'],
