@@ -153,13 +153,14 @@ class Association extends Admin
                 ["text", 'instructor_domain', 'instructor_domain'],
                 ["text", 'geo_url', '地理GEO数据json地址'],
                 ["text", 'import_type', '导入方案'],
-                ["select", 'model_type', '模型类型', "", ['province', 'city', 'district']],
+                ["select", 'model_type', '模型类型', "", ['province' => "province", 'city' => "city", 'district' => "district"]],
                 ["number", 'cover_number', '区县数量'],
                 ["text", 'name', '机构名称'],
                 ["text", 'info', '工会信息'],
                 ["image", 'img', '背景图'],
                 ["image", 'logo', 'LOGO'],
                 ["image", 'poster', '海报图'],
+                ["text", 'poster', '海报图'],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
