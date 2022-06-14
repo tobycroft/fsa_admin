@@ -8,7 +8,6 @@ use app\common\builder\ZBuilder;
 use app\fsa\model\HostMemberModel;
 use app\fsa\model\HostMemberTitleModel;
 use app\fsa\model\HostModel;
-use app\fsa\model\InstructorModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
@@ -38,8 +37,7 @@ class HostMember extends Admin
         $data_list = HostMemberModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
-            $item["association_name"] = HostModel::where("id", $item["hid"])->value("name");
-            $item["instructor_info"] = InstructorModel::where("id", $item["iid"])->value("name");
+            $item["host_name"] = HostModel::where("id", $item["hid"])->value("name");
             $data_list[$key] = $item;
         }
         $btn_access = [
@@ -55,10 +53,8 @@ class HostMember extends Admin
             ->addColumns([
                 ["id", "id"],
                 ["hid", "单位ID"],
-                ["association_name", "机构名称"],
+                ["host_name", "单位名称"],
                 ["uid", "uid", "number"],
-                ['instructor_info', '讲师姓名'],
-                ['iid', '讲师id', 'number'],
                 ['is_admin', '是否是机构管理员', 'switch'],
                 ["right_button", "功能"],
             ])
