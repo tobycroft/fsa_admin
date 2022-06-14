@@ -85,9 +85,11 @@ class Host extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['text', 'name', '主办方'],
-                ['text', 'info', '主办方'],
-                ['text', 'employee', '主办方'],
-                ['text', 'student', '学生数量'],
+                ['text', 'info', '信息简介'],
+                ['number', 'employee', '主办方'],
+                ['number', 'student', '学生数量'],
+                ['image', 'img', '图片'],
+                ['image', 'icon', 'icon'],
             ])
             ->fetch();
     }
@@ -138,6 +140,11 @@ class Host extends Admin
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
                 ['text', 'name', '主办方'],
+                ['text', 'info', '信息'],
+                ['number', 'employee', '主办方'],
+                ['number', 'student', '学生数量'],
+                ['image', 'img', '图片'],
+                ['image', 'icon', 'icon'],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
