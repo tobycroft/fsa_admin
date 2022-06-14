@@ -5,12 +5,11 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\ForumModel;
 use app\fsa\model\AssociationModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -149,6 +148,13 @@ class Association extends Admin
                 ["hidden", "id"],
                 ["text", "uid", "uid"],
                 ["text", 'domain', '域名主体'],
+                ["text", 'h5_domain', 'h5_domain'],
+                ["text", 'screen_domain', 'screen_domain'],
+                ["text", 'instructor_domain', 'instructor_domain'],
+                ["text", 'geo_url', '地理GEO数据json地址'],
+                ["text", 'import_type', '导入方案'],
+                ["select", 'model_type', '模型类型', "", ['province', 'city', 'district']],
+                ["number", 'cover_number', '区县数量'],
                 ["text", 'name', '机构名称'],
                 ["text", 'info', '工会信息'],
                 ["image", 'img', '背景图'],
