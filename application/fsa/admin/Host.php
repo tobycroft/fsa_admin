@@ -5,13 +5,11 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\AssociationModel;
-use app\fsa\model\ForumModel;
 use app\fsa\model\HostModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -49,6 +47,9 @@ class Host extends Admin
             ->addColumns([
                 ["id", "id"],
                 ['name', '主办方', 'text.edit'],
+                ['info', '信息', 'text.edit'],
+                ['employee', '雇员数量', 'text.edit'],
+                ['student', '学生数量', 'text.edit'],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["delete" => "删除",])
