@@ -58,7 +58,7 @@ class HostMember extends Admin
                 ['is_admin', '是否是机构管理员', 'switch'],
                 ["right_button", "功能"],
             ])
-            ->addRightButtons(["delete" => "删除",])
+            ->addRightButtons(["edit" => "修改", "delete" => "删除"])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
             ->setColumnWidth('title', 300)
