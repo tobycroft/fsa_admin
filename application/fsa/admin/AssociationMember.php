@@ -103,8 +103,8 @@ class AssociationMember extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["select", "aid", "协会", "", $assocs],
-                ["mtids", "MTIDS"],
-                ["uid", "uid", "number"],
+                ["text", "mtids", "MTIDS"],
+                ["number", "uid", "uid",],
                 ["number", 'iid', '讲师id',],
                 ["switch", 'is_admin', '是否是机构管理员'],
             ])
