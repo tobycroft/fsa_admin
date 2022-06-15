@@ -8,7 +8,6 @@ use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationMemberModel;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\InstructorModel;
-use app\fsa\model\InstructorTitleModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
@@ -39,7 +38,6 @@ class AssociationMember extends Admin
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $item["association_member_title"] = InstructorTitleModel::whereIn("id", $item["mtids"])->value("name");
             $item["instructor_info"] = InstructorModel::where("id", $item["iid"])->value("name");
             $data_list[$key] = $item;
         }
@@ -57,8 +55,6 @@ class AssociationMember extends Admin
                 ["id", "id"],
                 ["aid", "机构ID"],
                 ["association_name", "机构名称"],
-                ["mtids", "MTIDS"],
-                ["association_member_title", "用户身份MTIDS"],
                 ["uid", "uid", "number"],
                 ['instructor_info', '讲师姓名'],
                 ['iid', '讲师id', 'number'],
@@ -98,17 +94,11 @@ class AssociationMember extends Admin
         foreach ($assoc as $item) {
             $assocs[$item["id"]] = $item["name"];
         }
-        $mt = InstructorTitleModel::select();
-        $mts = [];
-        foreach ($mt as $item) {
-            $mts[$item["id"]] = $item["name"];
-        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["select", "aid", "协会", "", $assocs],
-                ["select", "mtids", "MTIDS", "", $mts],
                 ["number", "uid", "uid",],
                 ["number", 'iid', '讲师id',],
                 ["switch", 'is_admin', '是否是机构管理员'],
@@ -161,17 +151,11 @@ class AssociationMember extends Admin
         foreach ($assoc as $item) {
             $assocs[$item["id"]] = $item["name"];
         }
-        $mt = InstructorTitleModel::select();
-        $mts = [];
-        foreach ($mt as $item) {
-            $mts[$item["id"]] = $item["name"];
-        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["select", "aid", "协会", "", $assocs],
-                ["select", "mtids", "MTIDS", "", $mts],
                 ["number", "uid", "uid",],
                 ["number", 'iid', '讲师id',],
                 ["switch", 'is_admin', '是否是机构管理员'],
