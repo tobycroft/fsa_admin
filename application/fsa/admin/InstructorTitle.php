@@ -84,11 +84,17 @@ class InstructorTitle extends Admin
                 $this->error('新增失败');
             }
         }
+
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["text", "aid", "机构ID"],
+                ["select", "aid", "协会", "", $assocs],
                 ["text", "name", "头衔"],
             ])
             ->fetch();
@@ -130,7 +136,11 @@ class InstructorTitle extends Admin
                 $this->error('编辑失败');
             }
         }
-
+        $assoc = AssociationModel::select();
+        $assocs = [];
+        foreach ($assoc as $item) {
+            $assocs[$item["id"]] = $item["name"];
+        }
         // 获取数据
         $info = InstructorTitleModel::where('id', $id)->find();
 
@@ -139,7 +149,7 @@ class InstructorTitle extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ["text", "aid", "机构ID"],
+                ["select", "aid", "协会", "", $assocs],
                 ["text", "name", "头衔"],
             ])
             ->setFormData($info) // 设置表单数据
