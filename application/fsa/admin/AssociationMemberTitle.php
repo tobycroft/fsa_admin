@@ -6,12 +6,11 @@ namespace app\fsa\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
-use app\fsa\model\ForumModel;
-use app\fsa\model\AssociationMemberTitleModel;
+use app\fsa\model\InstructorTitleModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -34,7 +33,7 @@ class AssociationMemberTitle extends Admin
         $map = $this->getMap();
 
         // 读取用户数据
-        $data_list = AssociationMemberTitleModel::where($map)->order($order)->paginate();
+        $data_list = InstructorTitleModel::where($map)->order($order)->paginate();
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
@@ -79,7 +78,7 @@ class AssociationMemberTitle extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            if ($user = AssociationMemberTitleModel::create($data)) {
+            if ($user = InstructorTitleModel::create($data)) {
                 $this->success('新增成功', url('index'));
             } else {
                 $this->error('新增失败');
@@ -112,7 +111,7 @@ class AssociationMemberTitle extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = AssociationMemberTitleModel::where('role', 'in', $role_list)->column('id');
+            $user_list = InstructorTitleModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($id, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -125,7 +124,7 @@ class AssociationMemberTitle extends Admin
             // 非超级管理需要验证可选择角色
 
 
-            if (AssociationMemberTitleModel::update($data)) {
+            if (InstructorTitleModel::update($data)) {
                 $this->success('编辑成功');
             } else {
                 $this->error('编辑失败');
@@ -133,7 +132,7 @@ class AssociationMemberTitle extends Admin
         }
 
         // 获取数据
-        $info = AssociationMemberTitleModel::where('id', $id)->find();
+        $info = InstructorTitleModel::where('id', $id)->find();
 
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
@@ -167,7 +166,7 @@ class AssociationMemberTitle extends Admin
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
             $role_list = RoleModel::getChildsId(session('user_auth.role'));
-            $user_list = AssociationMemberTitleModel::where('role', 'in', $role_list)->column('id');
+            $user_list = InstructorTitleModel::where('role', 'in', $role_list)->column('id');
             if (!in_array($uid, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
@@ -430,17 +429,17 @@ class AssociationMemberTitle extends Admin
 
         switch ($type) {
             case 'enable':
-                if (false === AssociationMemberTitleModel::where('id', 'in', $ids)->setField('status', 1)) {
+                if (false === InstructorTitleModel::where('id', 'in', $ids)->setField('status', 1)) {
                     $this->error('启用失败');
                 }
                 break;
             case 'disable':
-                if (false === AssociationMemberTitleModel::where('id', 'in', $ids)->setField('status', 0)) {
+                if (false === InstructorTitleModel::where('id', 'in', $ids)->setField('status', 0)) {
                     $this->error('禁用失败');
                 }
                 break;
             case 'delete':
-                if (false === AssociationMemberTitleModel::where('id', 'in', $ids)->delete()) {
+                if (false === InstructorTitleModel::where('id', 'in', $ids)->delete()) {
                     $this->error('删除失败');
                 }
                 break;
@@ -474,7 +473,7 @@ class AssociationMemberTitle extends Admin
             }
         }
 
-        $result = AssociationMemberTitleModel::where("id", $id)->setField($field, $value);
+        $result = InstructorTitleModel::where("id", $id)->setField($field, $value);
         if (false !== $result) {
             $this->success('操作成功');
         } else {

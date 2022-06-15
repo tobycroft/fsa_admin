@@ -6,9 +6,9 @@ namespace app\fsa\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationMemberModel;
-use app\fsa\model\AssociationMemberTitleModel;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\InstructorModel;
+use app\fsa\model\InstructorTitleModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
@@ -39,7 +39,7 @@ class AssociationMember extends Admin
         $page = $data_list->render();
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $item["association_member_title"] = AssociationMemberTitleModel::whereIn("id", $item["mtids"])->value("name");
+            $item["association_member_title"] = InstructorTitleModel::whereIn("id", $item["mtids"])->value("name");
             $item["instructor_info"] = InstructorModel::where("id", $item["iid"])->value("name");
             $data_list[$key] = $item;
         }
@@ -98,7 +98,7 @@ class AssociationMember extends Admin
         foreach ($assoc as $item) {
             $assocs[$item["id"]] = $item["name"];
         }
-        $mt = AssociationMemberTitleModel::select();
+        $mt = InstructorTitleModel::select();
         $mts = [];
         foreach ($mt as $item) {
             $mts[$item["id"]] = $item["name"];
@@ -161,7 +161,7 @@ class AssociationMember extends Admin
         foreach ($assoc as $item) {
             $assocs[$item["id"]] = $item["name"];
         }
-        $mt = AssociationMemberTitleModel::select();
+        $mt = InstructorTitleModel::select();
         $mts = [];
         foreach ($mt as $item) {
             $mts[$item["id"]] = $item["name"];
