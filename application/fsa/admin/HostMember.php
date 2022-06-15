@@ -153,6 +153,7 @@ class HostMember extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
+                ['hidden', 'id'],
                 ["select", "hid", "学校", "", $hosts],
                 ["number", "uid", "uid"],
                 ["text", "name", "姓名"],
