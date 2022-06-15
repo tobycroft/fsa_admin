@@ -471,15 +471,6 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         if (is_string($data)) {
             $sequence = $data;
             $data = [];
-        } else {
-            foreach ($data as $key => $value) {
-                if ($value == "on") {
-                    $value = 1;
-                } elseif ($value == "off") {
-                    $value = 0;
-                }
-                $data[$key] = $value;
-            }
         }
 
         if (!$this->checkBeforeSave($data, $where)) {
@@ -516,6 +507,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             foreach ($data as $key => $value) {
                 $this->setAttr($key, $value, $data);
             }
+
 
             if (!empty($where)) {
                 $this->exists = true;
