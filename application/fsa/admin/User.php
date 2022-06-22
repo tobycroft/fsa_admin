@@ -112,7 +112,7 @@ class User extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
+                ['text', 'username', '用户名', '必填，直接填手机号'],
                 ['text', 'phone', '手机号', '可以是中文'],
                 ['text', 'wx_id', '微信id', '可以是中文'],
                 ['text', 'wx_token', '微信token', '可以是中文'],
