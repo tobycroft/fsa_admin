@@ -108,13 +108,6 @@ class User extends Admin
             }
         }
 
-        // 角色列表
-        if (session('user_auth.role') != 1) {
-            $role_list = RoleModel::getTree(null, false, session('user_auth.role'));
-        } else {
-            $role_list = RoleModel::getTree(null, false);
-        }
-
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
