@@ -5,11 +5,10 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\TypeModel;
 use app\fsa\model\User as UserModel;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -49,7 +48,7 @@ class User extends Admin
             ->setPageTips("总数量：" . $num2 . "    今日数量：" . $num1, 'danger')
 //            ->setPageTips("总数量：" . $num2, 'danger')
             ->setPageTitle('列表')
-            ->setSearch(['id' => 'ID', "phone"=>"手机号", 'username' => '用户名']) // 设置搜索参数
+            ->setSearch(['id' => 'ID', "phone" => "手机号", 'username' => '用户名']) // 设置搜索参数
             ->addOrder('id')
             ->addColumn('id', 'UID')
             ->addColumn('username', '用户名')
@@ -63,6 +62,7 @@ class User extends Admin
             ->addColumn('change_date', '修改时间')
             ->addColumn('date', '创建时间')
             ->addColumn('right_button', '操作', 'btn')
+            ->addTopButtons(["add" => "发帖"])
             ->addRightButton('edit') // 添加编辑按钮
             ->addRightButton('delete') //添加删除按钮
             ->addRightButton('custom', $btn_access) //添加删除按钮
