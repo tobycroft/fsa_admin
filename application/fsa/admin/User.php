@@ -134,6 +134,8 @@ class User extends Admin
                 ['text', 'wx_id', '昵称', '可以是中文'],
                 ['text', 'wx_token', '昵称', '可以是中文'],
                 ['password', 'password', '密码', '必填，6-20位'],
+                ["switch", 'active', '启用'],
+
             ])
             ->fetch();
     }
@@ -185,13 +187,12 @@ class User extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['static', 'username', '用户名', '不可更改'],
-                ['text', 'password', '密码', '必填，6-20位'],
-                ['text', 'phone', 'phone', '必填，6-20位'],
-                ['text', 'wx_id', 'wx_id', '必填，6-20位'],
-                ['text', 'wx_token', 'wx_token', '必填，6-20位'],
-                ['checkbox', 'admin', 'admin', '', ['禁用', '启用'], 1],
-                ['checkbox', 'active', 'active', '', ['禁用', '启用'], 1],
+                ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
+                ['text', 'phone', '昵称', '可以是中文'],
+                ['text', 'wx_id', '昵称', '可以是中文'],
+                ['text', 'wx_token', '昵称', '可以是中文'],
+                ['password', 'password', '密码', '必填，6-20位'],
+                ["switch", 'active', '启用'],
 
             ])
             ->setFormData($info) // 设置表单数据
