@@ -113,10 +113,10 @@ class User extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['text', 'username', '用户名', '必填，直接填手机号'],
-                ['text', 'phone', '手机号', '可以是中文'],
-                ['text', 'wx_id', '微信id', '可以是中文'],
-                ['text', 'wx_token', '微信token', '可以是中文'],
-                ['password', 'password', '密码', '必填，6-20位'],
+                ['text', 'phone', '手机号'],
+                ['text', 'wx_id', '微信id'],
+                ['text', 'wx_token', '微信token'],
+                ['password', 'password', '密码', '不填'],
                 ["switch", 'active', '启用'],
 
             ])
