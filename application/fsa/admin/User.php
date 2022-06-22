@@ -134,9 +134,6 @@ class User extends Admin
                 ['text', 'wx_id', '昵称', '可以是中文'],
                 ['text', 'wx_token', '昵称', '可以是中文'],
                 ['password', 'password', '密码', '必填，6-20位'],
-                ['text', 'mobile', '手机号'],
-                ['image', 'avatar', '头像'],
-                ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
             ])
             ->fetch();
     }
