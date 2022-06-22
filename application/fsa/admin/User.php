@@ -84,17 +84,6 @@ class User extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
             // 验证
-            $result = $this->validate($data, 'User');
-            // 验证失败 输出错误信息
-            if (true !== $result) $this->error($result);
-
-            // 非超级管理需要验证可选择角色
-            if (session('user_auth.role') != 1) {
-                if ($data['role'] == session('user_auth.role')) {
-                    $this->error('禁止创建与当前角色同级的用户');
-                }
-
-            }
 
             $data['roles'] = isset($data['roles']) ? implode(',', $data['roles']) : '';
 
