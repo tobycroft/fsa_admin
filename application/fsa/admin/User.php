@@ -193,7 +193,6 @@ class User extends Admin
                 ['text', 'wx_token', '昵称', '可以是中文'],
                 ['password', 'password', '密码', '必填，6-20位'],
                 ["switch", 'active', '启用'],
-
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
