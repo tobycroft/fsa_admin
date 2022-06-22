@@ -133,8 +133,6 @@ class User extends Admin
                 ['text', 'phone', '昵称', '可以是中文'],
                 ['text', 'wx_id', '昵称', '可以是中文'],
                 ['text', 'wx_token', '昵称', '可以是中文'],
-                ['select', 'role', '主角色', '非超级管理员，禁止创建与当前角色同级的用户', $role_list],
-                ['select', 'roles', '副角色', '可多选', $role_list, '', 'multiple'],
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
                 ['image', 'avatar', '头像'],
