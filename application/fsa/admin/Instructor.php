@@ -5,14 +5,12 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\InstructorTitleModel;
 use app\fsa\model\AssociationModel;
-use app\fsa\model\ForumModel;
 use app\fsa\model\InstructorModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -50,7 +48,7 @@ class Instructor extends Admin
 
         return ZBuilder::make('table')
             ->addOrder('id')
-            ->setSearch(['id' => 'id']) // 设置搜索参数
+            ->setSearch(['id' => 'id', 'name' => 'name', 'phone' => 'phone']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
