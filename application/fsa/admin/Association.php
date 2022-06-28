@@ -56,6 +56,7 @@ class Association extends Admin
                 ['logo', 'LOGO', 'picture'],
                 ['poster', '展示图', 'picture'],
                 ['cover_number', '区县数量', "number"],
+                ['default_address', '默认地址', "text.edit"],
                 ["right_button", "功能"],
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
@@ -105,6 +106,7 @@ class Association extends Admin
                 ["image", 'img', '背景图'],
                 ["image", 'logo', 'LOGO'],
                 ["image", 'poster', '海报图'],
+                ["text", 'default_address', '默认地址', "省,市,县,街道"],
             ])
             ->fetch();
     }
@@ -168,6 +170,7 @@ class Association extends Admin
                 ["image", 'img', '背景图'],
                 ["image", 'logo', 'LOGO'],
                 ["image", 'poster', '海报图'],
+                ["text", 'default_address', '默认地址', "省,市,县,街道"],
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();
