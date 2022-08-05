@@ -155,6 +155,7 @@ class AssociationMember extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
+                ["hidden", "id"],
                 ["select", "aid", "协会", "", $assocs],
                 ["number", "uid", "uid",],
                 ["number", 'iid', '讲师id',],
