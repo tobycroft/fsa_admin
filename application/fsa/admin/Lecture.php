@@ -227,7 +227,7 @@ class Lecture extends Admin
             if ($dec["code"] === 0) {
                 $this->success("导入成功");
             } else {
-                $this->error($dec["echo"], null, $dec["data"], 10);
+                $this->error($dec["echo"]);
             }
         }
 
