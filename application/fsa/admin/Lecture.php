@@ -226,14 +226,6 @@ class Lecture extends Admin
             } else {
                 $this->error($dec["data"] . $dec["echo"], null, null, 10);
             }
-            exit();
-
-//            if ($user = LectureModel::create($data)) {
-//                $this->success('新增成功', url('index'));
-//            } else {
-//                $this->error('新增失败');
-//            }
-            $this->error("nogo");
         }
 
 
