@@ -16,6 +16,7 @@ use app\fsa\model\TagRoleModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
+use Tobycroft\AossSdk\Aoss;
 use Tobycroft\AossSdk\Excel;
 use util\Tree;
 
@@ -213,7 +214,18 @@ class Lecture extends Admin
             $info = $file->move("./upload/temp");
 
             $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
-            var_dump($data->getExcelColumn());
+            $excel_json = $data->getExcelJson();
+            $postData = [
+                "aid" => $this->request->post("aid"),
+                "json" => json_encode($excel_json),
+            ];
+            $ret = Aoss::raw_post("http://http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload", $postData);
+            $dec = json_decode($ret, true);
+            if ($dec["code"] === 0) {
+                $this->success("导入成功");
+            } else {
+                $this->error($dec["data"] . $dec["echo"], null, null, 10);
+            }
             exit();
 
 //            if ($user = LectureModel::create($data)) {
