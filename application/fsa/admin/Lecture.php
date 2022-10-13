@@ -213,9 +213,6 @@ class Lecture extends Admin
             $info = $file->move("./upload/temp");
 
             $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
-            var_dump($excel);
-            var_dump($data->response);
-            var_dump($data->getError());
             var_dump($data->getExcelJson());
             exit();
 
