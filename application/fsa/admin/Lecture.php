@@ -240,6 +240,7 @@ class Lecture extends Admin
                 ["select", "aid", "公会名称", "", $assoc],
                 ["file", 'file', '上传讲座excel',],
             ])
+            ->isAjax(true)
             ->assign("file_upload_url", url("upload"))
             ->fetch();
     }
