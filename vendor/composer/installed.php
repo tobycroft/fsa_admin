@@ -3,7 +3,7 @@
         'name' => 'topthink/think',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '16fb1e59f90eeb95c4afb7790d17518284b9785e',
+        'reference' => '570327e7f2da53498b74f77b995a4c6768a670d2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -19,6 +19,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'tobycroft/aoss-sdk' => array(
+            'pretty_version' => 'v1.2.1',
+            'version' => '1.2.1.0',
+            'reference' => 'c70c9fcebb36b5843e21d8f318c9edddaa203edd',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../tobycroft/aoss-sdk',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'topthink/framework' => array(
             'pretty_version' => 'v5.1.41',
             'version' => '5.1.41.0',
@@ -31,7 +40,7 @@
         'topthink/think' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '16fb1e59f90eeb95c4afb7790d17518284b9785e',
+            'reference' => '570327e7f2da53498b74f77b995a4c6768a670d2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
