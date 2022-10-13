@@ -89,7 +89,11 @@ class Lecture extends Admin
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('lecture_auth/index', ['search_field' => 'lid', 'keyword' => '__id__'])
         ];
-
+        $top_upload = [
+            'title' => '上传讲座数据',
+            'icon' => 'fa fa-fw fa-key',
+            'href' => url('upload')
+        ];
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题"]) // 设置搜索参数
@@ -121,6 +125,7 @@ class Lecture extends Admin
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addRightButton("custom", $btn_access1)
+            ->addTopButton("upload", $top_upload)
             ->addTopButtons(["add" => "发帖"])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
@@ -197,6 +202,69 @@ class Lecture extends Admin
             ->fetch();
     }
 
+    public function upload()
+    {
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+
+            if ($user = LectureModel::create($data)) {
+                $this->success('新增成功', url('index'));
+            } else {
+                $this->error('新增失败');
+            }
+        }
+
+
+        $ins = InstructorModel::select();
+        $inss = [];
+        foreach ($ins as $item) {
+            $inss[$item["id"]] = $item["name"];
+        }
+        $host = HostModel::select();
+        $hosts = [];
+        foreach ($host as $item) {
+            $hosts[$item["id"]] = $item["name"];
+        }
+        $form = TagFormModel::select();
+        $forms = [];
+        foreach ($form as $item) {
+            $forms[$item["id"]] = $item["name"];
+        }
+        $role = TagRoleModel::select();
+        $roles = [];
+        foreach ($role as $item) {
+            $roles[$item["id"]] = $item["name"];
+        }
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('新增') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ["number", "aid", "公会名称"],
+                ["select", "iid", "讲师", "", $inss],
+                ["select", "hid", "主办方", "", $hosts],
+                ["select", "trid", "角色标签", "", $roles],
+                ["select", "tfid", "形式标签", "", $forms],
+                ["text", 'title', '讲座主题',],
+                ["text", 'tag_ids', '标签ids'],
+                ["text", 'tag_dataunit_ids', '标签数据归属方ids'],
+                ["text", 'start_date', '讲座开始时间',],
+                ["number", 'duration', '时长(秒)',],
+                ["text", 'province', '省'],
+                ["text", 'city', '市'],
+                ["text", 'district', '区'],
+                ["text", 'street', '街道'],
+                ["radio", 'can_gift', '礼包开关', "", ["1" => "开", "0" => "关"]],
+                ["number", 'gift_ids', '礼包id',],
+                ["image", 'poster_img', '讲座海报',],
+                ["number", 'visitor', '学员人数',],
+                ["image", 'file1', '文件地址1',],
+                ["image", 'file2', '文件地址2',],
+                ["radio", 'is_del', '软删除', "", ["1" => "开", "0" => "关"]],
+            ])
+            ->fetch();
+    }
+
     /**
      * 编辑
      * @param null $id 用户id
@@ -209,7 +277,8 @@ class Lecture extends Admin
      */
     public function edit($id = null)
     {
-        if ($id === null) $this->error('缺少参数');
+        if ($id === null)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
@@ -302,7 +371,8 @@ class Lecture extends Admin
      */
     public function access($module = '', $uid = 0, $tab = '')
     {
-        if ($uid === 0) $this->error('缺少参数');
+        if ($uid === 0)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {

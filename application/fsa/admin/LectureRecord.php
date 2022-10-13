@@ -42,11 +42,7 @@ class LectureRecord extends Admin
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('lecture/index', ['search_field' => 'id', 'keyword' => '__lid__'])
         ];
-        $top_upload = [
-            'title' => '上传讲座数据',
-            'icon' => 'fa fa-fw fa-key',
-            'href' => url('upload')
-        ];
+
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
@@ -68,7 +64,6 @@ class LectureRecord extends Admin
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
-            ->addTopButton("upload", $top_upload)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
@@ -113,37 +108,6 @@ class LectureRecord extends Admin
             ->fetch();
     }
 
-    public function upload()
-    {
-        // 保存数据
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-
-            if ($user = LectureRecordModel::create($data)) {
-                $this->success('新增成功', url('index'));
-            } else {
-                $this->error('新增失败');
-            }
-        }
-        // 使用ZBuilder快速创建表单
-        return ZBuilder::make('form')
-            ->setPageTitle('新增') // 设置页面标题
-            ->addFormItems([ // 批量添加表单项
-                ["number", "lid", "讲座ID"],
-                ["text", "title", "标题"],
-                ["textarea", "content", "标题"],
-                ["image", "img1", "图片1"],
-                ["image", "img2", "图片2"],
-                ["image", "img3", "图片3"],
-                ["image", "img4", "图片4"],
-                ["image", "img5", "图片5"],
-                ["image", "img6", "图片6"],
-                ["image", "img7", "图片7"],
-                ["image", "img8", "图片8"],
-                ["image", "img9", "图片9"],
-            ])
-            ->fetch();
-    }
 
     /**
      * 编辑
