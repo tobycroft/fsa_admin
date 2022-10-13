@@ -225,7 +225,14 @@ class Lecture extends Admin
             }
             $dec = json_decode($ret, true);
             if ($dec["code"] === 0) {
-                $this->success("导入成功");
+                return json([
+                    'code' => 1,
+                    'info' => '上传成功',
+                    'class' => 'success',
+                    'id' => null,
+                    'path' => null,
+                    "data" => $dec,
+                ]);
             } else {
                 return json([
                     'code' => 0,
@@ -233,7 +240,6 @@ class Lecture extends Admin
                     'info' => $dec["echo"],
                 ]);
             }
-            return;
         }
 
 
