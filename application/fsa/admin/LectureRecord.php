@@ -5,12 +5,11 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\ForumModel;
 use app\fsa\model\LectureRecordModel;
 use app\user\model\Role;
-use util\Tree;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**
@@ -65,6 +64,7 @@ class LectureRecord extends Admin
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
+            ->addTopButtons(["upload" => "导入"])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
@@ -109,6 +109,38 @@ class LectureRecord extends Admin
             ->fetch();
     }
 
+    public function upload()
+    {
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+
+            if ($user = LectureRecordModel::create($data)) {
+                $this->success('新增成功', url('index'));
+            } else {
+                $this->error('新增失败');
+            }
+        }
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('新增') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ["number", "lid", "讲座ID"],
+                ["text", "title", "标题"],
+                ["textarea", "content", "标题"],
+                ["image", "img1", "图片1"],
+                ["image", "img2", "图片2"],
+                ["image", "img3", "图片3"],
+                ["image", "img4", "图片4"],
+                ["image", "img5", "图片5"],
+                ["image", "img6", "图片6"],
+                ["image", "img7", "图片7"],
+                ["image", "img8", "图片8"],
+                ["image", "img9", "图片9"],
+            ])
+            ->fetch();
+    }
+
     /**
      * 编辑
      * @param null $id 用户id
@@ -121,7 +153,8 @@ class LectureRecord extends Admin
      */
     public function edit($id = null)
     {
-        if ($id === null) $this->error('缺少参数');
+        if ($id === null)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
@@ -186,7 +219,8 @@ class LectureRecord extends Admin
      */
     public function access($module = '', $uid = 0, $tab = '')
     {
-        if ($uid === 0) $this->error('缺少参数');
+        if ($uid === 0)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
