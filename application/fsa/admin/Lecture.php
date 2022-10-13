@@ -209,7 +209,7 @@ class Lecture extends Admin
         if ($this->request->isPost()) {
             $file = $this->request->file("file");
 
-            $excel = new Excel(config("upload_prefix"), "complete");
+            $excel = new Excel(config("upload_prefix"));
             $info = $file->move("./upload/temp");
 
             $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
