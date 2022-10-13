@@ -236,6 +236,7 @@ class Lecture extends Admin
                         'wait' => 10,
                     ]);
             }
+            return;
         }
 
 
