@@ -227,16 +227,11 @@ class Lecture extends Admin
             if ($dec["code"] === 0) {
                 $this->success("导入成功");
             } else {
-                echo $dec["echo"];
-//                $this->error($dec["echo"]);
-//                echo json_encode(
-//                    [
-//                        'code' => 0,
-//                        'msg' => $dec["echo"],
-//                        'data' => $dec["data"],
-//                        'url' => null,
-//                        'wait' => 10,
-//                    ]);
+                return json([
+                    'code' => 0,
+                    'class' => 'danger',
+                    'info' => $dec["echo"],
+                ]);
             }
             return;
         }
@@ -250,8 +245,7 @@ class Lecture extends Admin
                 ["select", "aid", "公会名称", "", $assoc],
                 ["file", 'file', '上传讲座excel',],
             ])
-            ->isAjax(false)
-//            ->assign("file_upload_url", url("upload"))
+            ->assign("file_upload_url", url("upload"))
             ->fetch();
     }
 
