@@ -42,7 +42,11 @@ class LectureRecord extends Admin
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('lecture/index', ['search_field' => 'id', 'keyword' => '__lid__'])
         ];
-
+        $top_upload = [
+            'title' => '上传讲座数据',
+            'icon' => 'fa fa-fw fa-key',
+            'href' => url('upload')
+        ];
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id']) // 设置搜索参数
@@ -64,7 +68,7 @@ class LectureRecord extends Admin
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addTopButtons(["add" => "发帖"])
-            ->addTopButtons(["upload" => "导入"])
+            ->addTopButton("upload", $top_upload)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
