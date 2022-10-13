@@ -229,7 +229,7 @@ class Lecture extends Admin
             } else {
                 json([
                     'code' => 0,
-                    'msg' => $dec["fail"],
+                    'msg' => $dec["echo"],
                     'data' => null,
                     'url' => null,
                     'wait' => 3,
