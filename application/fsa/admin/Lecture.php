@@ -208,6 +208,7 @@ class Lecture extends Admin
     {
         // 保存数据
         if ($this->request->isPost()) {
+            $this->request->isAjax(true);
             $file = $this->request->file("file");
 
             $excel = new Excel(config("upload_prefix"));
