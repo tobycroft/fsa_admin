@@ -213,7 +213,7 @@ class Lecture extends Admin
             $info = $file->move("./upload/temp");
 
             $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
-            var_dump($data->getExcelJson());
+            var_dump($data->getExcelColumn());
             exit();
 
 //            if ($user = LectureModel::create($data)) {
