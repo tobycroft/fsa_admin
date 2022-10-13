@@ -213,6 +213,7 @@ class Lecture extends Admin
 //            } else {
 //                $this->error('新增失败');
 //            }
+            $this->error("nogo");
         }
 
 
