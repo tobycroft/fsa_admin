@@ -208,11 +208,11 @@ class Lecture extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            if ($user = LectureModel::create($data)) {
-                $this->success('新增成功', url('index'));
-            } else {
-                $this->error('新增失败');
-            }
+//            if ($user = LectureModel::create($data)) {
+//                $this->success('新增成功', url('index'));
+//            } else {
+//                $this->error('新增失败');
+//            }
         }
 
 
