@@ -220,8 +220,11 @@ class Lecture extends Admin
                 "json" => json_encode($excel_json),
             ];
             $ret = Aoss::raw_post("http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload", $postData);
+            if (!$ret) {
+                $this->error($ret);
+            }
             $dec = json_decode($ret, true);
-            if ($ret && $dec["code"] === 0) {
+            if ($dec["code"] === 0) {
                 $this->success("导入成功");
             } else {
                 $this->error($dec["data"] . $dec["echo"], null, null, 10);
