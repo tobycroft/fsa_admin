@@ -208,7 +208,6 @@ class Lecture extends Admin
     {
         // 保存数据
         if ($this->request->isPost()) {
-            $this->request->isAjax(true);
             $file = $this->request->file("file");
 
             $excel = new Excel(config("upload_prefix"));
@@ -228,7 +227,13 @@ class Lecture extends Admin
             if ($dec["code"] === 0) {
                 $this->success("导入成功");
             } else {
-                $this->error($dec["echo"]);
+                json([
+                    'code' => 0,
+                    'msg' => $dec["fail"],
+                    'data' => null,
+                    'url' => null,
+                    'wait' => 3,
+                ]);
             }
         }
 
