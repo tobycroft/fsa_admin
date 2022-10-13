@@ -227,13 +227,7 @@ class Lecture extends Admin
             if ($dec["code"] === 0) {
                 $this->success("导入成功");
             } else {
-                json([
-                    'code' => 0,
-                    'msg' => $dec["echo"],
-                    'data' => null,
-                    'url' => null,
-                    'wait' => 3,
-                ]);
+                json($dec["echo"]);
             }
         }
 
