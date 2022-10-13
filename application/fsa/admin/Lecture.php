@@ -251,7 +251,7 @@ class Lecture extends Admin
                 ["file", 'file', '上传讲座excel',],
             ])
             ->isAjax(false)
-            ->assign("file_upload_url", url("upload"))
+//            ->assign("file_upload_url", url("upload"))
             ->fetch();
     }
 
