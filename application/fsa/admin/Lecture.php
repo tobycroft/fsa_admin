@@ -16,6 +16,7 @@ use app\fsa\model\TagRoleModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
+use Tobycroft\AossSdk\Excel;
 use util\Tree;
 
 
@@ -206,7 +207,14 @@ class Lecture extends Admin
     {
         // 保存数据
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $file = $this->request->file("file");
+
+            $excel = new Excel(config("upload_prefix"), "complete");
+
+            $data = $excel->send_excel($file->getPathname(), "", $file->getInfo("name"));
+            var_dump($data->error);
+            var_dump($data->data);
+            exit();
 
 //            if ($user = LectureModel::create($data)) {
 //                $this->success('新增成功', url('index'));
