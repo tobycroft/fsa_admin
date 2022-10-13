@@ -3,7 +3,6 @@
 
 namespace app\admin\controller;
 
-use Aoss\Aoss;
 use app\admin\model\Attachment as AttachmentModel;
 use app\common\builder\ZBuilder;
 use think\Db;
@@ -11,6 +10,7 @@ use think\facade\Env;
 use think\facade\Hook;
 use think\File;
 use think\Image;
+use Tobycroft\AossSdk\Aoss;
 
 /**
  * 附件控制器
@@ -20,7 +20,6 @@ class Attachment extends Admin
 {
     /**
      * 附件列表
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function index()
     {
@@ -80,7 +79,6 @@ class Attachment extends Admin
      * @param string $from 来源，wangeditor：wangEditor编辑器, ueditor:ueditor编辑器, editormd:editormd编辑器等
      * @param string $module 来自哪个模块
      * @return mixed
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function upload($dir = '', $from = '', $module = '')
     {
@@ -107,7 +105,6 @@ class Attachment extends Admin
      * @param string $from 来源
      * @param string $module 来自哪个模块
      * @return string|\think\response\Json
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function saveFile($dir = '', $from = '', $module = '')
     {
@@ -141,21 +138,12 @@ class Attachment extends Admin
         $file = $this->request->file($file_input_name);
         $file_name = $file->getInfo('name');
 
-        $send_file = new Aoss();
-        $send_file->send_url = config("upload_url");
-        $send_ret = $send_file->send($file->getPathname(), $file->getMime(), $file_name);
-        if (!$send_ret) {
-            return $this->uploadError($from, config('upload_url'), $callback);
-        }
-        $file_path = $send_ret;
-        // 判断附件是否已存在
-        if ($file_exists = AttachmentModel::get(['md5' => $file->hash('md5')])) {
-//            if ($file_exists['driver'] == 'local') {
-//                $file_path = PUBLIC_PATH . $json_send['path'];
-//            } else {
-            $file_path = $file_exists['path'];
-            // 附件已存在
-            return $this->uploadSuccess($from, $file_path, $file_exists['name'], $file_exists['id'], $callback);
+        $Aoss = new Aoss(config("upload_prefix"), "complete");
+        $md5_data = $Aoss->md5($file->hash('md5'));
+        if (empty($md5_data->error)) {
+            if ($file_exists = AttachmentModel::get(['md5' => $file->hash('md5')])) {
+                return $this->uploadSuccess($from, $md5_data->url, $md5_data->name, $file_exists['id'], $callback, $md5_data->data);
+            }
         }
 
         // 判断附件大小是否超过限制
@@ -164,7 +152,6 @@ class Attachment extends Admin
         }
 
         // 判断附件格式是否符合
-        $file_name = $file->getInfo('name');
         $file_ext = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
         $error_msg = '';
         if ($ext_limit == '') {
@@ -222,24 +209,48 @@ class Attachment extends Admin
                 if ($thumb == '') {
                     if (config('upload_image_thumb') != '') {
                         $thumb_path_name = $this->create_thumb($info, $info->getPathInfo()->getfileName(), $info->getFilename());
+                        $thumb_ret = $Aoss->send($thumb_path_name, $file->getMime(), $info->getFilename());
+                        if (isset($thumb_ret->error)) {
+                            return $this->uploadError($from, $thumb_ret->error, $callback);
+                        } else {
+                            $thumb_path_name = $thumb_ret->url;
+                        }
                     }
                 } else {
+
                     if (strtolower($thumb) != 'close') {
                         list($thumb_size, $thumb_type) = explode('|', $thumb);
                         $thumb_path_name = $this->create_thumb($info, $info->getPathInfo()->getfileName(), $info->getFilename(), $thumb_size, $thumb_type);
+                        $thumb_ret = $Aoss->send($thumb_path_name, $file->getMime(), $info->getFilename());
+                        if (isset($thumb_ret->error)) {
+                            return $this->uploadError($from, $thumb_ret->error, $callback);
+                        } else {
+                            $thumb_path_name = $thumb_ret->url;
+                        }
+
                     }
                 }
+            }
+            if (isset($md5_data->error)) {
+                $send_ret = $Aoss->send($info->getPathname(), $info->getMime(), $file_name);
+                if (isset($send_ret->error)) {
+                    echo $send_ret->error;
+                    exit();
+                    return $this->uploadError($from, $send_ret->error, $callback);
+                }
+            } else {
+                $send_ret = $md5_data;
             }
 
             // 获取附件信息
             $file_info = [
                 'uid' => session('user_auth.uid'),
-                'name' => $file->getInfo('name'),
-                'mime' => $file->getInfo('type'),
-                'path' => $file_path,
-                'ext' => $info->getExtension(),
-                'size' => $info->getSize(),
-                'md5' => $info->hash('md5'),
+                'name' => $send_ret->name,
+                'mime' => $send_ret->mime,
+                'path' => $send_ret->url,
+                'ext' => $send_ret->ext,
+                'size' => $send_ret->size,
+                'md5' => $send_ret->md5,
                 'sha1' => $info->hash('sha1'),
                 'thumb' => $thumb_path_name,
                 'module' => $module,
@@ -250,7 +261,7 @@ class Attachment extends Admin
 
             // 写入数据库
             if ($file_add = AttachmentModel::create($file_info)) {
-                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_path, $callback);
+                return $this->uploadSuccess($from, $send_ret->url, $file_info['name'], $send_ret->url, $callback, $send_ret->data);
             } else {
                 return $this->uploadError($from, '上传失败', $callback);
             }
@@ -262,9 +273,9 @@ class Attachment extends Admin
     /**
      * 处理ueditor上传
      * @return string|\think\response\Json
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    private function ueditor()
+    private
+    function ueditor()
     {
         $action = $this->request->get('action');
         $config_file = './static/libs/ueditor/php/config.json';
@@ -329,9 +340,9 @@ class Attachment extends Admin
     /**
      * 保存涂鸦（ueditor）
      * @return \think\response\Json
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    private function saveScrawl()
+    private
+    function saveScrawl()
     {
         $file = $this->request->post('file');
         $file_content = base64_decode($file);
@@ -380,9 +391,9 @@ class Attachment extends Admin
      * @param string $type 类型
      * @param $config
      * @return \think\response\Json
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    private function showFile($type, $config)
+    private
+    function showFile($type, $config)
     {
         /* 判断类型 */
         switch ($type) {
@@ -440,7 +451,6 @@ class Attachment extends Admin
 
     /**
      * 处理Jcrop图片裁剪
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function jcrop()
     {
@@ -576,7 +586,6 @@ class Attachment extends Admin
      * @param string $thumb_size 尺寸
      * @param string $thumb_type 裁剪类型
      * @return string 缩略图路径
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function create_thumb($file = '', $dir = '', $save_name = '', $thumb_size = '', $thumb_type = '')
     {
@@ -605,7 +614,6 @@ class Attachment extends Admin
      * @param string $watermark_img 水印图片id
      * @param string $watermark_pos 水印位置
      * @param string $watermark_alpha 水印透明度
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function create_water($file = '', $watermark_img = '', $watermark_pos = '', $watermark_alpha = '')
     {
@@ -631,9 +639,9 @@ class Attachment extends Admin
      * @param string $file_id
      * @param string $callback
      * @return string|\think\response\Json
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    private function uploadSuccess($from, $file_path = '', $file_name = '', $file_id = '', $callback = '')
+    private
+    function uploadSuccess($from, $file_path = '', $file_name = '', $file_id = '', $callback = '', $data = [])
     {
         switch ($from) {
             case 'wangeditor':
@@ -644,6 +652,7 @@ class Attachment extends Admin
                     "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
                     "url" => $file_path, // 返回的地址
                     "title" => $file_name, // 附件名
+                    "data" => $data,
                 ]);
                 break;
             case 'editormd':
@@ -651,6 +660,7 @@ class Attachment extends Admin
                     "success" => 1,
                     "message" => '上传成功',
                     "url" => $file_path,
+                    "data" => $data,
                 ]);
                 break;
             case 'ckeditor':
@@ -663,6 +673,7 @@ class Attachment extends Admin
                     'class' => 'success',
                     'id' => $file_path,
                     'path' => $file_path,
+                    "data" => $data,
                 ]);
         }
     }
@@ -673,9 +684,9 @@ class Attachment extends Admin
      * @param string $msg
      * @param string $callback
      * @return string|\think\response\Json
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    private function uploadError($from, $msg = '', $callback = '')
+    private
+    function uploadError($from, $msg = '', $callback = '')
     {
         switch ($from) {
             case 'wangeditor':
@@ -705,9 +716,9 @@ class Attachment extends Admin
      * @param string $allowFiles 允许查看的类型
      * @param array $files 文件列表
      * @return array|null
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function getfiles($path = '', $allowFiles = '', &$files = array())
+    public
+    function getfiles($path = '', $allowFiles = '', &$files = array())
     {
         if (!is_dir($path)) {
             return null;
@@ -740,9 +751,9 @@ class Attachment extends Admin
      * 启用附件
      * @param array $record 行为日志
      * @return mixed
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function enable($record = [])
+    public
+    function enable($record = [])
     {
         return $this->setStatus('enable');
     }
@@ -751,9 +762,9 @@ class Attachment extends Admin
      * 禁用附件
      * @param array $record 行为日志
      * @return mixed
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function disable($record = [])
+    public
+    function disable($record = [])
     {
         return $this->setStatus('disable');
     }
@@ -764,9 +775,9 @@ class Attachment extends Admin
      * @param array $record
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function setStatus($type = '', $record = [])
+    public
+    function setStatus($type = '', $record = [])
     {
         $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         $ids = is_array($ids) ? implode(',', $ids) : $ids;
@@ -778,9 +789,9 @@ class Attachment extends Admin
      * @param string $ids 附件id
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function delete($ids = '')
+    public
+    function delete($ids = '')
     {
         $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
         if (empty($ids)) {
@@ -814,9 +825,9 @@ class Attachment extends Admin
      * 快速编辑
      * @param array $record 行为日志
      * @return mixed
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function quickEdit($record = [])
+    public
+    function quickEdit($record = [])
     {
         $id = input('post.pk', '');
         return parent::quickEdit(['attachment_edit', 'admin_attachment', 0, UID, $id]);

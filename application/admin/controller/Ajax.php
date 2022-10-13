@@ -3,11 +3,12 @@
 
 namespace app\admin\controller;
 
-use app\common\controller\Common;
-use app\admin\model\Menu as MenuModel;
 use app\admin\model\Attachment as AttachmentModel;
-use think\facade\Cache;
+use app\admin\model\Menu as MenuModel;
+use app\common\controller\Common;
 use think\Db;
+use think\facade\Cache;
+use Tobycroft\AossSdk\Aoss;
 
 /**
  * 用于处理ajax请求的控制器
@@ -20,7 +21,6 @@ class Ajax extends Common
      * @param string $token token
      * @param int $pid 父级ID
      * @param string $pidkey 父级id字段名
-     * @author 蔡伟明 <314013107@qq.com>
      * @return \think\response\Json
      */
     public function getLevelData($token = '', $pid = 0, $pidkey = 'pid')
@@ -30,9 +30,9 @@ class Ajax extends Common
         }
 
         $token_data = session($token);
-        $table      = $token_data['table'];
-        $option     = $token_data['option'];
-        $key        = $token_data['key'];
+        $table = $token_data['table'];
+        $option = $token_data['option'];
+        $key = $token_data['key'];
 
         $data_list = Db::name($table)->where($pidkey, $pid)->column($option, $key);
 
@@ -43,7 +43,7 @@ class Ajax extends Common
         if ($data_list) {
             $result = [
                 'code' => 1,
-                'msg'  => '请求成功',
+                'msg' => '请求成功',
                 'list' => format_linkage($data_list)
             ];
             return json($result);
@@ -58,7 +58,6 @@ class Ajax extends Common
      * @param array $map 查询条件
      * @param string $options 选项，用于显示转换
      * @param string $list 选项缓存列表名称
-     * @author 蔡伟明 <314013107@qq.com>
      * @return \think\response\Json
      */
     public function getFilterList($token = '', $map = [], $options = '', $list = '')
@@ -66,7 +65,7 @@ class Ajax extends Common
         if ($list != '') {
             $result = [
                 'code' => 1,
-                'msg'  => '请求成功',
+                'msg' => '请求成功',
                 'list' => Cache::get($list)
             ];
             return json($result);
@@ -123,7 +122,7 @@ class Ajax extends Common
 
             $result = [
                 'code' => 1,
-                'msg'  => '请求成功',
+                'msg' => '请求成功',
                 'list' => $data_list
             ];
             return json($result);
@@ -135,7 +134,6 @@ class Ajax extends Common
     /**
      * 获取指定模块的菜单
      * @param string $module 模块名
-     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      */
     public function getModuleMenus($module = '')
@@ -146,7 +144,7 @@ class Ajax extends Common
         $menus = MenuModel::getMenuTree(0, '', $module);
         $result = [
             'code' => 1,
-            'msg'  => '请求成功',
+            'msg' => '请求成功',
             'list' => format_linkage($menus)
         ];
         return json($result);
@@ -155,9 +153,9 @@ class Ajax extends Common
     /**
      * 设置配色方案
      * @param string $theme 配色名称
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function setTheme($theme = '') {
+    public function setTheme($theme = '')
+    {
         if (!is_signin()) {
             $this->error('请先登录');
         }
@@ -165,7 +163,7 @@ class Ajax extends Common
         if (!in_array($theme, $themes)) {
             $this->error('非法操作');
         }
-        $map['name']  = 'system_color';
+        $map['name'] = 'system_color';
         $map['group'] = 'system';
 
         if (Db::name('admin_config')->where($map)->setField('value', $theme)) {
@@ -180,7 +178,6 @@ class Ajax extends Common
      * @param string $module_id 模块id
      * @param string $module 模型名
      * @param string $controller 控制器名
-     * @author 蔡伟明 <314013107@qq.com>
      * @return string
      */
     public function getSidebarMenu($module_id = '', $module = '', $controller = '')
@@ -209,29 +206,56 @@ class Ajax extends Common
     /**
      * 检查附件是否存在
      * @param string $md5 文件md5
-     * @author 蔡伟明 <314013107@qq.com>
      * @return \think\response\Json
      */
     public function check($md5 = '')
     {
         $md5 == '' && $this->error('参数错误');
-
-        // 判断附件是否已存在
         if ($file_exists = AttachmentModel::get(['md5' => $md5])) {
-            if ($file_exists['driver'] == 'local') {
-                $file_path = PUBLIC_PATH.$file_exists['path'];
+            $data = [
+                'code' => 1,
+                'info' => '文件已上传',
+                'class' => 'success',
+                'id' => $file_exists["path"],
+                'path' => $file_exists["path"],
+                'data' => $file_exists,
+            ];
+            return json($data);
+        }
+        $Aoss = new Aoss(config("upload_prefix"), "complete");
+        $md5_data = $Aoss->md5($md5);
+        if (empty($md5_data->error)) {
+            $file_info = [
+                'uid' => session('user_auth.uid'),
+                'name' => $md5_data->name,
+                'mime' => $md5_data->mime,
+                'path' => $md5_data->url,
+                'ext' => $md5_data->ext,
+                'size' => $md5_data->size,
+                'md5' => $md5_data->md5,
+                'sha1' => $md5_data->sha1,
+                'thumb' => "",
+                'module' => "remote",
+                'width' => $md5_data->width,
+                'height' => $md5_data->height,
+                'driver' => "remote",
+            ];
+            // 写入数据库
+            if (AttachmentModel::create($file_info)) {
+                $data = [
+                    'code' => 1,
+                    'info' => '同步成功',
+                    'class' => 'success',
+                    'id' => $md5_data->url,
+                    'path' => $md5_data->url,
+                    'data' => $md5_data->data,
+                ];
+                return json($data);
             } else {
-                $file_path = $file_exists['path'];
+                $this->error('文件同步失败');
             }
-            return json([
-                'code'   => 1,
-                'info'   => '上传成功',
-                'class'  => 'success',
-                'id'     => $file_path,
-                'path'   => $file_path
-            ]);
         } else {
-            $this->error('文件不存在');
+            $this->error('需要上传文件');
         }
     }
 
@@ -240,9 +264,9 @@ class Ajax extends Common
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function getMyRoles()
+    public
+    function getMyRoles()
     {
         if (!is_signin()) {
             $this->error('请先登录');
@@ -258,7 +282,7 @@ class Ajax extends Common
         $roles = array_unique($roles);
         $roles = Db::name('admin_role')->where('id', 'in', $roles)->column('id,name');
         $this->success('获取成功', null, [
-            'curr'  => session('user_auth.role'),
+            'curr' => session('user_auth.role'),
             'roles' => $roles
         ]);
     }
@@ -269,9 +293,9 @@ class Ajax extends Common
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function setMyRole($id = '')
+    public
+    function setMyRole($id = '')
     {
         if (!is_signin()) {
             $this->error('请先登录');
@@ -293,7 +317,7 @@ class Ajax extends Common
             $this->error('无法设置当前角色');
         }
 
-        cache('role_menu_auth_'.session('user_auth.role'), null);
+        cache('role_menu_auth_' . session('user_auth.role'), null);
         session('user_auth.role', $id);
         session('user_auth.role_name', Db::name('admin_role')->where('id', $id)->value('name'));
         session('user_auth_sign', data_auth_sign(session('user_auth')));
