@@ -210,8 +210,9 @@ class Lecture extends Admin
             $file = $this->request->file("file");
 
             $excel = new Excel(config("upload_prefix"), "complete");
+            $info = $file->move("./upload/temp");
 
-            $data = $excel->send_excel($file->getPathname(), "", $file->getInfo("name"));
+            $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
             var_dump($data->response);
             var_dump($data->getError());
             var_dump($data->getExcelJson());
