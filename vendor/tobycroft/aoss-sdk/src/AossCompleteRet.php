@@ -4,7 +4,8 @@ namespace Tobycroft\AossSdk;
 
 class AossCompleteRet
 {
-    public mixed $error = null;
+    public string $response;
+    protected mixed $error = null;
     public mixed $data = [];
     public mixed $name = "";
     public mixed $path = "";
@@ -24,6 +25,7 @@ class AossCompleteRet
 
     public function __construct($response)
     {
+        $this->response = $response;
         $json = json_decode($response, true);
         if (empty($json) || !isset($json["code"])) {
             $this->error = $response;
@@ -46,10 +48,22 @@ class AossCompleteRet
                 $this->width = $this->data["width"];
                 $this->height = $this->data["height"];
             } else {
-                $this->error = $json["data"];
+                $this->error = $json["echo"];
             }
         }
-        return $this;
+    }
+
+    public function isSuccess(): bool
+    {
+        return empty($this->error);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getError(): mixed
+    {
+        return $this->error;
     }
 }
 

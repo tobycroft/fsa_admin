@@ -4,11 +4,6 @@ namespace Tobycroft\AossSdk\WechatRequestBuilder;
 
 class WechatFunc
 {
-
-    public const GetWxacodeUnlimit = "/v1/wechat/wxa/";
-
-    public function __construct(self $any)
-    {
-        return $any;
-    }
+    public const Sns = "/v1/wechat/sns/";
+    public const Wxa = "/v1/wechat/wxa/";
 }
