@@ -216,15 +216,15 @@ class Ajax extends Common
                 'code' => 1,
                 'info' => '文件已上传',
                 'class' => 'success',
-                'id' => $file_exists["path"],
-                'path' => $file_exists["path"],
+                'id' => $file_exists['path'],
+                'path' => $file_exists['path'],
                 'data' => $file_exists,
             ];
             return json($data);
         }
-        $Aoss = new Aoss(config("upload_prefix"), "complete");
+        $Aoss = new Aoss(config('upload_prefix'), 'complete');
         $md5_data = $Aoss->md5($md5);
-        if (empty($md5_data->error)) {
+        if ($md5_data->isSuccess()) {
             $file_info = [
                 'uid' => session('user_auth.uid'),
                 'name' => $md5_data->name,
@@ -234,11 +234,11 @@ class Ajax extends Common
                 'size' => $md5_data->size,
                 'md5' => $md5_data->md5,
                 'sha1' => $md5_data->sha1,
-                'thumb' => "",
-                'module' => "remote",
+                'thumb' => '',
+                'module' => 'remote',
                 'width' => $md5_data->width,
                 'height' => $md5_data->height,
-                'driver' => "remote",
+                'driver' => 'remote',
             ];
             // 写入数据库
             if (AttachmentModel::create($file_info)) {
