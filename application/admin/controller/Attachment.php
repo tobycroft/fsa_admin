@@ -217,7 +217,6 @@ class Attachment extends Admin
                         }
                     }
                 } else {
-
                     if (strtolower($thumb) != 'close') {
                         list($thumb_size, $thumb_type) = explode('|', $thumb);
                         $thumb_path_name = $this->create_thumb($info, $info->getPathInfo()->getfileName(), $info->getFilename(), $thumb_size, $thumb_type);
@@ -231,7 +230,7 @@ class Attachment extends Admin
                     }
                 }
             }
-            if ($md5_data->isSuccess()) {
+            if (!$md5_data->isSuccess()) {
                 $send_ret = $Aoss->send($info->getPathname(), $info->getMime(), $file_name);
                 if ($send_ret->isSuccess()) {
                     return $this->uploadError($from, $send_ret->getError(), $callback);
