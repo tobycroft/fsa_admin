@@ -51,7 +51,7 @@ class AssociationMember extends Admin
 
         return ZBuilder::make('table')
             ->addOrder('id')
-            ->setSearch(['id' => 'id']) // 设置搜索参数
+            ->setSearch(['uid' => 'uid', 'iid' => 'iid']) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
