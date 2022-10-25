@@ -118,7 +118,8 @@ class AssociationMember extends Admin
      */
     public function edit($id = null)
     {
-        if ($id === null) $this->error('缺少参数');
+        if ($id === null)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
@@ -146,11 +147,7 @@ class AssociationMember extends Admin
         // 获取数据
         $info = AssociationMemberModel::where('id', $id)->find();
 
-        $assoc = AssociationModel::select();
-        $assocs = [];
-        foreach ($assoc as $item) {
-            $assocs[$item["id"]] = $item["name"];
-        }
+        $assocs = AssociationModel::column("id,name");
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
@@ -180,7 +177,8 @@ class AssociationMember extends Admin
      */
     public function access($module = '', $uid = 0, $tab = '')
     {
-        if ($uid === 0) $this->error('缺少参数');
+        if ($uid === 0)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
