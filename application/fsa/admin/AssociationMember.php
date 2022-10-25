@@ -82,7 +82,7 @@ class AssociationMember extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            AssociationMemberModel::where("uid", $data["uid"])->where("aid", $data["aid"])->delete()
+            AssociationMemberModel::where("uid", $data["uid"])->where("aid", $data["aid"])->delete();
             if ($user = AssociationMemberModel::create($data)) {
                 $this->success('新增成功', url('index'));
             } else {
