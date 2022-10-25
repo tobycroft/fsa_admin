@@ -157,8 +157,8 @@ class AssociationMember extends Admin
             ->addFormItems([ // 批量添加表单项
                 ["hidden", "id"],
                 ["select", "aid", "协会", "", $assocs],
-                ["number", "uid", "uid", "", $user],
-                ["number", 'iid', '讲师id', '', $ins],
+                ["select", "uid", "uid", "", $user],
+                ["select", 'iid', '讲师id', '', $ins],
                 ["switch", 'is_admin', '是否是机构管理员'],
             ])
             ->setFormData($info) // 设置表单数据
