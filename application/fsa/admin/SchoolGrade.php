@@ -12,11 +12,11 @@ namespace app\fsa\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\SchoolGradeModel;
-use app\user\model\User;
 use app\user\model\Role as RoleModel;
-use util\Tree;
+use app\user\model\User;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 /**
  * 用户默认控制器
@@ -489,14 +489,30 @@ class SchoolGrade extends Admin
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
         $field = input('post.name', '');
         $value = input('post.value', '');
+        $type = input('post.type', '');
+        $id = input('post.pk', '');
 
+        switch ($type) {
+            // 日期时间需要转为时间戳
+            case 'combodate':
+                $value = strtotime($value);
+                break;
+            // 开关
+            case 'switch':
+                $value = $value == 'true' ? 1 : 0;
+                break;
+            // 开关
+            case 'password':
+                $value = Hash::make((string)$value);
+                break;
+        }
         // 非超级管理员检查可操作的用户
         if (session('user_auth.role') != 1) {
             $role_list = Role::getChildsId(session('user_auth.role'));
-            $user_list = \app\user\model\User::where('role', 'in', $role_list)->column('id');
+            $user_list = \app\user\model\User::where('role', 'in', $role_list)
+                ->column('id');
             if (!in_array($id, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }

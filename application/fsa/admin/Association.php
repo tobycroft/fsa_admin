@@ -123,7 +123,8 @@ class Association extends Admin
      */
     public function edit($id = null)
     {
-        if ($id === null) $this->error('缺少参数');
+        if ($id === null)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
@@ -191,7 +192,8 @@ class Association extends Admin
      */
     public function access($module = '', $uid = 0, $tab = '')
     {
-        if ($uid === 0) $this->error('缺少参数');
+        if ($uid === 0)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
@@ -490,14 +492,30 @@ class Association extends Admin
      */
     public function quickEdit($record = [])
     {
-        $id = input('post.pk', '');
         $field = input('post.name', '');
         $value = input('post.value', '');
+        $type = input('post.type', '');
+        $id = input('post.pk', '');
 
+        switch ($type) {
+            // 日期时间需要转为时间戳
+            case 'combodate':
+                $value = strtotime($value);
+                break;
+            // 开关
+            case 'switch':
+                $value = $value == 'true' ? 1 : 0;
+                break;
+            // 开关
+            case 'password':
+                $value = Hash::make((string)$value);
+                break;
+        }
         // 非超级管理员检查可操作的用户
         if (session('user_auth.role') != 1) {
             $role_list = Role::getChildsId(session('user_auth.role'));
-            $user_list = \app\user\model\User::where('role', 'in', $role_list)->column('id');
+            $user_list = \app\user\model\User::where('role', 'in', $role_list)
+                ->column('id');
             if (!in_array($id, $user_list)) {
                 $this->error('权限不足，没有可操作的用户');
             }
