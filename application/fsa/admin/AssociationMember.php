@@ -90,18 +90,15 @@ class AssociationMember extends Admin
                 $this->error('新增失败');
             }
         }
-        $assoc = AssociationModel::select();
-        $assocs = [];
-        foreach ($assoc as $item) {
-            $assocs[$item["id"]] = $item["name"];
-        }
+        $assocs = AssociationModel::column('id,name');
+        $user = UserModel::column('id,phone');
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["select", "aid", "协会", "", $assocs],
-                ["number", "uid", "uid",],
-                ["number", 'iid', '讲师id',],
+                ['select', 'uid', 'uid', '', $user],
+//                ["number", 'iid', '讲师id',],
                 ["switch", 'is_admin', '是否是机构管理员'],
             ])
             ->fetch();
