@@ -200,6 +200,7 @@ class Lecture extends Admin
                 ["image", 'file1', '文件地址1',],
                 ["image", 'file2', '文件地址2',],
                 ["radio", 'is_del', '软删除', "", ["1" => "开", "0" => "关"]],
+                ["radio", 'status', '审核状态', "", ["1" => "通过", "0" => "待审核", "-1" => "拒绝"]],
             ])
             ->fetch();
     }
