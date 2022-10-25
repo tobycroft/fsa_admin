@@ -5,10 +5,10 @@ namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\fsa\model\User as UserModel;
-use util\Tree;
+use app\fsa\model\UserModel as UserModel;
 use think\Db;
 use think\facade\Hook;
+use util\Tree;
 
 
 /**

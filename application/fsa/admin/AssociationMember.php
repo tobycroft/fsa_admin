@@ -8,6 +8,7 @@ use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationMemberModel;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\InstructorModel;
+use app\fsa\model\UserModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
@@ -148,14 +149,16 @@ class AssociationMember extends Admin
         $info = AssociationMemberModel::where('id', $id)->find();
 
         $assocs = AssociationModel::column("id,name");
+        $user = UserModel::column("id,phone");
+        $ins = InstructorModel::column("id,name");
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["hidden", "id"],
                 ["select", "aid", "协会", "", $assocs],
-                ["number", "uid", "uid",],
-                ["number", 'iid', '讲师id',],
+                ["number", "uid", "uid", "", $user],
+                ["number", 'iid', '讲师id', '', $ins],
                 ["switch", 'is_admin', '是否是机构管理员'],
             ])
             ->setFormData($info) // 设置表单数据
