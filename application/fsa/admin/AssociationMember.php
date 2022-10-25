@@ -84,6 +84,7 @@ class AssociationMember extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
             AssociationMemberModel::where("uid", $data["uid"])->where("aid", $data["aid"])->delete();
+            $data["iid"] = InstructorModel::where("aid", $data["aid"])->where('uid', $data["uid"])->value("id");
             if ($user = AssociationMemberModel::create($data)) {
                 $this->success('新增成功', url('index'));
             } else {
