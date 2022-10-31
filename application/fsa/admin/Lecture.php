@@ -229,20 +229,9 @@ class Lecture extends Admin
             }
             $dec = json_decode($ret, true);
             if ($dec["code"] === 0) {
-                return json([
-                    'code' => 1,
-                    'info' => '上传成功',
-                    'class' => 'success',
-                    'id' => null,
-                    'path' => null,
-                    "data" => $dec,
-                ]);
+                $this->success("上传成功");
             } else {
-                return json([
-                    'code' => 0,
-                    'class' => 'danger',
-                    'info' => "错误:" . $dec["echo"],
-                ]);
+                $this->error('错误原因:' . $dec['echo']);
             }
         }
 
