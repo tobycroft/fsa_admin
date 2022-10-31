@@ -211,20 +211,20 @@ class Ajax extends Common
     public function check($md5 = '')
     {
         $md5 == '' && $this->error('参数错误');
-        if ($file_exists = AttachmentModel::get(['md5' => $md5])) {
-            $data = [
-                'code' => 1,
-                'info' => '文件已上传',
-                'class' => 'success',
-                'id' => $file_exists['path'],
-                'path' => $file_exists['path'],
-                'data' => $file_exists,
-            ];
-            return json($data);
-        }
         $Aoss = new Aoss(config('upload_prefix'), 'complete');
         $md5_data = $Aoss->md5($md5);
         if ($md5_data->isSuccess()) {
+            if ($file_exists = AttachmentModel::get(['md5' => $md5])) {
+                $data = [
+                    'code' => 1,
+                    'info' => '文件已上传',
+                    'class' => 'success',
+                    'id' => $file_exists['path'],
+                    'path' => $file_exists['path'],
+                    'data' => $file_exists,
+                ];
+                return json($data);
+            }
             $file_info = [
                 'uid' => session('user_auth.uid'),
                 'name' => $md5_data->name,
