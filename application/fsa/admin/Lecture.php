@@ -213,7 +213,7 @@ class Lecture extends Admin
 
 
             $excel = new Excel(config("upload_prefix"));
-            $ex = $excel->send_dp($data["file"]);
+            $ex = $excel->send_md5($data["file"]);
             echo $ex->response;
             var_dump($ex);
             exit();
