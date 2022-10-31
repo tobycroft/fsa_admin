@@ -4,6 +4,7 @@
 namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
+use app\admin\model\Attachment;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\HostModel;
@@ -211,9 +212,12 @@ class Lecture extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-
+            $atta = Attachment::where("path", $data['file'])->find();
+            if (!$atta) {
+                $this->error("先上传文件");
+            }
             $excel = new Excel(config("upload_prefix"));
-            $ex = $excel->send_md5($data["file"]);
+            $ex = $excel->send_md5($atta["md5"]);
             echo $ex->response;
             var_dump($ex);
             exit();
