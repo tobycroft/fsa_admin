@@ -214,9 +214,9 @@ class Lecture extends Admin
 
             $excel = new Excel(config("upload_prefix"));
             $ex = $excel->send_dp($data["file"]);
-            var_dump($ex);
+           echo $ex->response;
             exit();
-            $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
+
             $excel_json = $data->getExcelJson();
             $postData = [
                 "aid" => $this->request->post("aid"),
