@@ -209,10 +209,9 @@ class Lecture extends Admin
     {
         // 保存数据
         if ($this->request->isPost()) {
-            $file = $this->request->file("file");
+
 
             $excel = new Excel(config("upload_prefix"));
-            $info = $file->move("./upload/temp");
 
             $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
             $excel_json = $data->getExcelJson();

@@ -22,7 +22,7 @@
         "topthink/think-image": "^1.0",
         "topthink/think-helper": "^1.0",
         "ezyang/htmlpurifier": "^4.9",
-        "tobycroft/aoss-sdk": "^1.2"
+        "tobycroft/aoss-sdk": "^1.6"
     },
     "autoload": {
         "psr-4": {
