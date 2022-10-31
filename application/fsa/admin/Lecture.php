@@ -252,7 +252,7 @@ class Lecture extends Admin
                 ["select", "aid", "公会名称", "", $assoc],
                 ["file", 'file', '上传讲座excel',],
             ])
-            ->assign("file_upload_url", url("upload"))
+            ->assign("file_upload_url", "http://upload.tuuz.cc:81/v1/excel/index/index?token=fsa")
             ->fetch();
     }
 
