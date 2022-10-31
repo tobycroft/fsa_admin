@@ -5,18 +5,18 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f947aa6ae762f2db64f8cda99f90fa57c1c269a7',
+        'reference' => '516e2598020d46578f5cba77f2c860dfbee1c403',
         'name' => 'topthink/think',
         'dev' => true,
     ),
     'versions' => array(
         'ezyang/htmlpurifier' => array(
-            'pretty_version' => 'v4.14.0',
-            'version' => '4.14.0.0',
+            'pretty_version' => 'v4.16.0',
+            'version' => '4.16.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../ezyang/htmlpurifier',
             'aliases' => array(),
-            'reference' => '12ab42bd6e742c70c0a52f7b82477fcd44e64b75',
+            'reference' => '523407fb06eb9e5f3d59889b3978d5bfe94299c8',
             'dev_requirement' => false,
         ),
         'tobycroft/aoss-sdk' => array(
@@ -29,12 +29,12 @@
             'dev_requirement' => false,
         ),
         'topthink/framework' => array(
-            'pretty_version' => 'v5.1.41',
-            'version' => '5.1.41.0',
+            'pretty_version' => 'v5.1.42',
+            'version' => '5.1.42.0',
             'type' => 'think-framework',
             'install_path' => __DIR__ . '/../../thinkphp',
             'aliases' => array(),
-            'reference' => '7137741a323a4a60cfca334507cd1812fac91bb2',
+            'reference' => 'ecf1a90d397d821ce2df58f7d47e798c17eba3ad',
             'dev_requirement' => false,
         ),
         'topthink/think' => array(
@@ -43,7 +43,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f947aa6ae762f2db64f8cda99f90fa57c1c269a7',
+            'reference' => '516e2598020d46578f5cba77f2c860dfbee1c403',
             'dev_requirement' => false,
         ),
         'topthink/think-captcha' => array(
