@@ -219,10 +219,7 @@ class Lecture extends Admin
             $excel = new Excel(config("upload_prefix"));
             $ex = $excel->send_md5($atta["md5"]);
             echo $ex->response;
-            var_dump($ex);
-            exit();
-
-            $excel_json = $data->getExcelJson();
+            $excel_json = $ex->getExcelJson();
             $postData = [
                 "aid" => $this->request->post("aid"),
                 "json" => json_encode($excel_json),
