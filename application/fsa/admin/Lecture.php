@@ -4,6 +4,7 @@
 namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
+use app\admin\model\Attachment;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\HostModel;
@@ -209,13 +210,15 @@ class Lecture extends Admin
     {
         // 保存数据
         if ($this->request->isPost()) {
-            $file = $this->request->file("file");
+            $data = $this->request->post();
 
+            $atta = Attachment::where("path", $data['file'])->find();
+            if (!$atta) {
+                $this->error("先上传文件");
+            }
             $excel = new Excel(config("upload_prefix"));
-            $info = $file->move("./upload/temp");
-
-            $data = $excel->send_excel($info->getPathname(), $info->getMime(), $file->getSaveName());
-            $excel_json = $data->getExcelJson();
+            $ex = $excel->send_md5($atta["md5"]);
+            $excel_json = $ex->getExcelJson();
             $postData = [
                 "aid" => $this->request->post("aid"),
                 "json" => json_encode($excel_json),
@@ -226,20 +229,9 @@ class Lecture extends Admin
             }
             $dec = json_decode($ret, true);
             if ($dec["code"] === 0) {
-                return json([
-                    'code' => 1,
-                    'info' => '上传成功',
-                    'class' => 'success',
-                    'id' => null,
-                    'path' => null,
-                    "data" => $dec,
-                ]);
+                $this->success("上传成功");
             } else {
-                return json([
-                    'code' => 0,
-                    'class' => 'danger',
-                    'info' => "错误:" . $dec["echo"] . "\n" . '错误内容:' . $dec["data"],
-                ]);
+                $this->error('错误原因:' . $dec['echo']);
             }
         }
 
@@ -252,7 +244,7 @@ class Lecture extends Admin
                 ["select", "aid", "公会名称", "", $assoc],
                 ["file", 'file', '上传讲座excel',],
             ])
-            ->assign("file_upload_url", url("upload"))
+//            ->assign("file_upload_url", "https://upload.tuuz.cc:444/v1/excel/index/index?token=fsa")
             ->fetch();
     }
 

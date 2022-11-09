@@ -54,7 +54,7 @@ use think\db\Query;
  * @method $this withMax(string|array $relation, string $field, bool $subQuery = true) static 关联MAX统计
  * @method $this withMin(string|array $relation, string $field, bool $subQuery = true) static 关联Min统计
  * @method $this withAvg(string|array $relation, string $field, bool $subQuery = true) static 关联Avg统计
- * @method Paginator|$this paginate() static 分页
+ * @method Paginator|$this paginate(int|array $listRows = null, int|bool $simple = false, array $config = []) static 分页
  */
 abstract class Model implements \JsonSerializable, \ArrayAccess
 {
@@ -169,7 +169,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 架构函数
      * @access public
-     * @param array|object $data 数据
+     * @param  array|object $data 数据
      */
     public function __construct($data = [])
     {
@@ -181,7 +181,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         if ($this->disuse) {
             // 废弃字段
-            foreach ((array)$this->disuse as $key) {
+            foreach ((array) $this->disuse as $key) {
                 if (array_key_exists($key, $this->data)) {
                     unset($this->data[$key]);
                 }
@@ -195,10 +195,10 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         if (empty($this->name)) {
             // 当前模型名
-            $name = str_replace('\\', '/', static::class);
+            $name       = str_replace('\\', '/', static::class);
             $this->name = basename($name);
             if (Container::get('config')->get('class_suffix')) {
-                $suffix = basename(dirname($name));
+                $suffix     = basename(dirname($name));
                 $this->name = substr($this->name, 0, -strlen($suffix));
             }
         }
@@ -244,7 +244,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 是否从主库读取数据（主从分布有效）
      * @access public
-     * @param bool $all 是否所有模型有效
+     * @param  bool     $all 是否所有模型有效
      * @return $this
      */
     public function readMaster($all = false)
@@ -259,9 +259,9 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 创建新的模型实例
      * @access public
-     * @param array|object $data 数据
-     * @param bool $isUpdate 是否为更新
-     * @param mixed $where 更新条件
+     * @param  array|object $data 数据
+     * @param  bool         $isUpdate 是否为更新
+     * @param  mixed        $where 更新条件
      * @return Model
      */
     public function newInstance($data = [], $isUpdate = false, $where = null)
@@ -302,7 +302,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 获取当前模型的数据库查询对象
      * @access public
-     * @param Query $query 查询对象实例
+     * @param  Query $query 查询对象实例
      * @return $this
      */
     public function setQuery($query)
@@ -314,7 +314,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 获取当前模型的数据库查询对象
      * @access public
-     * @param bool|array $useBaseQuery 是否调用全局查询范围（或者指定查询范围名称）
+     * @param  bool|array $useBaseQuery 是否调用全局查询范围（或者指定查询范围名称）
      * @return Query
      */
     public function db($useBaseQuery = true)
@@ -332,7 +332,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         // 全局作用域
         if (true === $useBaseQuery && method_exists($this, 'base')) {
-            call_user_func_array([$this, 'base'], [& $query]);
+            call_user_func_array([$this, 'base'], [ & $query]);
         }
 
         $globalScope = is_array($useBaseQuery) && $useBaseQuery ? $useBaseQuery : $this->globalScope;
@@ -364,13 +364,12 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
      * @return void
      */
     protected static function init()
-    {
-    }
+    {}
 
     /**
      * 数据自动完成
      * @access protected
-     * @param array $auto 要自动更新的字段列表
+     * @param  array $auto 要自动更新的字段列表
      * @return void
      */
     protected function autoCompleteData($auto = [])
@@ -394,7 +393,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 更新是否强制写入数据 而不做比较
      * @access public
-     * @param bool $force
+     * @param  bool $force
      * @return $this
      */
     public function force($force = true)
@@ -416,7 +415,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 新增数据是否使用Replace
      * @access public
-     * @param bool $replace
+     * @param  bool $replace
      * @return $this
      */
     public function replace($replace = true)
@@ -428,7 +427,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 设置数据是否存在
      * @access public
-     * @param bool $exists
+     * @param  bool $exists
      * @return $this
      */
     public function exists($exists)
@@ -460,26 +459,16 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 保存当前数据对象
      * @access public
-     * @param array $data 数据
-     * @param array $where 更新条件
-     * @param string $sequence 自增序列名
+     * @param  array  $data     数据
+     * @param  array  $where    更新条件
+     * @param  string $sequence 自增序列名
      * @return bool
      */
     public function save($data = [], $where = [], $sequence = null)
     {
-
         if (is_string($data)) {
             $sequence = $data;
-            $data = [];
-        } else {
-            foreach ($data as $key => $value) {
-                if ($value == "on") {
-                    $value = 1;
-                } elseif ($value == "off") {
-                    $value = 0;
-                }
-                $data[$key] = $value;
-            }
+            $data     = [];
         }
 
         if (!$this->checkBeforeSave($data, $where)) {
@@ -497,7 +486,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         // 重新记录原始数据
         $this->origin = $this->data;
-        $this->set = [];
+        $this->set    = [];
 
         return true;
     }
@@ -505,8 +494,8 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 写入之前检查数据
      * @access protected
-     * @param array $data 数据
-     * @param array $where 保存条件
+     * @param  array   $data  数据
+     * @param  array   $where 保存条件
      * @return bool
      */
     protected function checkBeforeSave($data, $where)
@@ -518,7 +507,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             }
 
             if (!empty($where)) {
-                $this->exists = true;
+                $this->exists      = true;
                 $this->updateWhere = $where;
             }
         }
@@ -537,7 +526,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 检查数据是否允许写入
      * @access protected
-     * @param array $append 自动完成的字段列表
+     * @param  array   $append 自动完成的字段列表
      * @return array
      */
     protected function checkAllowFields(array $append = [])
@@ -560,7 +549,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         if ($this->disuse) {
             // 废弃字段
-            $field = array_diff($field, (array)$this->disuse);
+            $field = array_diff($field, (array) $this->disuse);
         }
 
         return $field;
@@ -569,7 +558,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 更新写入数据
      * @access protected
-     * @param mixed $where 更新条件
+     * @param  mixed   $where 更新条件
      * @return bool
      */
     protected function updateData($where)
@@ -613,10 +602,10 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             }
         }
 
-        $pk = $this->getPk();
+        $pk    = $this->getPk();
         $array = [];
 
-        foreach ((array)$pk as $key) {
+        foreach ((array) $pk as $key) {
             if (isset($data[$key])) {
                 $array[] = [$key, '=', $data[$key]];
                 unset($data[$key]);
@@ -627,7 +616,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             $where = $array;
         }
 
-        foreach ((array)$this->relationWrite as $name => $val) {
+        foreach ((array) $this->relationWrite as $name => $val) {
             if (is_array($val)) {
                 foreach ($val as $key) {
                     if (isset($data[$key])) {
@@ -667,7 +656,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 新增写入数据
      * @access protected
-     * @param string $sequence 自增序列名
+     * @param  string   $sequence 自增序列名
      * @return bool
      */
     protected function insertData($sequence)
@@ -697,7 +686,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             if ($result && $insertId = $db->getLastInsID($sequence)) {
                 $pk = $this->getPk();
 
-                foreach ((array)$pk as $key) {
+                foreach ((array) $pk as $key) {
                     if (!isset($this->data[$key]) || '' == $this->data[$key]) {
                         $this->data[$key] = $insertId;
                     }
@@ -727,9 +716,9 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 字段值(延迟)增长
      * @access public
-     * @param string $field 字段名
-     * @param integer $step 增长值
-     * @param integer $lazyTime 延时时间(s)
+     * @param  string  $field    字段名
+     * @param  integer $step     增长值
+     * @param  integer $lazyTime 延时时间(s)
      * @return bool
      * @throws Exception
      */
@@ -760,9 +749,9 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 字段值(延迟)减少
      * @access public
-     * @param string $field 字段名
-     * @param integer $step 减少值
-     * @param integer $lazyTime 延时时间(s)
+     * @param  string  $field    字段名
+     * @param  integer $step     减少值
+     * @param  integer $lazyTime 延时时间(s)
      * @return bool
      * @throws Exception
      */
@@ -821,8 +810,8 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 保存多个数据到当前数据对象
      * @access public
-     * @param array $dataSet 数据
-     * @param boolean $replace 是否自动识别更新和写入
+     * @param  array   $dataSet 数据
+     * @param  boolean $replace 是否自动识别更新和写入
      * @return Collection
      * @throws \Exception
      */
@@ -860,8 +849,8 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 是否为更新数据
      * @access public
-     * @param mixed $update
-     * @param mixed $where
+     * @param  mixed  $update
+     * @param  mixed  $where
      * @return $this
      */
     public function isUpdate($update = true, $where = null)
@@ -873,7 +862,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
                 $this->updateWhere = $where;
             }
         } else {
-            $this->exists = true;
+            $this->exists      = true;
             $this->updateWhere = $update;
         }
 
@@ -922,7 +911,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 设置自动完成的字段（ 规则通过修改器定义）
      * @access public
-     * @param array $fields 需要自动完成的字段
+     * @param  array $fields 需要自动完成的字段
      * @return $this
      */
     public function auto($fields)
@@ -935,9 +924,9 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 写入数据
      * @access public
-     * @param array $data 数据数组
-     * @param array|true $field 允许字段
-     * @param bool $replace 使用Replace
+     * @param  array      $data  数据数组
+     * @param  array|true $field 允许字段
+     * @param  bool       $replace 使用Replace
      * @return static
      */
     public static function create($data = [], $field = null, $replace = false)
@@ -956,9 +945,9 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 更新数据
      * @access public
-     * @param array $data 数据数组
-     * @param array $where 更新条件
-     * @param array|true $field 允许字段
+     * @param  array      $data  数据数组
+     * @param  array      $where 更新条件
+     * @param  array|true $field 允许字段
      * @return static
      */
     public static function update($data = [], $where = [], $field = null)
@@ -968,16 +957,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         if (!empty($field)) {
             $model->allowField($field);
         }
-        if (!is_string($data)) {
-            foreach ($data as $key => $value) {
-                if ($value == "on") {
-                    $value = 1;
-                } elseif ($value == "off") {
-                    $value = 0;
-                }
-                $data[$key] = $value;
-            }
-        }
+
         $model->isUpdate(true)->save($data, $where);
 
         return $model;
@@ -986,7 +966,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 删除记录
      * @access public
-     * @param mixed $data 主键列表 支持闭包查询条件
+     * @param  mixed $data 主键列表 支持闭包查询条件
      * @return bool
      */
     public static function destroy($data)
@@ -1039,7 +1019,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     public function __debugInfo()
     {
         return [
-            'data' => $this->data,
+            'data'     => $this->data,
             'relation' => $this->relation,
         ];
     }
@@ -1047,8 +1027,8 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 修改器 设置数据对象的值
      * @access public
-     * @param string $name 名称
-     * @param mixed $value 值
+     * @param  string $name  名称
+     * @param  mixed  $value 值
      * @return void
      */
     public function __set($name, $value)
@@ -1059,7 +1039,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 获取器 获取数据对象的值
      * @access public
-     * @param string $name 名称
+     * @param  string $name 名称
      * @return mixed
      */
     public function __get($name)
@@ -1070,7 +1050,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 检测数据对象的值
      * @access public
-     * @param string $name 名称
+     * @param  string $name 名称
      * @return boolean
      */
     public function __isset($name)
@@ -1085,7 +1065,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 销毁数据对象的值
      * @access public
-     * @param string $name 名称
+     * @param  string $name 名称
      * @return void
      */
     public function __unset($name)
@@ -1117,7 +1097,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 设置是否使用全局查询范围
      * @access public
-     * @param bool|array $use 是否启用全局查询范围（或者用数组指定查询范围名称）
+     * @param  bool|array $use 是否启用全局查询范围（或者用数组指定查询范围名称）
      * @return Query
      */
     public static function useGlobalScope($use)
