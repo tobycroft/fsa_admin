@@ -238,7 +238,7 @@ class Lecture extends Admin
                 return json([
                     'code' => 0,
                     'class' => 'danger',
-                    'info' => "错误:" . $dec["echo"],
+                    'info' => "错误:" . $dec["echo"] . "\n" . '错误内容:' . $dec["data"],
                 ]);
             }
         }
