@@ -231,7 +231,7 @@ class Lecture extends Admin
             if ($dec["code"] === 0) {
                 $this->success("上传成功");
             } else {
-                $this->error('错误原因:' . $dec['echo'] . '错误点:' . $dec["data"]);
+                $this->error('错误原因:' . $dec['echo'] . "\n" . '错误点:' . $dec["data"]);
             }
         }
 
