@@ -42,10 +42,12 @@ class Lecture extends Admin
         $map = $this->getMap();
 
         // 读取用户数据
-        $data_list = LectureModel::where($map)->order($order)->paginate();
+        $data_list = LectureModel::alias("a")->leftJoin(["fra_instructor" => "b"], "b.id=a.iid")->where($map)->order($order)
+            ->field("b.*,a.*")
+            ->paginate();
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
+//            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
             $item["host"] = HostModel::where("id", $item["hid"])->value("name");
             $item["tags"] = join(",", TagModel::whereIn("id", $item["tag_ids"])->column("name"));
             $item["dataunits"] = join(",", TagDataunitModel::whereIn("id", $item["tag_dataunit_ids"])->column("name"));
