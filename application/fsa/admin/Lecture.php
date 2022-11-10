@@ -100,7 +100,7 @@ class Lecture extends Admin
             'href' => url('upload')
         ];
         return ZBuilder::make('table')
-            ->addOrder('啊。id')
+            ->addOrder('a.id')
             ->setSearch(['a.id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题",'b.name'=>"讲师"]) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
