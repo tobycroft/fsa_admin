@@ -57,7 +57,7 @@ class User extends Admin
             ->addColumn('wx_id', '微信id')
             ->addColumn('wx_token', '微信token')
             ->addColumn('password', '密码')
-            ->addColumn('admin', '是否是管理员', "number")
+            ->addColumn('admin', '是否是管理员', "switch")
             ->addColumn('active', '是否启用', "switch")
             ->addColumn('change_date', '修改时间')
             ->addColumn('date', '创建时间')
