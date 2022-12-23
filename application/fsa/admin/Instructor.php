@@ -95,7 +95,7 @@ class Instructor extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["number", "aid", "机构ID", '', $aids],
+                ["select", "aid", "机构ID", '', $aids],
                 ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
                 ["image", "img", "头像字段",],
@@ -153,7 +153,7 @@ class Instructor extends Admin
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['number', 'aid', '机构ID', '', $aids],
+                ['select', 'aid', '机构ID', '', $aids],
                 ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
                 ["image", "img", "头像字段",],
