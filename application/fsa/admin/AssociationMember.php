@@ -59,6 +59,7 @@ class AssociationMember extends Admin
                 ["uid", "uid", "number"],
                 ['instructor_info', '讲师姓名'],
                 ['iid', '讲师id', 'number'],
+                ['phone', '手机号', 'text.edit'],
                 ['is_admin', '是否是机构管理员', 'switch'],
                 ["right_button", "功能"],
             ])
@@ -100,6 +101,7 @@ class AssociationMember extends Admin
                 ["select", "aid", "协会", "", $assocs],
                 ['select', 'uid', 'uid', '', $user],
 //                ["number", 'iid', '讲师id',],
+                ["text", 'phone', '手机号',],
                 ["switch", 'is_admin', '是否是机构管理员'],
             ])
             ->fetch();
@@ -157,6 +159,7 @@ class AssociationMember extends Admin
                 ["select", "aid", "协会", "", $assocs],
                 ["select", "uid", "uid", "", $user],
                 ["select", 'iid', '讲师id', '', $ins],
+                ['text', 'phone', '手机号',],
                 ["switch", 'is_admin', '是否是机构管理员'],
             ])
             ->setFormData($info) // 设置表单数据
