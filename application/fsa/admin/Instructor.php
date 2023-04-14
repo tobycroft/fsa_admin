@@ -89,11 +89,13 @@ class Instructor extends Admin
                 $this->error('新增失败');
             }
         }
+
+        $aids = AssociationModel::column("id,name");
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["number", "aid", "机构ID"],
+                ["select", "aid", "机构ID", '', $aids],
                 ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
                 ["image", "img", "头像字段",],
@@ -116,7 +118,8 @@ class Instructor extends Admin
      */
     public function edit($id = null)
     {
-        if ($id === null) $this->error('缺少参数');
+        if ($id === null)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {
@@ -143,13 +146,14 @@ class Instructor extends Admin
 
         // 获取数据
         $info = InstructorModel::where('id', $id)->find();
+        $aids = AssociationModel::column('id,name');
 
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ["number", "aid", "机构ID"],
+                ['select', 'aid', '机构ID', '', $aids],
                 ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
                 ["image", "img", "头像字段",],
@@ -176,7 +180,8 @@ class Instructor extends Admin
      */
     public function access($module = '', $uid = 0, $tab = '')
     {
-        if ($uid === 0) $this->error('缺少参数');
+        if ($uid === 0)
+            $this->error('缺少参数');
 
         // 非超级管理员检查可编辑用户
         if (session('user_auth.role') != 1) {

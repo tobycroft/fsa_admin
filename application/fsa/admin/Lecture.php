@@ -38,14 +38,16 @@ class Lecture extends Admin
     public function index()
     {
         // 获取排序
-        $order = $this->getOrder("id desc");
+        $order = $this->getOrder("a.id desc");
         $map = $this->getMap();
 
         // 读取用户数据
-        $data_list = LectureModel::where($map)->order($order)->paginate();
+        $data_list = LectureModel::alias("a")->leftJoin(["fra_instructor" => "b"], "b.id=a.iid")->where($map)->order($order)
+            ->field("b.*,a.*")
+            ->paginate();
         foreach ($data_list as $key => $item) {
             $item["association_name"] = AssociationModel::where("id", $item["aid"])->value("name");
-            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
+//            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
             $item["host"] = HostModel::where("id", $item["hid"])->value("name");
             $item["tags"] = join(",", TagModel::whereIn("id", $item["tag_ids"])->column("name"));
             $item["dataunits"] = join(",", TagDataunitModel::whereIn("id", $item["tag_dataunit_ids"])->column("name"));
@@ -98,8 +100,8 @@ class Lecture extends Admin
             'href' => url('upload')
         ];
         return ZBuilder::make('table')
-            ->addOrder('id')
-            ->setSearch(['id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题"]) // 设置搜索参数
+            ->addOrder('a.id')
+            ->setSearch(['a.id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题",'b.name'=>"讲师"]) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
                 ["association_name", "公会名称"],
@@ -128,7 +130,7 @@ class Lecture extends Admin
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addRightButton("custom", $btn_access1)
-            ->addTopButtons(["add" => "发帖"])
+            ->addTopButtons(["add" => "发帖","delete"=>"删除"])
             ->addTopButton("upload", $top_upload)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
