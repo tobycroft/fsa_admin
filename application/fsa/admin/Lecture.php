@@ -101,7 +101,7 @@ class Lecture extends Admin
         ];
         return ZBuilder::make('table')
             ->addOrder('a.id')
-            ->setSearch(['a.id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题",'b.name'=>"讲师"]) // 设置搜索参数
+            ->setSearch(['a.id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题", 'b.name' => "讲师"]) // 设置搜索参数
             ->addColumns([
                 ["id", "id"],
                 ["association_name", "公会名称"],
@@ -130,7 +130,7 @@ class Lecture extends Admin
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
             ->addRightButton("custom", $btn_access1)
-            ->addTopButtons(["add" => "发帖","delete"=>"删除"])
+            ->addTopButtons(["add" => "发帖", "delete" => "删除"])
             ->addTopButton("upload", $top_upload)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
@@ -225,6 +225,8 @@ class Lecture extends Admin
                 "aid" => $this->request->post("aid"),
                 "json" => json_encode($excel_json),
             ];
+            echo json_encode($postData);
+            exit();
             $ret = Aoss::raw_post("http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload", $postData);
             if (!$ret) {
                 $this->error("远程错误");
