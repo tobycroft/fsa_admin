@@ -221,12 +221,13 @@ class Lecture extends Admin
             $excel = new Excel(config("upload_prefix"));
             $ex = $excel->send_md5($atta["md5"]);
             $excel_json = $ex->getExcelJson();
+            if (empty($excel_json)) {
+                $this->error("excel解析错误");
+            }
             $postData = [
                 "aid" => $this->request->post("aid"),
                 "json" => json_encode($excel_json),
             ];
-            echo json_encode($postData);
-            exit();
             $ret = Aoss::raw_post("http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload", $postData);
             if (!$ret) {
                 $this->error("远程错误");
