@@ -220,6 +220,9 @@ class Lecture extends Admin
             }
             $excel = new Excel(config("upload_prefix"));
             $ex = $excel->send_md5($atta["md5"]);
+            if (!$ex->isSuccess()) {
+                $this->error($ex->getError());
+            }
             $excel_json = $ex->getExcelJson();
             if (empty($excel_json)) {
                 $this->error("excel解析错误");
