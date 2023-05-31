@@ -125,7 +125,7 @@ class Instructor extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ["select", "aid", "机构ID", '', $aids, count($aids)],
+                ["select", "aid", "机构ID", '', $aids, array_key_last($aids)],
 //                ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
                 ['number', 'phone', '电话'],
