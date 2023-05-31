@@ -128,9 +128,10 @@ class Instructor extends Admin
                 ["select", "aid", "机构ID", '', $aids, count($aids) - 1],
 //                ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
+                ['number', 'phone', '电话'],
+
 //                ["image", "img", "头像字段",],
                 ["select", "gender", "性别", "", [0 => "默认", 1 => "男", 2 => "女"], 2],
-                ["number", "phone", "电话"],
                 ["switch", "status", "是否通过审核", "", 1],
             ])
             ->fetch();
