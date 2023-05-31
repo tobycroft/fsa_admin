@@ -101,7 +101,7 @@ class Instructor extends Admin
 //                ["image", "img", "头像字段",],
                 ["select", "gender", "性别", "", [0 => "默认", 1 => "男", 2 => "女"], 2],
                 ["number", "phone", "电话"],
-                ["switch", "status", "是否通过审核", 1],
+                ["switch", "status", "是否通过审核", "", 1],
             ])
             ->fetch();
     }
