@@ -56,7 +56,7 @@ class Instructor extends Admin
                 ["uid", "用户ID"],
                 ["name", "姓名", "text.edit"],
                 ["img", "头像字段", "picture"],
-                ["gender", "性别", "select", [0 => "默认", 1 => "男", 2 => "女"], 2],
+                ["gender", "性别", "select", [0 => "默认", 1 => "男", 2 => "女"]],
                 ["phone", "电话", "number"],
                 ["status", "是否通过审核", "switch"],
                 ["right_button", "功能"],
@@ -99,7 +99,7 @@ class Instructor extends Admin
                 ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
                 ["image", "img", "头像字段",],
-                ["select", "gender", "性别", "", [0 => "默认", 1 => "男", 2 => "女"]],
+                ["select", "gender", "性别", "", [0 => "默认", 1 => "男", 2 => "女"], 2],
                 ["number", "phone", "电话"],
                 ["switch", "status", "是否通过审核",],
             ])
