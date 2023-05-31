@@ -96,12 +96,12 @@ class Instructor extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ["select", "aid", "机构ID", '', $aids],
-                ["number", "uid", "用户ID"],
+//                ["number", "uid", "用户ID"],
                 ["text", "name", "姓名"],
-                ["image", "img", "头像字段",],
+//                ["image", "img", "头像字段",],
                 ["select", "gender", "性别", "", [0 => "默认", 1 => "男", 2 => "女"], 2],
                 ["number", "phone", "电话"],
-                ["switch", "status", "是否通过审核",],
+                ["switch", "status", "是否通过审核", 1],
             ])
             ->fetch();
     }
