@@ -85,6 +85,10 @@ class Instructor extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
             $data["name"] = trim($data["name"]);
+            $ins = InstructorModel::where("phone", $data["phone"])->findOrEmpty();
+            if (!empty($ins)) {
+                $this->error('僵尸已存在无需重复添加');
+            }
             Db::startTrans();
             $user = UserModel::where("phone", $data["phone"])->findOrEmpty();
             if (empty($user)) {
