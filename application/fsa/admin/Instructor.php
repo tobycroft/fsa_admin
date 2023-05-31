@@ -85,12 +85,12 @@ class Instructor extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
             $data["name"] = trim($data["name"]);
-            $ins = InstructorModel::where("phone", $data["phone"])->findOrEmpty();
+            $ins = InstructorModel::where("phone", $data["phone"])->findOrEmpty()->toArray();
             if (!empty($ins)) {
                 $this->error('僵尸已存在无需重复添加' . $ins["name"]);
             }
             Db::startTrans();
-            $user = UserModel::where("phone", $data["phone"])->findOrEmpty();
+            $user = UserModel::where("phone", $data["phone"])->findOrEmpty()->toArray();
             if (empty($user)) {
                 if (!UserModel::create([
                     "username" => $data["name"],
@@ -102,7 +102,7 @@ class Instructor extends Admin
                     $this->error('用户创建失败');
                 }
             }
-            $user = UserModel::where('phone', $data['phone'])->findOrEmpty();
+            $user = UserModel::where('phone', $data['phone'])->findOrEmpty()->toArray();
             if (empty($user)) {
                 Db::rollback();
                 $this->error('用户创建失败2');
