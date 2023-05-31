@@ -6,7 +6,9 @@ namespace app\fsa\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
+use app\fsa\model\InstructorInfoModel;
 use app\fsa\model\InstructorModel;
+use app\fsa\model\UserModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
@@ -82,12 +84,39 @@ class Instructor extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
-
-            if ($user = InstructorModel::create($data)) {
-                $this->success('新增成功', url('index'));
-            } else {
-                $this->error('新增失败');
+            Db::startTrans();
+            $user = UserModel::where("phone", $data["phone"])->findOrEmpty();
+            if (empty($user)) {
+                if (!UserModel::create([
+                    "username" => $data["name"],
+                    "wx_name" => $data["name"],
+                    "phone" => $data["phone"],
+                    "password" => "0591",
+                ])) {
+                    Db::rollback();
+                    $this->error('用户创建失败');
+                }
             }
+            $user = UserModel::where('phone', $data['phone'])->findOrEmpty();
+            if (empty($user)) {
+                Db::rollback();
+                $this->error('用户创建失败2');
+            }
+            $ins = InstructorModel::create($data);
+            if (!$ins) {
+                Db::rollback();
+                $this->error('新增失败1');
+            }
+            $info = InstructorInfoModel::create([
+                "iid" => $ins->getLastInsID(),
+                "tel" => $data["phone"],
+            ]);
+            if (!$info) {
+                Db::rollback();
+                $this->error('新增失败2');
+            }
+            Db::commit();
+            $this->success('新增成功', url('index'));
         }
 
         $aids = AssociationModel::column("id,name");
