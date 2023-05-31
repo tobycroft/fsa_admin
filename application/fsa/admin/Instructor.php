@@ -84,6 +84,7 @@ class Instructor extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
+            $data["name"] = trim($data["name"]);
             Db::startTrans();
             $user = UserModel::where("phone", $data["phone"])->findOrEmpty();
             if (empty($user)) {
