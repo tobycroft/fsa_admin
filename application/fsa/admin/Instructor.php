@@ -51,6 +51,7 @@ class Instructor extends Admin
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id', 'name' => 'name', 'phone' => 'phone', 'uid' => 'uid']) // 设置搜索参数
+            ->setSearchArea(["aid" => "机构id"])
             ->addColumns([
                 ["id", "id"],
                 ["aid", "机构ID"],
