@@ -53,6 +53,7 @@ class Instructor extends Admin
             ->setSearch(['id' => 'id', 'name' => 'name', 'phone' => 'phone', 'uid' => 'uid']) // 设置搜索参数
             ->setSearchArea([
                 ['text', 'aid', '机构ID'],
+                ['text', 'name', '姓名'],
             ])
             ->addColumns([
                 ["id", "id"],
