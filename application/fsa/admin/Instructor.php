@@ -55,6 +55,10 @@ class Instructor extends Admin
                 $exp = explode('，', trim($val['工作简历']));
                 $achieve = explode("，", trim($val['家庭教育相关证书、培训及工作成果']));
                 $company = trim($val['所属工作室']);
+                $company = str_replace("晋江市家庭教育", "", $company);
+                $company = str_replace("领衔人", "", $company);
+                $company = str_replace("核心成员", "", $company);
+                $company = str_replace("成员", "", $company);
                 $full_name = $company . '--' . $name;
                 $instructor = InstructorModel::where('name', 'like', "%--" . $name)->where("aid", $data["aid"])->find();
                 if (!$instructor) {
