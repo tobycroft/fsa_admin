@@ -65,6 +65,7 @@ class Instructor extends Admin
                     if (!$instructor) {
                         Db::rollback();
                         $this->error("iid插入错误");
+                        return;
                     }
                 }
                 $instructors = InstructorModel::where('name', 'like', '%--' . $name)->where('aid', $data['aid'])->select();
@@ -79,6 +80,7 @@ class Instructor extends Admin
                         if (!$instructor_info) {
                             Db::rollback();
                             $this->error('iicreate失败');
+                            return;
                         }
                     }
                     $idc = InstructorDetailModel::where('iid', $instructor->id)->find();
@@ -99,6 +101,7 @@ class Instructor extends Admin
                         if (!$idc) {
                             Db::rollback();
                             $this->error('idc插入失败');
+                            return;
                         }
                     }
                 }
