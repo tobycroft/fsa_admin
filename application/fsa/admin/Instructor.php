@@ -7,6 +7,7 @@ use app\admin\controller\Admin;
 use app\admin\model\Attachment;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
+use app\fsa\model\InstructorDetailModel;
 use app\fsa\model\InstructorInfoModel;
 use app\fsa\model\InstructorModel;
 use app\fsa\model\UserModel;
@@ -49,17 +50,46 @@ class Instructor extends Admin
                 $job = $val['专业技术职务'];
                 $major = $val['毕业学校及专业'];
                 $phone = $val['联系方式'];
-                $resume = $val['工作简历'];
-                $result = $val['家庭教育相关证书、培训及工作成果'];
+                $exp1 = $val['工作简历'];
+                $achieve1 = $val['家庭教育相关证书、培训及工作成果'];
                 $company = $val['所属工作室'];
-                $ins = InstructorModel::where('name', $company . '--' . $name)->find();
+                $full_name = $company . '--' . $name;
+                Db::startTrans();
+                $ins = InstructorModel::where('name', $full_name)->find();
                 if (!$ins) {
-                    echo $company . '--' . $name;
-                }
-            }
+                    $create = InstructorModel::create([
+                        "name" => $full_name,
+                        "phone" => $phone,
+                    ]);
+                    if (!$create) {
+                        Db::rollback();
+                        $this->error("iid插入错误");
+                    }
+                    $iid = $create->id();
+                    $iicreate = InstructorInfoModel::create([
+                        'iid' => $iid,
+                        "title" => $job
+                    ]);
+                    if (!$iicreate) {
+                        Db::rollback();
+                        $this->error("iicreate失败");
+                    }
+                    $idc = InstructorDetailModel::create([
+                        "iid" => $iid,
+                        "job" => $job,
+                        "major" => $major,
+                        "exp1" => $exp1,
+                        "achieve1" => $achieve1,
 
-//            Db::startTrans();
-//            Db::commit();
+                    ]);
+                    if (!$idc) {
+                        Db::rollback();
+                        $this->error("idc插入失败");
+                    }
+                }
+                Db::commit();
+                $this->success("成功");
+            }
         }
 
 
