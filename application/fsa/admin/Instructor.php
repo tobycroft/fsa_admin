@@ -87,7 +87,11 @@ class Instructor extends Admin
 //            'class' => 'btn btn-xs btn-default ajax-get',
             'href' => url('instructor_info/index', ['search_field' => 'iid', 'keyword' => '__id__'])
         ];
-
+        $top_upload = [
+            'title' => '上传讲座数据',
+            'icon' => 'fa fa-fw fa-key',
+            'href' => url('upload')
+        ];
         return ZBuilder::make('table')
             ->addOrder('id')
             ->setSearch(['id' => 'id', 'name' => 'name', 'phone' => 'phone', 'uid' => 'uid']) // 设置搜索参数
@@ -109,6 +113,7 @@ class Instructor extends Admin
             ])
             ->addRightButtons(["edit" => "修改", "delete" => "删除",])
             ->addRightButton("custom", $btn_access)
+            ->addTopButton('upload', $top_upload)
             ->addTopButtons(["add" => "发帖"])
             ->setColumnWidth('title', 300)
             ->setRowList($data_list) // 设置表格数据
