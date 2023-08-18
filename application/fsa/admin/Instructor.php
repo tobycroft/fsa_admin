@@ -68,7 +68,7 @@ class Instructor extends Admin
                         Db::rollback();
                         $this->error("iid插入错误");
                     }
-                    $iid = $create->getLastInsID();
+                    $iid = $create->id;
                     $iicreate = InstructorInfoModel::create([
                         'iid' => $iid,
                         "title" => $job,
