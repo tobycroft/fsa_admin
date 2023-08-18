@@ -61,6 +61,7 @@ class Instructor extends Admin
                 $instructor = InstructorModel::where('phone', $phone)->find();
                 if (!$instructor) {
                     $instructor = InstructorModel::create([
+                        "aid" => $data["aid"],
                         "name" => $full_name,
                         "phone" => $phone,
                     ]);
