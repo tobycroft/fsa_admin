@@ -43,7 +43,7 @@ class Instructor extends Admin
             if (empty($excel_json)) {
                 $this->error('excel解析错误');
             }
-            echo json_encode($excel_json, 320);
+//            echo json_encode($excel_json, 320);
             foreach ($excel_json as $val) {
                 $name = $val['姓名'];
                 $job = $val['专业技术职务'];
@@ -53,7 +53,7 @@ class Instructor extends Admin
                 $result = $val['家庭教育相关证书、培训及工作成果'];
                 $company = $val['所属工作室'];
                 $ins = InstructorModel::where('name', $company . '--' . $name)->find();
-                if ($ins->isEmpty()) {
+                if (!$ins) {
                     echo $company . '--' . $name;
                 }
             }
