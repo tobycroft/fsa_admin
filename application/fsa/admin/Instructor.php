@@ -45,8 +45,8 @@ class Instructor extends Admin
                 $this->error('excel解析错误');
             }
             $arr = ["aa"];
-            echo $arr[0];
-            echo $arr[1];
+            echo empty($arr[0]) ?: "";
+            echo empty($arr[1]) ?: '';
             return;
 //            echo json_encode($excel_json, 320);
             foreach ($excel_json as $val) {
