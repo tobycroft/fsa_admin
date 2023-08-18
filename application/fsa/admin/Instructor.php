@@ -4,6 +4,7 @@
 namespace app\fsa\admin;
 
 use app\admin\controller\Admin;
+use app\admin\model\Attachment;
 use app\common\builder\ZBuilder;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\InstructorInfoModel;
@@ -12,6 +13,8 @@ use app\fsa\model\UserModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
+use Tobycroft\AossSdk\Aoss;
+use Tobycroft\AossSdk\Excel;
 use util\Tree;
 
 
@@ -21,6 +24,55 @@ use util\Tree;
  */
 class Instructor extends Admin
 {
+    public function upload()
+    {
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+
+            $atta = Attachment::where('path', $data['file'])->find();
+            if (!$atta) {
+                $this->error('先上传文件');
+            }
+            $excel = new Excel(config('upload_prefix'));
+            $ex = $excel->send_md5($atta['md5']);
+            if (!$ex->isSuccess()) {
+                echo $ex->getError();
+                exit();
+            }
+            $excel_json = $ex->getExcelJson();
+            if (empty($excel_json)) {
+                $this->error('excel解析错误');
+            }
+            $postData = [
+                'aid' => $this->request->post('aid'),
+                'json' => json_encode($excel_json),
+            ];
+            $ret = Aoss::raw_post('http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload', $postData);
+            if (!$ret) {
+                $this->error('远程错误');
+            }
+            $dec = json_decode($ret, true);
+            if ($dec['code'] === 0) {
+                $this->success('上传成功');
+            } else {
+                $this->error('错误原因:' . $dec['echo'] . "\n" . '错误点:' . json_encode($dec['data'], 320), null, null, 10);
+            }
+        }
+
+
+        $assoc = AssociationModel::column('id,name');
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('新增') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ['select', 'aid', '公会名称', '', $assoc],
+                ['file', 'file', '上传讲座excel',],
+            ])
+//            ->assign("file_upload_url", "https://upload.familyeducation.org.cn:444/v1/excel/index/index?token=fsa")
+            ->fetch();
+    }
+
     /**
      * 用户首页
      * @return mixed
