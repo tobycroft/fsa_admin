@@ -68,8 +68,8 @@ class Instructor extends Admin
                     $iid = $create->id();
                     $iicreate = InstructorInfoModel::create([
                         'iid' => $iid,
-                        "title" => $job
-                        "tel" => $phone
+                        "title" => $job,
+                        "tel" => $phone,
                     ]);
                     if (!$iicreate) {
                         Db::rollback();
