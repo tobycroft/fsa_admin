@@ -60,8 +60,8 @@ class Instructor extends Admin
                     $achieve = explode('；', trim($val['家庭教育相关证书、培训及工作成果']));
                 } elseif (str_contains('。', $achieve_text)) {
                     $achieve = explode('。', trim($val['家庭教育相关证书、培训及工作成果']));
-                } elseif (str_contains('、', $achieve_text)) {
-                    $achieve = explode('、', trim($val['家庭教育相关证书、培训及工作成果']));
+//                } elseif (str_contains('、', $achieve_text)) {
+//                    $achieve = explode('、', trim($val['家庭教育相关证书、培训及工作成果']));
                 } else {
                     $achieve = explode('。', trim($val['家庭教育相关证书、培训及工作成果']));
                 }
