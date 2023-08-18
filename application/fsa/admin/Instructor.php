@@ -13,7 +13,6 @@ use app\fsa\model\UserModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
-use Tobycroft\AossSdk\Aoss;
 use Tobycroft\AossSdk\Excel;
 use util\Tree;
 
@@ -44,20 +43,9 @@ class Instructor extends Admin
             if (empty($excel_json)) {
                 $this->error('excel解析错误');
             }
-            $postData = [
-                'aid' => $this->request->post('aid'),
-                'json' => json_encode($excel_json),
-            ];
-            $ret = Aoss::raw_post('http://api.fsa.familyeducation.org.cn/v1/instruction/association/upload', $postData);
-            if (!$ret) {
-                $this->error('远程错误');
-            }
-            $dec = json_decode($ret, true);
-            if ($dec['code'] === 0) {
-                $this->success('上传成功');
-            } else {
-                $this->error('错误原因:' . $dec['echo'] . "\n" . '错误点:' . json_encode($dec['data'], 320), null, null, 10);
-            }
+            echo json_encode($excel_json);
+//            Db::startTrans();
+//            Db::commit();
         }
 
 
