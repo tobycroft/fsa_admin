@@ -88,7 +88,7 @@ class Instructor extends Admin
             'href' => url('instructor_info/index', ['search_field' => 'iid', 'keyword' => '__id__'])
         ];
         $top_upload = [
-            'title' => '上传讲座数据',
+            'title' => '上传讲师倒入',
             'icon' => 'fa fa-fw fa-key',
             'href' => url('upload')
         ];
