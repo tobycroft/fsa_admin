@@ -48,13 +48,13 @@ class Instructor extends Admin
 //            echo json_encode($excel_json, 320);
             Db::startTrans();
             foreach ($excel_json as $val) {
-                $name = $val['姓名'];
-                $job = $val['专业技术职务'];
-                $major = $val['毕业学校及专业'];
-                $phone = $val['联系方式'];
-                $exp = explode('，', $val['工作简历']);
-                $achieve = explode("，", $val['家庭教育相关证书、培训及工作成果']);
-                $company = $val['所属工作室'];
+                $name = trim($val['姓名']);
+                $job = trim($val['专业技术职务']);
+                $major = trim($val['毕业学校及专业']);
+                $phone = trim($val['联系方式']);
+                $exp = explode('，', trim($val['工作简历']));
+                $achieve = explode("，", trim($val['家庭教育相关证书、培训及工作成果']));
+                $company = trim($val['所属工作室']);
                 $full_name = $company . '--' . $name;
                 $instructor = InstructorModel::where('name', 'like', "%--" . $name)->where("aid", $data["aid"])->find();
                 if (!$instructor) {
