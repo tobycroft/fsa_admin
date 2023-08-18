@@ -63,7 +63,7 @@ class Instructor extends Admin
 //                } elseif (str_contains('、', $achieve_text)) {
 //                    $achieve = explode('、', trim($val['家庭教育相关证书、培训及工作成果']));
                 } else {
-                    $achieve = explode('。', $achieve_text);
+                    $achieve = explode(',', $achieve_text);
                 }
                 $company = trim($val['所属工作室']);
                 $company = str_replace("晋江市家庭教育", "", $company);
