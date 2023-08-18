@@ -55,7 +55,7 @@ class Instructor extends Admin
                 $company = $val['所属工作室'];
                 $full_name = $company . '--' . $name;
                 Db::startTrans();
-                $ins = InstructorModel::where('name', $full_name)->find();
+                $ins = InstructorModel::where('phone', $phone)->find();
                 if (!$ins) {
                     $create = InstructorModel::create([
                         "name" => $full_name,
@@ -69,6 +69,7 @@ class Instructor extends Admin
                     $iicreate = InstructorInfoModel::create([
                         'iid' => $iid,
                         "title" => $job
+                        "tel" => $phone
                     ]);
                     if (!$iicreate) {
                         Db::rollback();
