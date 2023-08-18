@@ -44,7 +44,6 @@ class Instructor extends Admin
             if (empty($excel_json)) {
                 $this->error('excel解析错误');
             }
-            $arr = ["aa"];
 //            echo json_encode($excel_json, 320);
             foreach ($excel_json as $val) {
                 $name = $val['姓名'];
