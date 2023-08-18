@@ -47,15 +47,14 @@ class Instructor extends Admin
             $arr = ["aa"];
             echo empty($arr[0]) ? "" : $arr[0];
             echo empty($arr[1]) ? "" : $arr[1];
-            return;
 //            echo json_encode($excel_json, 320);
             foreach ($excel_json as $val) {
                 $name = $val['姓名'];
                 $job = $val['专业技术职务'];
                 $major = $val['毕业学校及专业'];
                 $phone = $val['联系方式'];
-                $exp1 = $val['工作简历'];
-                $achieve1 = $val['家庭教育相关证书、培训及工作成果'];
+                $exp = explode('，', $val['工作简历']);
+                $achieve = explode("，", $val['家庭教育相关证书、培训及工作成果']);
                 $company = $val['所属工作室'];
                 $full_name = $company . '--' . $name;
                 Db::startTrans();
@@ -84,9 +83,14 @@ class Instructor extends Admin
                         "iid" => $iid,
                         "job" => $job,
                         "major" => $major,
-                        "exp1" => $exp1,
-                        "achieve1" => $achieve1,
-
+                        "exp1" => empty($exp[0]) ? "" : $exp[0],
+                        "exp2" => empty($exp[1]) ? '' : $exp[1],
+                        "exp3" => empty($exp[2]) ? '' : $exp[2],
+                        "exp4" => empty($exp[3]) ? '' : $exp[3],
+                        "achieve1" => empty($achieve[0]) ? '' : $achieve[0],
+                        "achieve2" => empty($achieve[1]) ? '' : $achieve[1],
+                        "achieve3" => empty($achieve[2]) ? '' : $achieve[2],
+                        "achieve4" => empty($achieve[3]) ? '' : $achieve[3],
                     ]);
                     if (!$idc) {
                         Db::rollback();
