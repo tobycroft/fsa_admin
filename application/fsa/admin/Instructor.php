@@ -67,38 +67,42 @@ class Instructor extends Admin
                         $this->error("iid插入错误");
                     }
                 }
-                $instructor_info = InstructorInfoModel::where("iid", $instructor->id)->find();
-                if (!$instructor_info) {
-                    $instructor_info = InstructorInfoModel::create([
-                        'iid' => $instructor->id,
-                        'title' => $job,
-                        'tel' => $phone,
-                    ]);
+                $instructors = InstructorModel::where('name', 'like', '%--' . $name)->where('aid', $data['aid'])->select();
+                foreach ($instructors as $instructor) {
+                    $instructor_info = InstructorInfoModel::where('iid', $instructor->id)->find();
                     if (!$instructor_info) {
-                        Db::rollback();
-                        $this->error('iicreate失败');
+                        $instructor_info = InstructorInfoModel::create([
+                            'iid' => $instructor->id,
+                            'title' => $job,
+                            'tel' => $phone,
+                        ]);
+                        if (!$instructor_info) {
+                            Db::rollback();
+                            $this->error('iicreate失败');
+                        }
                     }
-                }
-                $idc = InstructorDetailModel::where("iid", $instructor->id)->find();
-                if (!$idc) {
-                    $idc = InstructorDetailModel::create([
-                        'iid' => $instructor->id,
-                        'job' => $job,
-                        'major' => $major,
-                        'exp1' => empty($exp[0]) ? '' : $exp[0],
-                        'exp2' => empty($exp[1]) ? '' : $exp[1],
-                        'exp3' => empty($exp[2]) ? '' : $exp[2],
-                        'exp4' => empty($exp[3]) ? '' : $exp[3],
-                        'achieve1' => empty($achieve[0]) ? '' : $achieve[0],
-                        'achieve2' => empty($achieve[1]) ? '' : $achieve[1],
-                        'achieve3' => empty($achieve[2]) ? '' : $achieve[2],
-                        'achieve4' => empty($achieve[3]) ? '' : $achieve[3],
-                    ]);
+                    $idc = InstructorDetailModel::where('iid', $instructor->id)->find();
                     if (!$idc) {
-                        Db::rollback();
-                        $this->error('idc插入失败');
+                        $idc = InstructorDetailModel::create([
+                            'iid' => $instructor->id,
+                            'job' => $job,
+                            'major' => $major,
+                            'exp1' => empty($exp[0]) ? '' : $exp[0],
+                            'exp2' => empty($exp[1]) ? '' : $exp[1],
+                            'exp3' => empty($exp[2]) ? '' : $exp[2],
+                            'exp4' => empty($exp[3]) ? '' : $exp[3],
+                            'achieve1' => empty($achieve[0]) ? '' : $achieve[0],
+                            'achieve2' => empty($achieve[1]) ? '' : $achieve[1],
+                            'achieve3' => empty($achieve[2]) ? '' : $achieve[2],
+                            'achieve4' => empty($achieve[3]) ? '' : $achieve[3],
+                        ]);
+                        if (!$idc) {
+                            Db::rollback();
+                            $this->error('idc插入失败');
+                        }
                     }
                 }
+
             }
             Db::commit();
             $this->success('成功');
