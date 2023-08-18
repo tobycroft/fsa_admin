@@ -100,9 +100,9 @@ class Instructor extends Admin
                         $this->error('idc插入失败');
                     }
                 }
-                Db::commit();
-                $this->success("成功");
             }
+            Db::commit();
+            $this->success('成功');
         }
 
 
