@@ -58,33 +58,33 @@ class Instructor extends Admin
                 $company = $val['所属工作室'];
                 $full_name = $company . '--' . $name;
                 Db::startTrans();
-                $ins = InstructorModel::where('phone', $phone)->find();
-                if (!$ins) {
-                    $ins = InstructorModel::create([
+                $instructor = InstructorModel::where('phone', $phone)->find();
+                if (!$instructor) {
+                    $instructor = InstructorModel::create([
                         "name" => $full_name,
                         "phone" => $phone,
                     ]);
-                    if (!$ins) {
+                    if (!$instructor) {
                         Db::rollback();
                         $this->error("iid插入错误");
                     }
                 }
-                $iicreate = InstructorInfoModel::where("iid", $ins->id)->find();
-                if (!$iicreate) {
-                    $iicreate = InstructorInfoModel::create([
-                        'iid' => $ins->id,
+                $instructor_info = InstructorInfoModel::where("iid", $instructor->id)->find();
+                if (!$instructor_info) {
+                    $instructor_info = InstructorInfoModel::create([
+                        'iid' => $instructor->id,
                         'title' => $job,
                         'tel' => $phone,
                     ]);
-                    if (!$iicreate) {
+                    if (!$instructor_info) {
                         Db::rollback();
                         $this->error('iicreate失败');
                     }
                 }
-                $idc = InstructorDetailModel::where("iid", $ins->id)->find();
+                $idc = InstructorDetailModel::where("iid", $instructor->id)->find();
                 if (!$idc) {
                     $idc = InstructorDetailModel::create([
-                        'iid' => $ins->id,
+                        'iid' => $instructor->id,
                         'job' => $job,
                         'major' => $major,
                         'exp1' => empty($exp[0]) ? '' : $exp[0],
