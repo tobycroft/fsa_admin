@@ -48,7 +48,7 @@ class Instructor extends Admin
                 'aid' => $this->request->post('aid'),
                 'json' => json_encode($excel_json),
             ];
-            $ret = Aoss::raw_post('http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload', $postData);
+            $ret = Aoss::raw_post('http://api.fsa.familyeducation.org.cn/v1/instruction/association/upload', $postData);
             if (!$ret) {
                 $this->error('远程错误');
             }
