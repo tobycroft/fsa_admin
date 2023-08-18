@@ -55,7 +55,7 @@ class Instructor extends Admin
                 $achieve = explode("，", $val['家庭教育相关证书、培训及工作成果']);
                 $company = $val['所属工作室'];
                 $full_name = $company . '--' . $name;
-                $instructor = InstructorModel::where('phone', $phone)->where("aid", $data["aid"])->find();
+                $instructor = InstructorModel::where('name', 'like', "%--" . $name)->where("aid", $data["aid"])->find();
                 if (!$instructor) {
                     $instructor = InstructorModel::create([
                         "aid" => $data["aid"],
