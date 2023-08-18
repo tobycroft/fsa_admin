@@ -44,6 +44,20 @@ class Instructor extends Admin
                 $this->error('excel解析错误');
             }
             echo json_encode($excel_json, 320);
+            foreach ($excel_json as $val) {
+                $name = $val['姓名'];
+                $job = $val['专业技术职务'];
+                $major = $val['毕业学校及专业'];
+                $phone = $val['联系方式'];
+                $resume = $val['工作简历'];
+                $result = $val['家庭教育相关证书、培训及工作成果'];
+                $company = $val['所属工作室'];
+                $ins = InstructorModel::where('name', $company . '--' . $name)->find();
+                if ($ins->isEmpty()) {
+                    echo $company . '--' . $name;
+                }
+            }
+
 //            Db::startTrans();
 //            Db::commit();
         }
