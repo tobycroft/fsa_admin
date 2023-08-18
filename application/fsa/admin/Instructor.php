@@ -37,12 +37,13 @@ class Instructor extends Admin
             $ex = $excel->send_md5($atta['md5']);
             if (!$ex->isSuccess()) {
                 echo $ex->getError();
+                exit();
             }
             $excel_json = $ex->getExcelJson();
             if (empty($excel_json)) {
                 $this->error('excel解析错误');
             }
-            echo json_encode($excel_json，320);
+            echo json_encode($excel_json, 320);
 //            Db::startTrans();
 //            Db::commit();
         }
