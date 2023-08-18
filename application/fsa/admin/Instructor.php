@@ -43,6 +43,7 @@ class Instructor extends Admin
             $excel_json = $ex->getExcelJson();
             if (empty($excel_json)) {
                 $this->error('excel解析错误');
+                return;
             }
 //            echo json_encode($excel_json, 320);
             Db::startTrans();
