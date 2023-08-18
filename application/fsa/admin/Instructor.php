@@ -60,41 +60,45 @@ class Instructor extends Admin
                 Db::startTrans();
                 $ins = InstructorModel::where('phone', $phone)->find();
                 if (!$ins) {
-                    $create = InstructorModel::create([
+                    $ins = InstructorModel::create([
                         "name" => $full_name,
                         "phone" => $phone,
                     ]);
-                    if (!$create) {
+                    if (!$ins) {
                         Db::rollback();
                         $this->error("iid插入错误");
                     }
-                    $iid = $create->id;
+                }
+                $iicreate = InstructorInfoModel::where("iid", $ins->id)->find();
+                if (!$iicreate) {
                     $iicreate = InstructorInfoModel::create([
-                        'iid' => $iid,
-                        "title" => $job,
-                        "tel" => $phone,
+                        'iid' => $ins->id,
+                        'title' => $job,
+                        'tel' => $phone,
                     ]);
                     if (!$iicreate) {
                         Db::rollback();
-                        $this->error("iicreate失败");
+                        $this->error('iicreate失败');
                     }
-
+                }
+                $idc = InstructorDetailModel::where("iid", $ins->id)->find();
+                if (!$idc) {
                     $idc = InstructorDetailModel::create([
-                        "iid" => $iid,
-                        "job" => $job,
-                        "major" => $major,
-                        "exp1" => empty($exp[0]) ? "" : $exp[0],
-                        "exp2" => empty($exp[1]) ? '' : $exp[1],
-                        "exp3" => empty($exp[2]) ? '' : $exp[2],
-                        "exp4" => empty($exp[3]) ? '' : $exp[3],
-                        "achieve1" => empty($achieve[0]) ? '' : $achieve[0],
-                        "achieve2" => empty($achieve[1]) ? '' : $achieve[1],
-                        "achieve3" => empty($achieve[2]) ? '' : $achieve[2],
-                        "achieve4" => empty($achieve[3]) ? '' : $achieve[3],
+                        'iid' => $ins->id,
+                        'job' => $job,
+                        'major' => $major,
+                        'exp1' => empty($exp[0]) ? '' : $exp[0],
+                        'exp2' => empty($exp[1]) ? '' : $exp[1],
+                        'exp3' => empty($exp[2]) ? '' : $exp[2],
+                        'exp4' => empty($exp[3]) ? '' : $exp[3],
+                        'achieve1' => empty($achieve[0]) ? '' : $achieve[0],
+                        'achieve2' => empty($achieve[1]) ? '' : $achieve[1],
+                        'achieve3' => empty($achieve[2]) ? '' : $achieve[2],
+                        'achieve4' => empty($achieve[3]) ? '' : $achieve[3],
                     ]);
                     if (!$idc) {
                         Db::rollback();
-                        $this->error("idc插入失败");
+                        $this->error('idc插入失败');
                     }
                 }
                 Db::commit();
