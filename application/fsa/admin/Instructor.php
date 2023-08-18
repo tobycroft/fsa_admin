@@ -54,14 +54,16 @@ class Instructor extends Admin
                 $phone = trim($val['联系方式']);
                 $exp = explode('，', trim($val['工作简历']));
                 $achieve_text = trim($val['家庭教育相关证书、培训及工作成果']);
-                if (str_contains("，", $achieve_text)) {
-                    $achieve = explode($achieve_text, "，");
-                } elseif (str_contains('；', $achieve_text)) {
-                    $achieve = explode($achieve_text, '；');
-                } elseif (str_contains('。', $achieve_text)) {
-                    $achieve = explode($achieve_text, '。');
+                if (str_contains($achieve_text, '，')) {
+                    $achieve = explode('，', $achieve_text);
+                } elseif (str_contains($achieve_text, '；')) {
+                    $achieve = explode('；', $achieve_text);
+                } elseif (str_contains($achieve_text, '。')) {
+                    $achieve = explode('。', $achieve_text);
+//                } elseif (str_contains('、', $achieve_text)) {
+//                    $achieve = explode('、', trim($val['家庭教育相关证书、培训及工作成果']));
                 } else {
-                    $achieve = explode($achieve_text, ',');
+                    $achieve = explode('。', $achieve_text);
                 }
                 $company = trim($val['所属工作室']);
                 $company = str_replace("晋江市家庭教育", "", $company);
