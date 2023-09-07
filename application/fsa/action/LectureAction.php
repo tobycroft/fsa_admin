@@ -12,15 +12,15 @@ use app\fsa\model\TagRoleModel;
 
 class LectureAction
 {
-    protected $assoc;
+    protected $association;
 
     public function import_model(array $excel, int $aid)
     {
-        $this->assoc = AssociationModel::where('id', $aid)->find();
-        if (!$this->assoc) {
+        $this->association = AssociationModel::where('id', $aid)->find();
+        if (!$this->association) {
             throw new \Error("aid不存在");
         }
-        switch ($this->assoc["import_type"]) {
+        switch ($this->association->import_type) {
             case "a":
                 $this->a($excel);
 
@@ -104,14 +104,14 @@ class LectureAction
             if (!$host) {
                 $host = HostModel::create([
                     "name" => $HostName,
-                    "aid" => $this->assoc["aid"],
+                    "aid" => $this->association->id,
                 ]);
             }
             $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits, $TagDataunits1, $TagDataunits2])->column("id");
             $tag_role_ids = TagRoleModel::whereIn("name", [$role_name])->column("id");
             if (empty($tag_role_ids)) {
                 TagRoleModel::create([
-                    "aid" => $this->assoc["aid"],
+                    "aid" => $this->association->id,
                     "is_show" => 1,
                     "name" => $role_name,
                 ]);
@@ -119,7 +119,7 @@ class LectureAction
             $tag_form_ids = TagFormModel::whereIn("name", [$form_name])->column("id");
             if (empty($tag_form_ids)) {
                 TagFormModel::create([
-                    'aid' => $this->assoc['aid'],
+                    'aid' => $this->association['aid'],
                     'is_show' => 1,
                     'name' => $form_name,
                 ]);
@@ -131,7 +131,7 @@ class LectureAction
             if ($lec) {
                 if (!LectureModel::where("id", $lec->id)
                     ->data([
-                        'aid' => $this->assoc["aid"],
+                        'aid' => $this->association->id,
                         'iid' => $iid,
                         'hid' => $host->id,
                         'title' => $title,
