@@ -139,7 +139,6 @@ class LectureAction
                 ->where("start_date", $StartDate)
                 ->find();
             if ($lecture) {
-                throw new \Error($instructor->id);
                 if (!LectureModel::where("id", $lecture->id)
                     ->data([
                         'aid' => $this->association->id,
