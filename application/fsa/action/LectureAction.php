@@ -167,7 +167,7 @@ class LectureAction
                         'visitor' => $Visitor,
                     ])
                     ->update()) {
-                    throw new \Error($data->getError());
+                    throw new \Error($data);
                 } else {
 //                    throw new \Error(implode(",", $tag_dataunit_ids));
                 }
