@@ -128,7 +128,7 @@ class LectureAction
                 ->where("start_date", $StartDate)
                 ->find();
             if ($lec) {
-                LectureModel::where("id", $lec->id)
+                if (!LectureModel::where("id", $lec->id)
                     ->data([
                         'aid' => $this->assoc->aid,
                         'iid' => $iid,
@@ -146,6 +146,11 @@ class LectureAction
                         'street' => $Street,
                         'visitor' => $Visitor,
                     ])
+                    ->update()) {
+                    throw new \Error("数据修改失败");
+                }
+            } else {
+
             }
         }
     }
