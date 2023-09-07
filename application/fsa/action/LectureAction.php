@@ -8,7 +8,6 @@ use app\fsa\model\InstructorModel;
 use app\fsa\model\LectureModel;
 use app\fsa\model\TagDataunitModel;
 use app\fsa\model\TagFormModel;
-use app\fsa\model\TagModel;
 use app\fsa\model\TagRoleModel;
 
 class LectureAction
@@ -50,7 +49,7 @@ class LectureAction
         $ins_data = null;
         foreach ($excel as $value) {
             $StartDate = $value['活动开始时间'];
-            $num = $value['参与人数'];
+            $Visitor = $value['参与人数'];
             $role_name = $value['对象标签'];
             $form_name = $value['形式标签'];
             $phone = $value['手机号码'];
@@ -72,7 +71,6 @@ class LectureAction
                 $TagDataunits2 = "妇联讲课补贴范围";
             }
 
-            $Duration = 7200;
             $iid = 0;
             if (strlen($phone) < 5) {
                 throw new \Error("手机号不能为空");
@@ -108,9 +106,8 @@ class LectureAction
                     "aid" => $this->assoc->aid,
                 ]);
             }
-            $tag_ids = TagModel::whereIn("name", [$TagDataunits1, $TagDataunits2])->column("id");
-            $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits1, $TagDataunits2])->column("id");
-            $tag_role_ids = TagRoleModel::where("name", $role_name)->column("id");
+            $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits, $TagDataunits1, $TagDataunits2])->column("id");
+            $tag_role_ids = TagRoleModel::whereIn("name", [$role_name])->column("id");
             if (empty($tag_role_ids)) {
                 TagRoleModel::create([
                     "aid" => $this->assoc->aid,
@@ -118,7 +115,7 @@ class LectureAction
                     "name" => $role_name,
                 ]);
             }
-            $tag_form_ids = TagFormModel::where("name", $form_name)->column("id");
+            $tag_form_ids = TagFormModel::whereIn("name", [$form_name])->column("id");
             if (empty($tag_form_ids)) {
                 TagFormModel::create([
                     'aid' => $this->assoc['aid'],
@@ -137,20 +134,17 @@ class LectureAction
                         'iid' => $iid,
                         'hid' => $host->id,
                         'title' => $title,
-                        'tag_ids' => tag_ids,
-                        'tag_dataunit_ids' => tag_dataunit_ids,
-                        'trid' => trid,
-                        'tfid' => tfid,
-                        'start_date' => start_date,
-                        'duration' => duration,
-                        'type' => Type,
-                        'province' => province,
-                        'city' => city,
-                        'district' => district,
-                        'street' => street,
-                        'can_gift' => can_gift,
-                        'gift_ids' => gift_ids,
-                        'visitor' => visitor,
+                        'tag_ids' => 6,
+                        'tag_dataunit_ids' => implode(",", $tag_dataunit_ids),
+                        'trid' => implode(",", $tag_role_ids),
+                        'tfid' => implode(",", $tag_form_ids),
+                        'start_date' => $StartDate,
+                        'type' => $type,
+                        'province' => $Province,
+                        'city' => $City,
+                        'district' => $District,
+                        'street' => $Street,
+                        'visitor' => $Visitor,
                     ])
             }
         }
