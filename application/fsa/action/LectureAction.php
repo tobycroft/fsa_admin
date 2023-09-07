@@ -46,7 +46,7 @@ class LectureAction
 
     protected function jinjiang($excel)
     {
-        $ins_data = null;
+        $instructor = null;
 
         foreach ($excel as $value) {
             $StartDate = $value['活动开始时间'];
@@ -67,7 +67,7 @@ class LectureAction
                 throw new \Error("活动类型需要填写线上或线下");
             }
 
-            $name = $value['主讲人姓名'];
+            $instructor_name = $value['主讲人姓名'];
             $HostName = $value['举办方名称'];
             $TagDataunits = $value['主办单位类型'];
             $City = $value['活动地点（市）'];
@@ -83,11 +83,10 @@ class LectureAction
                 $TagDataunits2 = "妇联讲课补贴范围";
             }
 
-            $iiiidd = 0;
             if (strlen($phone) < 5) {
                 throw new \Error("手机号不能为空");
             }
-            if (strlen($name) < 1) {
+            if (strlen($instructor_name) < 1) {
                 throw new \Error("姓名不能为空");
             }
             if (strlen($Province) < 1) {
@@ -99,10 +98,10 @@ class LectureAction
             if (strlen($District) < 1) {
                 throw new \Error("乡镇区不能为空");
             }
-            if (!$ins_data) {
-                $ins_data = InstructorModel::where('phone', $phone)->find();
+            if (!$instructor) {
+                $instructor = InstructorModel::where('phone', $phone)->find();
             }
-            if (!$ins_data) {
+            if (!$instructor) {
                 continue;
 //                $ins_data = InstructorModel::create([
 //                    "aid" => $this->assoc['id'],
@@ -135,8 +134,7 @@ class LectureAction
                     'name' => $form_name,
                 ]);
             }
-            throw new \Error($iid);
-            $lecture = LectureModel::where("iid", $iid)
+            $lecture = LectureModel::where("iid", $instructor->id)
                 ->where("title", $title)
                 ->where("start_date", $StartDate)
                 ->find();
@@ -144,7 +142,7 @@ class LectureAction
                 if (!LectureModel::where("id", $lecture->id)
                     ->data([
                         'aid' => $this->association->id,
-                        'iid' => $iid,
+                        'iid' => $instructor->id,
                         'hid' => $host->id,
                         'title' => $title,
                         'tag_ids' => 6,
