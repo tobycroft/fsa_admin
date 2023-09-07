@@ -124,6 +124,7 @@ class LectureAction
                     'name' => $form_name,
                 ]);
             }
+            throw new \Error($iid);
             $lecture = LectureModel::where("iid", $iid)
                 ->where("title", $title)
                 ->where("start_date", $StartDate)
