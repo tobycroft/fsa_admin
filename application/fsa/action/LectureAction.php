@@ -149,6 +149,8 @@ class LectureAction
                     ])
                     ->update()) {
                     throw new \Error("数据修改失败");
+                } else {
+                    throw new \Error(implode(",", $tag_dataunit_ids));
                 }
             } else {
 
