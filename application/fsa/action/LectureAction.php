@@ -20,6 +20,7 @@ class LectureAction
         if (!$this->assoc) {
             throw new \Error("aid不存在");
         }
+        $this->assoc = $this->assoc->toArray();
         switch ($this->assoc["import_type"]) {
             case "a":
                 $this->a($excel);
