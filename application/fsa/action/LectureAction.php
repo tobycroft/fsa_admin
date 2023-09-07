@@ -20,7 +20,7 @@ class LectureAction
         if (!$this->assoc) {
             throw new \Error("aid不存在");
         }
-        switch ($this->assoc->import_type) {
+        switch ($this->assoc["import_type"]) {
             case "a":
                 $this->a($excel);
 
@@ -103,14 +103,14 @@ class LectureAction
             if (!$host) {
                 $host = HostModel::create([
                     "name" => $HostName,
-                    "aid" => $this->assoc->aid,
+                    "aid" => $this->assoc["aid"],
                 ]);
             }
             $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits, $TagDataunits1, $TagDataunits2])->column("id");
             $tag_role_ids = TagRoleModel::whereIn("name", [$role_name])->column("id");
             if (empty($tag_role_ids)) {
                 TagRoleModel::create([
-                    "aid" => $this->assoc->aid,
+                    "aid" => $this->assoc["aid"],
                     "is_show" => 1,
                     "name" => $role_name,
                 ]);
@@ -130,7 +130,7 @@ class LectureAction
             if ($lec) {
                 if (!LectureModel::where("id", $lec->id)
                     ->data([
-                        'aid' => $this->assoc->aid,
+                        'aid' => $this->assoc["aid"],
                         'iid' => $iid,
                         'hid' => $host->id,
                         'title' => $title,
