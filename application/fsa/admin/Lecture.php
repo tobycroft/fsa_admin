@@ -6,6 +6,7 @@ namespace app\fsa\admin;
 use app\admin\controller\Admin;
 use app\admin\model\Attachment;
 use app\common\builder\ZBuilder;
+use app\fsa\action\LectureAction;
 use app\fsa\model\AssociationModel;
 use app\fsa\model\HostModel;
 use app\fsa\model\InstructorModel;
@@ -49,7 +50,12 @@ class Lecture extends Admin
             if (empty($excel_json)) {
                 $this->error('excel解析错误');
             }
+
+            $lec = new LectureAction();
+            $lec->import_model($excel_json, $assoc["import_type"]);
+
             return json($excel_json);
+
 //            $postData = [
 //                'aid' => $this->request->post('aid'),
 //                'json' => json_encode($excel_json),
