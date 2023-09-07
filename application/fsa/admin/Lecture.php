@@ -52,7 +52,7 @@ class Lecture extends Admin
             }
 
             $lec = new LectureAction();
-            $lec->import_model($excel_json, $assoc["import_type"]);
+            $lec->import_model($excel_json, $data["aid"]);
 
             return json($excel_json);
 
