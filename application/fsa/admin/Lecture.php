@@ -49,7 +49,7 @@ class Lecture extends Admin
             if (empty($excel_json)) {
                 $this->error('excel解析错误');
             }
-            echo json_encode($excel_json, 320);
+            return json($excel_json);
 //            $postData = [
 //                'aid' => $this->request->post('aid'),
 //                'json' => json_encode($excel_json),
