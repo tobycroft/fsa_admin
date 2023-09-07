@@ -47,6 +47,7 @@ class LectureAction
     protected function jinjiang($excel)
     {
         $ins_data = null;
+
         foreach ($excel as $value) {
             $StartDate = $value['活动开始时间'];
             $Visitor = $value['参与人数'];
