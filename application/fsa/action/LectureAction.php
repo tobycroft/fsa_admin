@@ -56,6 +56,17 @@ class LectureAction
             $phone = $value['手机号码'];
             $title = $value['活动主题'];
             $type = $value['活动类别'];
+            //search in type check contain some characters
+            if (str_contains($type, '线上') && str_contains($type, '线下')) {
+                $type = "线上与线下";
+            } elseif (str_contains($type, '线上')) {
+                $type = "线上";
+            } elseif (str_contains($type, '线下')) {
+                $type = "线下";
+            } else {
+                throw new \Error("活动类型需要填写线上或线下")；
+            }
+
             $name = $value['主讲人姓名'];
             $HostName = $value['举办方名称'];
             $TagDataunits = $value['主办单位类型'];
@@ -72,7 +83,7 @@ class LectureAction
                 $TagDataunits2 = "妇联讲课补贴范围";
             }
 
-            $iid = 0;
+            $iiiidd = 0;
             if (strlen($phone) < 5) {
                 throw new \Error("手机号不能为空");
             }
