@@ -237,7 +237,7 @@ class Lecture extends Admin
             ->addRightButton("custom", $btn_access1)
             ->addTopButtons(["add" => "发帖", "delete" => "删除"])
             ->addTopButton("upload", $top_upload)
-            ->addTopButton("upload2", $top_upload2)
+            ->addTopButton("upload", $top_upload2)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
