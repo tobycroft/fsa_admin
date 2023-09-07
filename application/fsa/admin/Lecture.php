@@ -28,6 +28,106 @@ use util\Tree;
  */
 class Lecture extends Admin
 {
+
+    public function upload2()
+    {
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+
+            $atta = Attachment::where('path', $data['file'])->find();
+            if (!$atta) {
+                $this->error('先上传文件');
+            }
+            $excel = new Excel(config('upload_prefix'));
+            $ex = $excel->send_md5($atta['md5']);
+            if (!$ex->isSuccess()) {
+                echo $ex->getError();
+                exit();
+            }
+            $excel_json = $ex->getExcelJson();
+            if (empty($excel_json)) {
+                $this->error('excel解析错误');
+            }
+            $postData = [
+                'aid' => $this->request->post('aid'),
+                'json' => json_encode($excel_json),
+            ];
+            $ret = Aoss::raw_post('http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload', $postData);
+            if (!$ret) {
+                $this->error('远程错误');
+            }
+            $dec = json_decode($ret, true);
+            if ($dec['code'] === 0) {
+                $this->success('上传成功');
+            } else {
+                $this->error('错误原因:' . $dec['echo'] . "\n" . '错误点:' . json_encode($dec['data'], 320), null, null, 10);
+            }
+        }
+
+
+        $assoc = AssociationModel::column('id,name');
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('新增') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ['select', 'aid', '公会名称', '', $assoc],
+                ['file', 'file', '上传讲座excel',],
+            ])
+//            ->assign("file_upload_url", "https://upload.familyeducation.org.cn:444/v1/excel/index/index?token=fsa")
+            ->fetch();
+    }
+
+    public function upload()
+    {
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+
+            $atta = Attachment::where('path', $data['file'])->find();
+            if (!$atta) {
+                $this->error('先上传文件');
+            }
+            $excel = new Excel(config('upload_prefix'));
+            $ex = $excel->send_md5($atta['md5']);
+            if (!$ex->isSuccess()) {
+                echo $ex->getError();
+                exit();
+            }
+            $excel_json = $ex->getExcelJson();
+            if (empty($excel_json)) {
+                $this->error('excel解析错误');
+            }
+            $postData = [
+                'aid' => $this->request->post('aid'),
+                'json' => json_encode($excel_json),
+            ];
+            $ret = Aoss::raw_post('http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload', $postData);
+            if (!$ret) {
+                $this->error('远程错误');
+            }
+            $dec = json_decode($ret, true);
+            if ($dec['code'] === 0) {
+                $this->success('上传成功');
+            } else {
+                $this->error('错误原因:' . $dec['echo'] . "\n" . '错误点:' . json_encode($dec['data'], 320), null, null, 10);
+            }
+        }
+
+
+        $assoc = AssociationModel::column('id,name');
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('新增') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ['select', 'aid', '公会名称', '', $assoc],
+                ['file', 'file', '上传讲座excel',],
+            ])
+//            ->assign("file_upload_url", "https://upload.familyeducation.org.cn:444/v1/excel/index/index?token=fsa")
+            ->fetch();
+    }
+
+
     /**
      * 用户首页
      * @return mixed
@@ -99,6 +199,11 @@ class Lecture extends Admin
             'icon' => 'fa fa-fw fa-key',
             'href' => url('upload')
         ];
+        $top_upload2 = [
+            'title' => '讲座数据本地处理',
+            'icon' => 'fa fa-fw fa-key',
+            'href' => url('upload2')
+        ];
         return ZBuilder::make('table')
             ->addOrder('a.id')
             ->setSearch(['a.id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题", 'b.name' => "讲师"]) // 设置搜索参数
@@ -132,6 +237,7 @@ class Lecture extends Admin
             ->addRightButton("custom", $btn_access1)
             ->addTopButtons(["add" => "发帖", "delete" => "删除"])
             ->addTopButton("upload", $top_upload)
+            ->addTopButton("upload2", $top_upload2)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
@@ -208,54 +314,6 @@ class Lecture extends Admin
             ->fetch();
     }
 
-    public function upload()
-    {
-        // 保存数据
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-
-            $atta = Attachment::where("path", $data['file'])->find();
-            if (!$atta) {
-                $this->error("先上传文件");
-            }
-            $excel = new Excel(config("upload_prefix"));
-            $ex = $excel->send_md5($atta["md5"]);
-            if (!$ex->isSuccess()) {
-                echo $ex->getError();
-                exit();
-            }
-            $excel_json = $ex->getExcelJson();
-            if (empty($excel_json)) {
-                $this->error("excel解析错误");
-            }
-            $postData = [
-                "aid" => $this->request->post("aid"),
-                "json" => json_encode($excel_json),
-            ];
-            $ret = Aoss::raw_post("http://api.fsa.familyeducation.org.cn/v1/lecture/association/upload", $postData);
-            if (!$ret) {
-                $this->error("远程错误");
-            }
-            $dec = json_decode($ret, true);
-            if ($dec["code"] === 0) {
-                $this->success("上传成功");
-            } else {
-                $this->error('错误原因:' . $dec['echo'] . "\n" . '错误点:' . json_encode($dec['data'], 320), null, null, 10);
-            }
-        }
-
-
-        $assoc = AssociationModel::column("id,name");
-        // 使用ZBuilder快速创建表单
-        return ZBuilder::make('form')
-            ->setPageTitle('新增') // 设置页面标题
-            ->addFormItems([ // 批量添加表单项
-                ["select", "aid", "公会名称", "", $assoc],
-                ["file", 'file', '上传讲座excel',],
-            ])
-//            ->assign("file_upload_url", "https://upload.familyeducation.org.cn:444/v1/excel/index/index?token=fsa")
-            ->fetch();
-    }
 
     /**
      * 编辑
