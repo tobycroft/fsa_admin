@@ -110,15 +110,21 @@ class LectureAction
 //                    "status" => 1,
 //                ])->find();
             }
-            $host = HostModel::where("name", $HostName)->find();
+            $host = HostModel::where("name", $HostName)
+                ->where('aid', $this->association->id)
+                ->find();
             if (!$host) {
                 $host = HostModel::create([
                     "name" => $HostName,
                     "aid" => $this->association->id,
                 ]);
             }
-            $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits, $TagDataunits1, $TagDataunits2])->column("id");
-            $tag_role_ids = TagRoleModel::whereIn("name", [$role_name])->column("id");
+            $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits, $TagDataunits1, $TagDataunits2])
+                ->where('aid', $this->association->id)
+                ->column("id");
+            $tag_role_ids = TagRoleModel::whereIn("name", [$role_name])
+                ->where("aid", $this->association->id)
+                ->column("id");
             if (empty($tag_role_ids)) {
                 TagRoleModel::create([
                     "aid" => $this->association->id,
@@ -135,6 +141,7 @@ class LectureAction
                 ]);
             }
             $lecture = LectureModel::where("iid", $instructor->id)
+                ->where('aid', $this->association->id)
                 ->where("title", $title)
                 ->where("start_date", $StartDate)
                 ->find();
