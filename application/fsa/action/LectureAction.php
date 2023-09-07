@@ -199,7 +199,7 @@ class LectureAction
             }
 
             $instructor_name = $value['主讲人姓名'];
-            $HostName = $value['举办方名称'];
+            $HostName = empty($value['举办方名称']) ? $value['主办方名称'] : $value['举办方名称'];
             $TagDataunits = $value['主办单位类型'];
             $City = $value['活动地点（市）'];
             $Province = $value['活动地点（省）'];
