@@ -148,7 +148,7 @@ class LectureAction
                 ->where("start_date", $StartDate)
                 ->find();
             if ($lecture) {
-                if (!$data = LectureModel::where("id", $lecture->id)
+                LectureModel::where("id", $lecture->id)
                     ->data([
                         'aid' => $this->association->id,
                         'iid' => $instructor->id,
@@ -166,11 +166,7 @@ class LectureAction
                         'street' => $Street,
                         'visitor' => $Visitor,
                     ])
-                    ->update()) {
-                    throw new \Error($data);
-                } else {
-//                    throw new \Error(implode(",", $tag_dataunit_ids));
-                }
+                    ->update();
             } else {
 
             }
