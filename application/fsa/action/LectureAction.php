@@ -178,7 +178,6 @@ class LectureAction
 
     protected function jinjiangfix($excel)
     {
-        $instructor = null;
 
         foreach ($excel as $value) {
             $StartDate = $value['活动开始时间'];
@@ -230,27 +229,6 @@ class LectureAction
             if (strlen($District) < 1) {
                 throw new \Error("乡镇区不能为空");
             }
-            if (!$instructor) {
-                $instructor = InstructorModel::where('phone', $phone)->find();
-            }
-            if (!$instructor) {
-                continue;
-//                $ins_data = InstructorModel::create([
-//                    "aid" => $this->assoc['id'],
-//                    "name" => $name,
-//                    "phone" => $phone,
-//                    "status" => 1,
-//                ])->find();
-            }
-            $host = HostModel::where("name", $HostName)
-                ->where('aid', $this->association->id)
-                ->find();
-            if (!$host) {
-                $host = HostModel::create([
-                    "name" => $HostName,
-                    "aid" => $this->association->id,
-                ]);
-            }
             $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits, $TagDataunits1, $TagDataunits2])
                 ->where('aid', $this->association->id)
                 ->column("id");
@@ -274,19 +252,13 @@ class LectureAction
                     'name' => $form_name,
                 ]);
             }
-            $lecture = LectureModel::where("iid", $instructor->id)
-                ->where('aid', $this->association->id)
+            $lecture = LectureModel::where('aid', $this->association->id)
                 ->where("title", $title)
                 ->where("start_date", $StartDate)
                 ->find();
             if ($lecture) {
                 LectureModel::where("id", $lecture->id)
                     ->data([
-//                        'aid' => $this->association->id,
-//                        'iid' => $instructor->id,
-//                        'hid' => $host->id,
-//                        'title' => $title,
-//                        'tag_ids' => 6,
                         'tag_dataunit_ids' => implode(",", $tag_dataunit_ids),
                         'trid' => implode(",", $tag_role_ids),
                         'tfid' => implode(",", $tag_form_ids),
