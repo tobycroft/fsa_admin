@@ -132,7 +132,7 @@ class LectureAction
                     "name" => $role_name,
                 ]);
             }
-            $tag_form_ids = TagFormModel::whereIn("name", [$form_name])
+            $tag_form_ids = TagFormModel::where("name", $form_name)
                 ->where('aid', $this->association->id)
                 ->column("id");
             if (empty($tag_form_ids)) {
