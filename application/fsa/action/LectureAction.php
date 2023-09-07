@@ -170,7 +170,7 @@ class LectureAction
 //                        'iid' => $instructor->id,
                         'hid' => $host->id,
 //                        'title' => $title,
-//                        'tag_ids' => 6,
+//                        'tag_ids' => 6
                         'tag_dataunit_ids' => implode(",", $tag_dataunit_ids),
                         'trid' => implode(",", $tag_role_ids),
                         'tfid' => implode(",", $tag_form_ids),
