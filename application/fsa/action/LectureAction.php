@@ -125,7 +125,7 @@ class LectureAction
                 ]);
             }
             $lecture = LectureModel::where("iid", $iid)
-                ->where("hid", $host->id)
+                ->where("title", $title)
                 ->where("start_date", $StartDate)
                 ->find();
             if ($lecture) {
