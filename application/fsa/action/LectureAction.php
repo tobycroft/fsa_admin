@@ -124,12 +124,12 @@ class LectureAction
                     'name' => $form_name,
                 ]);
             }
-            $lec = LectureModel::where("iid", $iid)
+            $lecture = LectureModel::where("iid", $iid)
                 ->where("hid", $host->id)
                 ->where("start_date", $StartDate)
                 ->find();
-            if ($lec) {
-                if (!LectureModel::where("id", $lec->id)
+            if ($lecture) {
+                if (!LectureModel::where("id", $lecture->id)
                     ->data([
                         'aid' => $this->association->id,
                         'iid' => $iid,
