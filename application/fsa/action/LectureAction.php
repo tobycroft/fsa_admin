@@ -119,7 +119,7 @@ class LectureAction
             $tag_form_ids = TagFormModel::whereIn("name", [$form_name])->column("id");
             if (empty($tag_form_ids)) {
                 TagFormModel::create([
-                    'aid' => $this->association['aid'],
+                    'aid' => $this->association->id,
                     'is_show' => 1,
                     'name' => $form_name,
                 ]);
