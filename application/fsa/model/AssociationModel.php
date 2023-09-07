@@ -4,8 +4,6 @@
 namespace app\fsa\model;
 
 use think\Model;
-use think\helper\Hash;
-use think\Db;
 
 /**
  * 后台用户模型
