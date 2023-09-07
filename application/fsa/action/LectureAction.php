@@ -122,9 +122,21 @@ class LectureAction
                     "aid" => $this->association->id,
                 ]);
             }
+            $tag_dataunit_ids = TagDataunitModel::where('name', $TagDataunits)
+                ->where('aid', $this->association->id)
+                ->column('id');
+            if (empty($tag_dataunit_ids)) {
+                TagDataunitModel::create([
+                    'aid' => $this->association->id,
+                    'is_show' => 1,
+                    'name' => $TagDataunits,
+                ]);
+            }
+
             $tag_dataunit_ids = TagDataunitModel::whereIn("name", [$TagDataunits, $TagDataunits1, $TagDataunits2])
                 ->where('aid', $this->association->id)
                 ->column("id");
+
             $tag_role_ids = TagRoleModel::whereIn("name", [$role_name])
                 ->where("aid", $this->association->id)
                 ->column("id");
@@ -145,6 +157,7 @@ class LectureAction
                     'name' => $form_name,
                 ]);
             }
+
             $lecture = LectureModel::where("iid", $instructor->id)
                 ->where('aid', $this->association->id)
                 ->where("title", $title)
@@ -157,7 +170,7 @@ class LectureAction
 //                        'iid' => $instructor->id,
                         'hid' => $host->id,
 //                        'title' => $title,
-                        'tag_ids' => 6,
+//                        'tag_ids' => 6,
                         'tag_dataunit_ids' => implode(",", $tag_dataunit_ids),
                         'trid' => implode(",", $tag_role_ids),
                         'tfid' => implode(",", $tag_form_ids),
