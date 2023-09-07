@@ -153,15 +153,15 @@ class LectureAction
             if ($lecture) {
                 LectureModel::where("id", $lecture->id)
                     ->data([
-                        'aid' => $this->association->id,
-                        'iid' => $instructor->id,
+//                        'aid' => $this->association->id,
+//                        'iid' => $instructor->id,
                         'hid' => $host->id,
-                        'title' => $title,
+//                        'title' => $title,
                         'tag_ids' => 6,
                         'tag_dataunit_ids' => implode(",", $tag_dataunit_ids),
                         'trid' => implode(",", $tag_role_ids),
                         'tfid' => implode(",", $tag_form_ids),
-                        'start_date' => $StartDate,
+//                        'start_date' => $StartDate,
                         'type' => $type,
                         'province' => $Province,
                         'city' => $City,
