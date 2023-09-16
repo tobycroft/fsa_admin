@@ -5,9 +5,9 @@ namespace app\common\behavior;
 
 use app\admin\model\Config as ConfigModel;
 use app\admin\model\Module as ModuleModel;
+use think\facade\App;
 use think\facade\Env;
 use think\facade\Request;
-use think\facade\App;
 
 /**
  * 初始化配置信息行为

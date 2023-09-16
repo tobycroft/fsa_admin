@@ -6,14 +6,12 @@ namespace app\common\builder\table;
 use app\admin\model\Menu;
 use app\common\builder\ZBuilder;
 use app\user\model\Role;
-use think\Exception;
 use think\facade\Cache;
 use think\facade\Env;
 
 /**
  * 表格构建器
  * @package app\common\builder\table
- * @author 蔡伟明 <314013107@qq.com>
  */
 class Builder extends ZBuilder
 {
@@ -155,7 +153,6 @@ class Builder extends ZBuilder
 
     /**
      * 初始化
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function initialize()
     {
@@ -175,7 +172,6 @@ class Builder extends ZBuilder
      * @param mixed $name 要显示的模板变量
      * @param string $value 变量的值
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function assign($name, $value = '')
     {
@@ -191,7 +187,6 @@ class Builder extends ZBuilder
      * 设置页面标题
      * @param string $page_title 页面标题
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setPageTitle($page_title = '')
     {
@@ -204,7 +199,6 @@ class Builder extends ZBuilder
     /**
      * 隐藏第一列多选框
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function hideCheckbox($status = true)
     {
@@ -218,7 +212,6 @@ class Builder extends ZBuilder
      * @param string $type 提示类型：success/info/warning/danger，默认info
      * @param string $pos 提示位置：top,button
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setPageTips($tips = '', $type = 'info', $pos = 'top')
     {
@@ -239,7 +232,6 @@ class Builder extends ZBuilder
      *                       所以可以在定义省份下拉菜单时，传入地区的下拉列表名，
      *                       如需忽略多个参数，用逗号隔开
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addTopSelect($name = '', $title = '', $options = [], $default = '', $ignore = '')
     {
@@ -265,7 +257,6 @@ class Builder extends ZBuilder
      * 添加表头排序
      * @param array|string $column 表头排序字段，多个以逗号隔开
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addOrder($column = [])
     {
@@ -283,7 +274,6 @@ class Builder extends ZBuilder
      * @param array $default 默认选项，['字段名' => '字段值,字段值...']
      * @param string $type 筛选类型，默认为CheckBox，也可以是radio
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addFilter($columns = [], $options = [], $default = [], $type = 'checkbox')
     {
@@ -336,7 +326,6 @@ class Builder extends ZBuilder
      * @param string $default 默认值，一维数组或逗号隔开的字符串
      * @param string $type 筛选类型，默认为CheckBox，也可以是radio
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addFilterList($field = '', $list = [], $default = '', $type = 'checkbox')
     {
@@ -395,7 +384,6 @@ class Builder extends ZBuilder
      * 组合筛选条件
      * @param string $map 筛选条件
      * @return array
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function buildFilterMap($map = '')
     {
@@ -427,7 +415,6 @@ class Builder extends ZBuilder
      * @param string|array $date 默认的开始日期和结束日期
      * @param string|array $tips 开始日期和结束日期的提示
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addTimeFilter($field = '', $date = '', $tips = '')
     {
@@ -480,7 +467,6 @@ class Builder extends ZBuilder
      * @param string $validate 验证器名
      * @param string $fields 要验证的字段，多个用逗号隔开，并且在验证器中要定义该字段名对应的场景
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addValidate($validate = '', $fields = '')
     {
@@ -497,7 +483,6 @@ class Builder extends ZBuilder
      * @param string $content 要替换的内容
      * @param null $target 要替换的目标按钮
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function replaceRightButton($map = [], $content = '', $target = null)
     {
@@ -621,7 +606,6 @@ class Builder extends ZBuilder
      * @param string $type 按钮类型：add/enable/disable/delete
      * @param array $params 参数
      * @return string
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function getDefaultUrl($type = '', $params = [])
     {
@@ -659,7 +643,6 @@ class Builder extends ZBuilder
      * @param array $attribute 按钮属性
      * @param bool $pop 是否使用弹出框形式
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addTopButton($type = '', $attribute = [], $pop = false)
     {
@@ -743,6 +726,18 @@ class Builder extends ZBuilder
                 ];
                 break;
 
+            // 导出
+            case 'export':
+                // 默认属性
+                $btn_attribute = [
+                    'title' => '导出',
+                    'icon' => 'fa fa-ban',
+                    'class' => 'btn btn-warning ajax-post confirm',
+                    'target-form' => 'ids',
+                    'href' => $this->getDefaultUrl($type, ['_t' => $table_token, 'field' => $field])
+                ];
+                break;
+
             // 自定义按钮
             default:
                 // 默认属性
@@ -784,7 +779,6 @@ class Builder extends ZBuilder
      * 检查是否有按钮权限
      * @param array $btn_attribute 按钮属性
      * @return bool
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function checkButtonAuth($btn_attribute = [])
     {
@@ -810,7 +804,6 @@ class Builder extends ZBuilder
      * $builder->addTopButtons(['add' => ['table' => '__USER__'], 'delete']);
      *
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addTopButtons($buttons = [])
     {
@@ -908,7 +901,6 @@ class Builder extends ZBuilder
      * @param string $table 表名
      * @param int $prefix 前缀类型：0使用Db类(不添加表前缀)，1使用Db类(添加表前缀)，2使用模型
      * @return bool|string
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function createTableToken($table = '', $prefix = 1)
     {
@@ -932,7 +924,6 @@ class Builder extends ZBuilder
      * @param bool $pop 是否使用弹出框形式
      * @param array $extra 扩展参数，设置按钮样式
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addRightButton($type = '', $attribute = [], $pop = false, $extra = [])
     {
@@ -1058,7 +1049,6 @@ class Builder extends ZBuilder
      * $builder->addRightButtons(['edit' => ['table' => 'admin_user'], 'delete']);
      *
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addRightButtons($buttons = [])
     {
@@ -1079,7 +1069,6 @@ class Builder extends ZBuilder
      * 设置表格高度
      * @param string $height 高度：fixed/auto/具体数值
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      * @since 1.3.0
      */
     public function setHeight($height = 'fixed')
@@ -1092,7 +1081,6 @@ class Builder extends ZBuilder
      * 固定左侧列数
      * @param int $num 数量
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function fixedRight($num = 0)
     {
@@ -1104,7 +1092,6 @@ class Builder extends ZBuilder
      * 固定右侧列数
      * @param int $num 数量
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function fixedLeft($num = 0)
     {
@@ -1119,7 +1106,6 @@ class Builder extends ZBuilder
      * @param string $url 提交地址
      * @param null $search_button 提交按钮
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setSearch($fields = [], $placeholder = '', $url = '', $search_button = null)
     {
@@ -1140,7 +1126,6 @@ class Builder extends ZBuilder
      * @param array $items
      * @param string $url
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setSearchArea($items = [], $url = '')
     {
@@ -1290,7 +1275,6 @@ class Builder extends ZBuilder
      * @param string $table 数据库表名，不含前缀，如果为true则使用模型方式
      * @param int $prefix 前缀类型：0使用Db类(不添加表前缀)，1使用Db类(添加表前缀)，2使用模型
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setTableName($table = '', $prefix = 1)
     {
@@ -1313,7 +1297,6 @@ class Builder extends ZBuilder
      * 设置插件名称（此方法只供制作插件时用）
      * @param string $plugin_name 插件名
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setPluginName($plugin_name = '')
     {
@@ -1333,7 +1316,6 @@ class Builder extends ZBuilder
      * @param string $class css类名
      * @param string $extra 扩展参数
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addColumn($name = '', $title = '', $type = '', $default = '', $param = '', $class = '', $extra = '')
     {
@@ -1390,7 +1372,6 @@ class Builder extends ZBuilder
      * @param string $column 列名，即字段名
      * @param int $width 宽度，默认为100
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setColumnWidth($column = '', $width = 100)
     {
@@ -1418,7 +1399,6 @@ class Builder extends ZBuilder
      * @param string $column 列名，即字段名
      * @param string $screen 屏幕，xs/sm/md/lg
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function hideColumn($column = '', $screen = '')
     {
@@ -1461,7 +1441,6 @@ class Builder extends ZBuilder
      * 设置表格数据列表
      * @param array|object $row_list 表格数据
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setRowList($row_list = null)
     {
@@ -1491,7 +1470,6 @@ class Builder extends ZBuilder
      * 将表格数据转换为纯数组
      * @param array|object $row_list 数据
      * @return array
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function toArray($row_list)
     {
@@ -1509,7 +1487,6 @@ class Builder extends ZBuilder
      * @param string $index 索引
      * @param string $field 字段名
      * @return mixed
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function getData($index = '', $field = '')
     {
@@ -1529,7 +1506,6 @@ class Builder extends ZBuilder
      * 设置需要使用原始数据的字段
      * @param string|array $field 字段名
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function raw($field = '')
     {
@@ -1545,7 +1521,6 @@ class Builder extends ZBuilder
      * 设置表格主键
      * @param string $key 主键名称
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setPrimaryKey($key = '')
     {
@@ -1557,10 +1532,9 @@ class Builder extends ZBuilder
 
     /**
      * 设置Tab按钮列表
-     * @param array $tab_list Tab列表  ['title' => '标题', 'href' => 'http://www.DThinkphp.com']
+     * @param array $tab_list Tab列表  ['title' => '标题', 'href' => 'http://www.thinkphp.cn']
      * @param string $curr_tab 当前tab
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setTabNav($tab_list = [], $curr_tab = '')
     {
@@ -1577,7 +1551,6 @@ class Builder extends ZBuilder
      * 设置分页
      * @param string $pages 分页数据
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setPages($pages = '')
     {
@@ -1590,7 +1563,6 @@ class Builder extends ZBuilder
     /**
      * 设置为无分页
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function noPages()
     {
@@ -1603,7 +1575,6 @@ class Builder extends ZBuilder
      * @param string $extra_html 额外代码
      * @param string $tag 标记
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      * @alter 小乌 <82950492@qq.com>
      */
     public function setExtraHtml($extra_html = '', $tag = '')
@@ -1621,7 +1592,6 @@ class Builder extends ZBuilder
      * @param string $tag 标记
      * @param array $vars 模板输出变量
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setExtraHtmlFile($template = '', $tag = '', $vars = [])
     {
@@ -1644,7 +1614,6 @@ class Builder extends ZBuilder
      * 设置额外JS代码
      * @param string $extra_js 额外JS代码
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setExtraJs($extra_js = '')
     {
@@ -1658,7 +1627,6 @@ class Builder extends ZBuilder
      * 设置额外CSS代码
      * @param string $extra_css 额外CSS代码
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setExtraCss($extra_css = '')
     {
@@ -1672,7 +1640,6 @@ class Builder extends ZBuilder
      * 设置页面模版
      * @param string $template 模版
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function setTemplate($template = '')
     {
@@ -1689,7 +1656,6 @@ class Builder extends ZBuilder
      * @param null $op 表达式
      * @param null $condition 查询条件
      * @return $this
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function addTrClass($class = '', $field = null, $op = null, $condition = null)
     {
@@ -1741,7 +1707,6 @@ class Builder extends ZBuilder
      * 编译HTML属性
      * @param array $attr 要编译的数据
      * @return array|string
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function compileHtmlAttr($attr = [])
     {
@@ -1761,7 +1726,6 @@ class Builder extends ZBuilder
 
     /**
      * 编译表格数据row_list的值
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function compileRows()
     {
@@ -2230,7 +2194,6 @@ class Builder extends ZBuilder
      * 分析行class
      * @param mixed $row 行数据
      * @return array
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function parseTrClass($row)
     {
@@ -2262,7 +2225,6 @@ class Builder extends ZBuilder
      * @param mixed $row 行数据
      * @param array $condition 对比条件
      * @return bool
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function parseCondition($row, $condition = [])
     {
@@ -2307,7 +2269,6 @@ class Builder extends ZBuilder
      * @param string $table 表名
      * @param string $field 字段
      * @return bool|string
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function createFilterToken($table = '', $field = '')
     {
@@ -2318,7 +2279,6 @@ class Builder extends ZBuilder
 
     /**
      * 编译表格数据
-     * @author 蔡伟明 <314013107@qq.com>
      */
     private function compileTable()
     {
@@ -2605,7 +2565,6 @@ class Builder extends ZBuilder
      * @param array $vars 模板输出变量
      * @param array $config 模板参数
      * @return mixed
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function fetch($template = '', $vars = [], $config = [])
     {
