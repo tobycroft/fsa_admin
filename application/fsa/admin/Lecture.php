@@ -83,7 +83,7 @@ class Lecture extends Admin
                 '市' => $item['city'],
                 '区' => $item['district'],
                 '街道' => $item['street'],
-                '学员人数' => empty($item['visitor']) ?: 0,
+                '学员人数' => !empty($item['visitor']) ? $item['visitor'] : 0,
             ];
         }
 //        echo json_encode($arr, 320);
