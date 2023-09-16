@@ -35,7 +35,7 @@ class Lecture extends Admin
     {
 
         $data_list = LectureModel::alias('a')->leftJoin(['fra_instructor' => 'b'], 'b.id=a.iid')
-            ->where("id", "in", $ids)
+            ->where("a.id", "in", $ids)
             ->field('b.*,a.*')
             ->paginate();
         foreach ($data_list as $key => $item) {
