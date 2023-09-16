@@ -47,7 +47,6 @@ class Lecture extends Admin
             $data_list[$key] = $item;
         }
         foreach ($data_list as $item) {
-
             $arr[] = [
                 'id' => $item['id'],
                 '公会名称' => $item['association_name'],
