@@ -45,6 +45,8 @@ class Lecture extends Admin
             $item['host'] = HostModel::where('id', $item['hid'])->value('name');
             $item['tags'] = join(',', TagModel::whereIn('id', $item['tag_ids'])->column('name'));
             $item['dataunits'] = join(',', TagDataunitModel::whereIn('id', $item['tag_dataunit_ids'])->column('name'));
+            $item["tf_name"] = TagFormModel::where("id", $item["tfid"])->value("name");
+            $item["tr_name"] = TagRoleModel::where("id", $item["trid"])->value("name");
             $data_list[$key] = $item;
         }
         $arr = [];
@@ -72,8 +74,8 @@ class Lecture extends Admin
                 '公会名称' => $item['association_name'],
                 '讲师' => $item['instructor'],
                 '主办方' => $item['host'],
-                '角色标签' => $item['trid'],
-                '形式标签' => $item['tfid'],
+                '角色标签' => $item['tr_name'],
+                '形式标签' => $item['tf_name'],
                 '讲座主题' => $item['title'],
                 '标签ids' => $item['tags'],
                 '标签数据归属方ids' => $item['dataunits'],
