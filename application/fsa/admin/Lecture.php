@@ -34,7 +34,8 @@ class Lecture extends Admin
     public function export($ids = [])
     {
 
-        $data_list = LectureModel::alias('a')->leftJoin(['fra_instructor' => 'b'], 'b.id=a.iid')->where($map)->order($order)
+        $data_list = LectureModel::alias('a')->leftJoin(['fra_instructor' => 'b'], 'b.id=a.iid')
+            ->where("id", "in", $ids)
             ->field('b.*,a.*')
             ->paginate();
         foreach ($data_list as $key => $item) {
