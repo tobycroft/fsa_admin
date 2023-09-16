@@ -47,17 +47,24 @@ class Lecture extends Admin
             $data_list[$key] = $item;
         }
         foreach ($data_list as $item) {
+
             $arr[] = [
                 'id' => $item['id'],
-                '课程类型' => $item['study_title'],
-                '班级' => $item['gc'],
-                '名称' => $item['cname'],
-                '评价' => $item['content'],
-                '图片1' => $item['img0'],
-                '图片2' => $item['img1'],
-                '修改时间' => $item['change_date'],
-                '时间' => $item['date'],
-                'hot_type' => $item['hot_type'],
+                '公会名称' => $item['association_name'],
+                '讲师' => $item['iid'],
+                '主办方' => $item['hid'],
+                '角色标签' => $item['trid'],
+                '形式标签' => $item['tfid'],
+                '讲座主题' => $item['title'],
+                '标签ids' => $item['tags'],
+                '标签数据归属方ids' => $item['dataunits'],
+                '讲座开始时间' => $item['start_date'],
+                '时长(秒)' => $item['duration'],
+                '省' => $item['province'],
+                '市' => $item['city'],
+                '区' => $item['district'],
+                '街道' => $item['street'],
+                '学员人数' => $item['visitor'],
             ];
         }
         // 设置表头信息（对应字段名,宽度，显示表头名称）
