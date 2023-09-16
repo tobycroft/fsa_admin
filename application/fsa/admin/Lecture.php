@@ -64,7 +64,8 @@ class Lecture extends Admin
             '市' => "市",
             '区' => "区",
             '街道' => "街道",
-            '学员人数' => "学员人数",];
+            '学员人数' => "学员人数",
+        ];
         foreach ($data_list as $item) {
             $arr[] = [
                 'id' => $item['id'],
