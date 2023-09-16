@@ -68,8 +68,8 @@ class Lecture extends Admin
                 '学员人数' => $item['visitor'],
             ];
         }
-        echo json_encode($arr, 320);
-        exit();
+//        echo json_encode($arr, 320);
+//        exit();
         // 设置表头信息（对应字段名,宽度，显示表头名称）
         $Aoss = new Excel(config('upload_prefix'));
         $ret = $Aoss->create_excel_fileurl($arr);
