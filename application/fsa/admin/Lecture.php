@@ -35,10 +35,8 @@ class Lecture extends Admin
     {
 
         $data_list = LectureModel::alias('a')
-//            ->leftJoin(['fra_instructor' => 'b'], 'b.id=a.iid')
             ->where("a.id", "in", $ids)
-//            ->field('b.*,a.*')
-            ->select();
+            ->select()->toArray();
         foreach ($data_list as $key => $item) {
             $item['association_name'] = AssociationModel::where('id', $item['aid'])->value('name');
             $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
