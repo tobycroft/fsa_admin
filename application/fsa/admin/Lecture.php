@@ -40,7 +40,7 @@ class Lecture extends Admin
             ->paginate();
         foreach ($data_list as $key => $item) {
             $item['association_name'] = AssociationModel::where('id', $item['aid'])->value('name');
-//            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
+            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
             $item['host'] = HostModel::where('id', $item['hid'])->value('name');
             $item['tags'] = join(',', TagModel::whereIn('id', $item['tag_ids'])->column('name'));
             $item['dataunits'] = join(',', TagDataunitModel::whereIn('id', $item['tag_dataunit_ids'])->column('name'));
@@ -51,8 +51,8 @@ class Lecture extends Admin
             $arr[] = [
                 'id' => $item['id'],
                 '公会名称' => $item['association_name'],
-                '讲师' => $item['iid'],
-                '主办方' => $item['hid'],
+                '讲师' => $item['instructor'],
+                '主办方' => $item['host'],
                 '角色标签' => $item['trid'],
                 '形式标签' => $item['tfid'],
                 '讲座主题' => $item['title'],
