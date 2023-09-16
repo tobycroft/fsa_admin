@@ -46,7 +46,7 @@ class Lecture extends Admin
             $item['dataunits'] = join(',', TagDataunitModel::whereIn('id', $item['tag_dataunit_ids'])->column('name'));
             $data_list[$key] = $item;
         }
-        $arr=[];
+        $arr = [];
         foreach ($data_list as $item) {
             $arr[] = [
                 'id' => $item['id'],
@@ -70,6 +70,8 @@ class Lecture extends Admin
         // 设置表头信息（对应字段名,宽度，显示表头名称）
         $Aoss = new Excel(config('upload_prefix'));
         $ret = $Aoss->create_excel_fileurl($arr);
+        echo json_encode($ret,320);
+        exit();
         $this->success('成功', $ret->file_url(), '_blank');
     }
 
