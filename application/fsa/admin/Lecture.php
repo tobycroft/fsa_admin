@@ -49,7 +49,7 @@ class Lecture extends Admin
         }
         $arr = [];
         $arr[] = [
-            'id' => $item['id'],
+            'id' => "ID字段不要修改",
             '公会名称' => "公会名称",
             '讲师' => "讲师",
             '主办方' => "主办方",
