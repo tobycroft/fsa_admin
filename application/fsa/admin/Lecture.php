@@ -30,6 +30,41 @@ use util\Tree;
 class Lecture extends Admin
 {
 
+
+    public function export($ids = [])
+    {
+
+        $data_list = LectureModel::alias('a')->leftJoin(['fra_instructor' => 'b'], 'b.id=a.iid')->where($map)->order($order)
+            ->field('b.*,a.*')
+            ->paginate();
+        foreach ($data_list as $key => $item) {
+            $item['association_name'] = AssociationModel::where('id', $item['aid'])->value('name');
+//            $item["instructor"] = InstructorModel::where("id", $item["iid"])->value("name");
+            $item['host'] = HostModel::where('id', $item['hid'])->value('name');
+            $item['tags'] = join(',', TagModel::whereIn('id', $item['tag_ids'])->column('name'));
+            $item['dataunits'] = join(',', TagDataunitModel::whereIn('id', $item['tag_dataunit_ids'])->column('name'));
+            $data_list[$key] = $item;
+        }
+        foreach ($data_list as $item) {
+            $arr[] = [
+                'id' => $item['id'],
+                '课程类型' => $item['study_title'],
+                '班级' => $item['gc'],
+                '名称' => $item['cname'],
+                '评价' => $item['content'],
+                '图片1' => $item['img0'],
+                '图片2' => $item['img1'],
+                '修改时间' => $item['change_date'],
+                '时间' => $item['date'],
+                'hot_type' => $item['hot_type'],
+            ];
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $Aoss = new Excel(config('upload_prefix'));
+        $ret = $Aoss->create_excel_fileurl($arr);
+        $this->success('成功', $ret->file_url(), '_blank');
+    }
+
     public function upload2()
     {
         // 保存数据
@@ -207,9 +242,17 @@ class Lecture extends Admin
             'icon' => 'fa fa-fw fa-key',
             'href' => url('upload2')
         ];
+        $association = AssociationModel::column("id,name");
         return ZBuilder::make('table')
             ->addOrder('a.id')
             ->setSearch(['a.id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题", 'b.name' => "讲师"]) // 设置搜索参数
+            ->setSearchArea([['select', 'type', '学习类型', '', '', ['daily' => '每日', 'weekly' => '周', 'monthy' => '月']],
+                ['select', 'aid', '协会', '', '', $association],
+//                ['text', 'year', '入学年份'],
+//                ['datetime', 'date', '时间段'],
+//                ['text', 'grade', '年级'],
+//                ['text', 'class', '班级'],
+            ])
             ->addColumns([
                 ["id", "id"],
                 ["association_name", "公会名称"],
