@@ -46,6 +46,7 @@ class Lecture extends Admin
             $item['dataunits'] = join(',', TagDataunitModel::whereIn('id', $item['tag_dataunit_ids'])->column('name'));
             $data_list[$key] = $item;
         }
+        $arr=[];
         foreach ($data_list as $item) {
             $arr[] = [
                 'id' => $item['id'],
