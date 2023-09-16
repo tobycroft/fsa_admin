@@ -242,6 +242,11 @@ class Lecture extends Admin
             'icon' => 'fa fa-fw fa-key',
             'href' => url('upload2')
         ];
+        $export = [
+            'title' => '导出',
+            'icon' => 'fa fa-fw fa-key',
+            'href' => url('export')
+        ];
         $association = AssociationModel::column("id,name");
         return ZBuilder::make('table')
             ->addOrder('a.id')
@@ -283,7 +288,8 @@ class Lecture extends Admin
             ->addRightButton("custom", $btn_access1)
             ->addTopButtons(["add" => "发帖", "delete" => "删除"])
             ->addTopButton("upload", $top_upload)
-            ->addTopButton("upload", $top_upload2)
+            ->addTopButton("upload2", $top_upload2)
+            ->addTopButton("export", $export)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page)
             ->fetch();
