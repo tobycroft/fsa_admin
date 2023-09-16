@@ -251,7 +251,8 @@ class Lecture extends Admin
         return ZBuilder::make('table')
             ->addOrder('a.id')
             ->setSearch(['a.id' => 'id', "province" => "省", "city" => "市", "district" => "县", "title" => "标题", 'b.name' => "讲师"]) // 设置搜索参数
-            ->setSearchArea([['select', 'type', '学习类型', '', '', ['daily' => '每日', 'weekly' => '周', 'monthy' => '月']],
+            ->setSearchArea([
+//                ['select', 'type', '学习类型', '', '', ['daily' => '每日', 'weekly' => '周', 'monthy' => '月']],
                 ['select', 'aid', '协会', '', '', $association],
 //                ['text', 'year', '入学年份'],
 //                ['datetime', 'date', '时间段'],
