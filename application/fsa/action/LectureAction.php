@@ -334,7 +334,13 @@ class LectureAction
             if (strlen($hostname) < 1) {
                 throw new \Error('主办单位不能为空');
             }
-            $hid = HostModel::where("name", $hostname)->value("id");
+            $host = HostModel::where("name", $hostname)->find();
+            if (empty($host)) {
+                $host = HostModel::create([
+                    'aid' => $this->association->id,
+                    'name' => $hostname,
+                ]);
+            }
             $tag_dataunit_ids = TagDataunitModel::whereIn('name', $dataunits)
                 ->where('aid', $this->association->id)
                 ->column('id');
@@ -379,7 +385,7 @@ class LectureAction
                         'visitor' => $Visitor,
                         'title' => $title,
                         'duration' => $duration,
-                        'hid' => $hid,
+                        'hid' => $host->id,
                     ])
                     ->update();
             } else {
@@ -396,7 +402,7 @@ class LectureAction
                     'visitor' => $Visitor,
                     'title' => $title,
                     'duration' => $duration,
-                    'hid' => $hid,
+                    'hid' => $host->id,
                 ]);
             }
         }
