@@ -306,7 +306,7 @@ class LectureAction
             $tf_name = $value['形式标签'];
             $title = $value['讲座主题'];
 
-            $instructor = $value['讲师'];
+            $instructor_name = $value['讲师'];
             $hostname = $value["主办方"];
             $dataunits = explode(',', $value['标签数据归属方ids']);
             $tags = $value['标签ids'];
@@ -315,7 +315,7 @@ class LectureAction
             $District = $value['区'];
             $Street = $value['街道'];
 
-            if (strlen($instructor) < 1) {
+            if (strlen($instructor_name) < 1) {
                 throw new \Error('姓名不能为空');
             }
             if (strlen($Province) < 1) {
@@ -336,6 +336,10 @@ class LectureAction
                     'aid' => $this->association->id,
                     'name' => $hostname,
                 ]);
+            }
+            $instructor = InstructorModel::where("name", $instructor_name)->find();
+            if (!$instructor) {
+                throw new \Error($instructor_name . "-不存在，请修改或删除这个老师");
             }
             $tag_dataunit_ids = TagDataunitModel::whereIn('name', $dataunits)
                 ->where('aid', $this->association->id)
