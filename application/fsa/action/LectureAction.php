@@ -390,6 +390,7 @@ class LectureAction
                         'title' => $title,
                         'duration' => $duration,
                         'hid' => $host->id,
+                        'iid' => $instructor->id,
                     ])
                     ->update();
             } else {
