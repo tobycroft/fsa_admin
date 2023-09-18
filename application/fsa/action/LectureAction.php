@@ -296,9 +296,13 @@ class LectureAction
 
     protected function jinjiangnew($excel)
     {
+        $ids = [];
         Db::startTrans();
         foreach ($excel as $value) {
             $id = $value['ID字段不要修改'];
+
+            $ids[] = $id;
+
             $start_date = $value['讲座开始时间'];
             $Visitor = $value['学员人数'];
             $duration = $value['时长(秒)'];
@@ -406,6 +410,7 @@ class LectureAction
                 ]);
             }
         }
+        LectureModel::where("aid", $this->association->id)->whereNotIn("id", $ids)->delete();
         Db::commit();
     }
 }
