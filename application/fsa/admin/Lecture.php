@@ -65,6 +65,7 @@ class Lecture extends Admin
             '区' => "区",
             '街道' => "街道",
             '学员人数' => "学员人数",
+            "type" => "类型",
         ];
         foreach ($data_list as $item) {
             $arr[] = [
@@ -83,6 +84,7 @@ class Lecture extends Admin
                 '市' => $item['city'],
                 '区' => $item['district'],
                 '街道' => $item['street'],
+                '类型' => $item['type'],
                 '学员人数' => !empty($item['visitor']) ? $item['visitor'] : "0",
             ];
         }
