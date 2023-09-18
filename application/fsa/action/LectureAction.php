@@ -301,7 +301,7 @@ class LectureAction
         foreach ($excel as $value) {
             $id = $value['ID字段不要修改'];
 
-            $ids[] = $id;
+//            $ids[] = $id;
 
             $start_date = $value['讲座开始时间'];
             $Visitor = $value['学员人数'];
@@ -395,7 +395,7 @@ class LectureAction
                     ])
                     ->update();
             } else {
-                LectureModel::create([
+                $lecture = LectureModel::create([
                     'tag_dataunit_ids' => implode(',', $tag_dataunit_ids),
                     'tag_ids' => implode(',', $tag_ids),
                     'trid' => implode(',', $tag_role_ids),
@@ -413,6 +413,7 @@ class LectureAction
                     'aid' => $this->association->id,
                 ]);
             }
+            $ids[] = $lecture->id;
         }
         LectureModel::where("aid", $this->association->id)->whereNotIn("id", $ids)->delete();
         Db::commit();
