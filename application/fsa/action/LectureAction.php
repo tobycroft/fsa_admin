@@ -33,6 +33,9 @@ class LectureAction
             case "jinjiangfix":
                 $this->jinjiangfix($excel);
 
+            case "jinjiangnew":
+                $this->jinjiangnew($excel);
+
             default:
                 break;
         }
@@ -288,5 +291,10 @@ class LectureAction
 
             }
         }
+    }
+
+    protected function jinjiangnew($excel)
+    {
+
     }
 }
