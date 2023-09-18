@@ -346,7 +346,6 @@ class LectureAction
             $tag_ids = TagModel::whereIn('name', $tags)
                 ->where('aid', $this->association->id)
                 ->column('id');
-
             $tag_role_ids = TagRoleModel::whereIn('name', [$tr_name])
                 ->where('aid', $this->association->id)
                 ->column('id');
