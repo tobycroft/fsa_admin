@@ -376,6 +376,7 @@ class LectureAction
                 ->find();
             if ($lecture) {
                 LectureModel::where('id', $lecture->id)
+                    ->where("aid", $this->association->id)
                     ->data([
                         'tag_dataunit_ids' => implode(',', $tag_dataunit_ids),
                         'tag_ids' => implode(',', $tag_ids),
