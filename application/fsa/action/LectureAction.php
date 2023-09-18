@@ -386,7 +386,19 @@ class LectureAction
                     ])
                     ->update();
             } else {
-
+                LectureModel::create([
+                    'tag_dataunit_ids' => implode(',', $tag_dataunit_ids),
+                    'tag_ids' => implode(',', $tag_ids),
+                    'trid' => implode(',', $tag_role_ids),
+                    'tfid' => implode(',', $tag_form_ids),
+                    'start_date' => $start_date,
+                    'type' => $type,
+                    'province' => $Province,
+                    'city' => $City,
+                    'district' => $District,
+                    'street' => $Street,
+                    'visitor' => $Visitor,
+                ]);
             }
         }
     }
