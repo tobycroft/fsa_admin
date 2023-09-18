@@ -383,6 +383,8 @@ class LectureAction
                         'district' => $District,
                         'street' => $Street,
                         'visitor' => $Visitor,
+                        'title' => $title,
+                        'duration' => $duration,
                     ])
                     ->update();
             } else {
@@ -398,6 +400,8 @@ class LectureAction
                     'district' => $District,
                     'street' => $Street,
                     'visitor' => $Visitor,
+                    'title' => $title,
+                    'duration' => $duration,
                 ]);
             }
         }
