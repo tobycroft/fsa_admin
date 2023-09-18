@@ -304,17 +304,6 @@ class LectureAction
             $tf_name = $value['形式标签'];
             $phone = $value['手机号码'];
             $title = $value['讲座主题'];
-            $type = $value['活动类别'];
-            //search in type check contain some characters
-            if (str_contains($type, '线上') && str_contains($type, '线下')) {
-                $type = '线上与线下';
-            } elseif (str_contains($type, '线上')) {
-                $type = '线上';
-            } elseif (str_contains($type, '线下')) {
-                $type = '线下';
-            } else {
-                throw new \Error('活动类型需要填写线上或线下');
-            }
 
             $instructor = $value['讲师'];
             $hostname = $value["主办方"];
@@ -381,7 +370,6 @@ class LectureAction
                         'trid' => implode(',', $tag_role_ids),
                         'tfid' => implode(',', $tag_form_ids),
                         'start_date' => $start_date,
-                        'type' => $type,
                         'province' => $Province,
                         'city' => $City,
                         'district' => $District,
@@ -399,7 +387,6 @@ class LectureAction
                     'trid' => implode(',', $tag_role_ids),
                     'tfid' => implode(',', $tag_form_ids),
                     'start_date' => $start_date,
-                    'type' => $type,
                     'province' => $Province,
                     'city' => $City,
                     'district' => $District,
