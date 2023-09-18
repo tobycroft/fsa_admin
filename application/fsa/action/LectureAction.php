@@ -298,7 +298,7 @@ class LectureAction
     {
         Db::startTrans();
         foreach ($excel as $value) {
-            $id = $value['id'];
+            $id = $value['ID字段不要修改'];
             $start_date = $value['讲座开始时间'];
             $Visitor = $value['学员人数'];
             $duration = $value['时长(秒)'];
