@@ -317,7 +317,7 @@ class LectureAction
             }
 
             $instructor = $value['讲师'];
-            $host = $value["主办方"];
+            $hostname = $value["主办方"];
             $dataunits = explode(',', $value['标签数据归属方ids']);
             $tags = $value['标签ids'];
             $City = $value['市'];
@@ -340,6 +340,10 @@ class LectureAction
             if (strlen($District) < 1) {
                 throw new \Error('乡镇区不能为空');
             }
+            if (strlen($hostname) < 1) {
+                throw new \Error('主办单位不能为空');
+            }
+            $hid = HostModel::where("name", $hostname)->value("id");
             $tag_dataunit_ids = TagDataunitModel::whereIn('name', $dataunits)
                 ->where('aid', $this->association->id)
                 ->column('id');
@@ -385,6 +389,7 @@ class LectureAction
                         'visitor' => $Visitor,
                         'title' => $title,
                         'duration' => $duration,
+                        'hid' => $hid,
                     ])
                     ->update();
             } else {
@@ -402,6 +407,7 @@ class LectureAction
                     'visitor' => $Visitor,
                     'title' => $title,
                     'duration' => $duration,
+                    'hid' => $hid,
                 ]);
             }
         }
