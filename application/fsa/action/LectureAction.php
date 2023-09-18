@@ -10,6 +10,7 @@ use app\fsa\model\TagDataunitModel;
 use app\fsa\model\TagFormModel;
 use app\fsa\model\TagModel;
 use app\fsa\model\TagRoleModel;
+use think\Db;
 
 class LectureAction
 {
@@ -295,6 +296,7 @@ class LectureAction
 
     protected function jinjiangnew($excel)
     {
+        Db::startTrans();
         foreach ($excel as $value) {
             $id = $value['id'];
             $start_date = $value['讲座开始时间'];
@@ -398,5 +400,6 @@ class LectureAction
                 ]);
             }
         }
+        Db::commit();
     }
 }
