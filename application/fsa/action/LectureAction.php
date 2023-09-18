@@ -304,7 +304,6 @@ class LectureAction
             $duration = $value['时长(秒)'];
             $tr_name = $value['角色标签'];
             $tf_name = $value['形式标签'];
-            $phone = $value['手机号码'];
             $title = $value['讲座主题'];
 
             $instructor = $value['讲师'];
@@ -316,9 +315,6 @@ class LectureAction
             $District = $value['区'];
             $Street = $value['街道'];
 
-            if (strlen($phone) < 5) {
-                throw new \Error('手机号不能为空');
-            }
             if (strlen($instructor) < 1) {
                 throw new \Error('姓名不能为空');
             }
