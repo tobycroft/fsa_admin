@@ -86,8 +86,8 @@ class LectureAction
             if (strlen($title) < 5) {
                 throw new \Error("标题不能为空-行数：" . $i);
             }
-            if (strlen($Visitor) < 5) {
-                throw new \Error("参数人数不能为空-行数：" . $i);
+            if ($Visitor < 0) {
+                throw new \Error("参与人数不能小于0-行数：" . $i);
             }
             if (strlen($phone) < 5) {
                 throw new \Error("手机号不能为空-行数：" . $i);
