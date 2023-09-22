@@ -49,8 +49,7 @@ class LectureAction
 
     protected function gt($excel)
     {
-        $instructor = null;
-
+        Db::startTrans();
         foreach ($excel as $value) {
             $StartDate = $value['活动开始时间'];
             $Visitor = $value['参与人数'];
@@ -59,7 +58,6 @@ class LectureAction
             $phone = $value['手机号码'];
             $title = $value['活动主题'];
             $type = $value['活动类别'];
-            //search in type check contain some characters
             if (str_contains($type, '线上') && str_contains($type, '线下')) {
                 $type = '线上与线下';
             } elseif (str_contains($type, '线上')) {
@@ -77,14 +75,6 @@ class LectureAction
             $Province = $value['活动地点（省）'];
             $District = $value['活动地点（区、县）'];
             $Street = $value['活动地点（乡、镇、街道）'];
-            $TagDataunits1 = $value['是否体现“晋江市家庭教育大讲堂”'];
-            $TagDataunits2 = $value['是否列入妇联讲课补贴范围'];
-            if ($TagDataunits1 == '是') {
-                $TagDataunits1 = '晋江市家庭教育大讲堂';
-            }
-            if ($TagDataunits2 == '是') {
-                $TagDataunits2 = '妇联讲课补贴范围';
-            }
 
             if (strlen($phone) < 5) {
                 throw new \Error('手机号不能为空');
@@ -101,9 +91,7 @@ class LectureAction
             if (strlen($District) < 1) {
                 throw new \Error('乡镇区不能为空');
             }
-            if (!$instructor) {
-                $instructor = InstructorModel::where('phone', $phone)->find();
-            }
+            $instructor = InstructorModel::where('phone', $phone)->find();
             if (!$instructor) {
                 $instructor = InstructorModel::create([
                     "aid" => $this->association->id,
@@ -121,16 +109,19 @@ class LectureAction
                     'aid' => $this->association->id,
                 ]);
             }
+            foreach (explode(",", $TagDataunits) as $tag) {
+                $td = TagDataunitModel::where("name", $tag)->find();
+                if (!$td) {
+                    TagDataunitModel::create([
+                        'aid' => $this->association->id,
+                        'is_show' => 1,
+                        'name' => $TagDataunits,
+                    ]);
+                }
+            }
             $tag_dataunit_ids = TagDataunitModel::where('name', $TagDataunits)
                 ->where('aid', $this->association->id)
                 ->column('id');
-            if (empty($tag_dataunit_ids)) {
-                TagDataunitModel::create([
-                    'aid' => $this->association->id,
-                    'is_show' => 1,
-                    'name' => $TagDataunits,
-                ]);
-            }
 
             $tag_dataunit_ids = TagDataunitModel::whereIn('name', [$TagDataunits, $TagDataunits1, $TagDataunits2])
                 ->where('aid', $this->association->id)
@@ -200,10 +191,10 @@ class LectureAction
                     'district' => $District,
                     'street' => $Street,
                     'visitor' => $Visitor,
-                ])
-                    ->update();
+                ]);
             }
         }
+        Db::commit();
     }
 
     protected function jinjiang($excel)
