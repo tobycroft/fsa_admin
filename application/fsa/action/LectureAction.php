@@ -49,8 +49,10 @@ class LectureAction
 
     protected function gt($excel)
     {
+        $i = 0;
         Db::startTrans();
         foreach ($excel as $value) {
+            $i++;
             $StartDate = $value['活动开始时间'];
             $Visitor = $value['参与人数'];
             $role_name = $value['对象标签'];
@@ -77,19 +79,19 @@ class LectureAction
             $Street = $value['活动地点（乡、镇、街道）'];
 
             if (strlen($phone) < 5) {
-                throw new \Error('手机号不能为空');
+                throw new \Error("手机号-行数：" . $i);
             }
             if (strlen($instructor_name) < 1) {
-                throw new \Error('姓名不能为空');
+                throw new \Error('姓名不能为空-行数：' . $i);
             }
             if (strlen($Province) < 1) {
-                throw new \Error('省不能为空');
+                throw new \Error('省不能为空-行数：' . $i);
             }
             if (strlen($City) < 1) {
-                throw new \Error('城市不能为空');
+                throw new \Error('城市不能为空-行数：' . $i);
             }
             if (strlen($District) < 1) {
-                throw new \Error('乡镇区不能为空');
+                throw new \Error('乡镇区不能为空-行数：' . $i);
             }
             $instructor = InstructorModel::where('phone', $phone)->find();
             if (!$instructor) {
