@@ -51,6 +51,7 @@ class LectureAction
     {
         $i = 0;
         Db::startTrans();
+
         foreach ($excel as $value) {
             $i++;
             $StartDate = $value['活动开始时间'];
