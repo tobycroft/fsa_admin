@@ -25,18 +25,23 @@ class LectureAction
         switch ($this->association->import_type) {
             case "a":
                 $this->a($excel);
+                break;
 
             case "gt":
                 $this->gt($excel);
+                break;
 
             case "jinjiang":
                 $this->jinjiang($excel);
+                break;
 
             case "jinjiangfix":
                 $this->jinjiangfix($excel);
+                break;
 
             case "jinjiangnew":
                 $this->jinjiangnew($excel);
+                break;
 
             default:
                 break;
