@@ -178,6 +178,7 @@ class LectureAction
                 ->where("city", $City)
                 ->where("district", $District)
                 ->where("street", $Street)
+                ->where("visitor", $Visitor)
                 ->find();
             if ($lecture) {
                 LectureModel::where("aid", $this->association->id)
