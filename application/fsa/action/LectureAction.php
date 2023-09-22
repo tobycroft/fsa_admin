@@ -61,6 +61,7 @@ class LectureAction
             $phone = $value['手机号码'];
             $title = $value['活动主题'];
             $type = $value['活动类别'];
+
             if (str_contains($type, '线上') && str_contains($type, '线下')) {
                 $type = '线上与线下';
             } elseif (str_contains($type, '线上')) {
