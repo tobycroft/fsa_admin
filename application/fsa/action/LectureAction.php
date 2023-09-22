@@ -182,7 +182,7 @@ class LectureAction
                 ->where("visitor", $Visitor)
                 ->find();
             if ($lecture) {
-                LectureModel::where("aid", $this->association->id)
+                $le = LectureModel::where("aid", $this->association->id)
                     ->where('id', $lecture->id)
                     ->data([
 //                        'aid' => $this->association->id,
@@ -202,6 +202,9 @@ class LectureAction
                         'visitor' => $Visitor,
                     ])
                     ->update();
+                if (!$le) {
+                    throw new \Error('插入错误-行数：' . $i);
+                }
             } else {
                 $le = LectureModel::create([
                     'aid' => $this->association->id,
