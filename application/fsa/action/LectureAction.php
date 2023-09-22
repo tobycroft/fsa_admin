@@ -202,9 +202,9 @@ class LectureAction
                         'visitor' => $Visitor,
                     ])
                     ->update();
-                if (!$le) {
-                    throw new \Error('修改错误-行数：' . $i);
-                }
+//                if (!$le) {
+//                    throw new \Error('修改错误-行数：' . $i);
+//                }
             } else {
                 $le = LectureModel::create([
                     'aid' => $this->association->id,
