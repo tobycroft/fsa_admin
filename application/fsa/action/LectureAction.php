@@ -173,6 +173,7 @@ class LectureAction
                 ->where('aid', $this->association->id)
                 ->where('hid', $host->id)
                 ->where('title', $title)
+                ->where('type', $type)
                 ->where('start_date', $StartDate)
                 ->where("province", $Province)
                 ->where("city", $City)
