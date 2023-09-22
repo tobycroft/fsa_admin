@@ -80,6 +80,9 @@ class LectureAction
             $District = $value['活动地点（区、县）'];
             $Street = $value['活动地点（乡、镇、街道）'];
 
+            if (strlen($StartDate) < 5) {
+                throw new \Error("开始时间为空-行数：" . $i);
+            }
             if (strlen($phone) < 5) {
                 throw new \Error("手机号-行数：" . $i);
             }
