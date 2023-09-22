@@ -203,7 +203,7 @@ class LectureAction
                     ])
                     ->update();
                 if (!$le) {
-                    throw new \Error('插入错误-行数：' . $i);
+                    throw new \Error('修改错误-行数：' . $i);
                 }
             } else {
                 $le = LectureModel::create([
