@@ -49,7 +49,7 @@ class LectureAction
 
     protected function gt($excel)
     {
-        $i = 0;
+        $i = 1;
         Db::startTrans();
 
         foreach ($excel as $value) {
