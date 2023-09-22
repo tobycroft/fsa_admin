@@ -68,7 +68,7 @@ class LectureAction
             } elseif (str_contains($type, '线下')) {
                 $type = '线下';
             } else {
-                throw new \Error($type . '-活动类型需要填写线上或线下-行数：' . $i);
+                throw new \Error($title . $type . '-活动类型需要填写线上或线下-行数：' . $i);
             }
 
             $instructor_name = $value['主讲人姓名'];
