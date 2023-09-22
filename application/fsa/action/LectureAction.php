@@ -171,6 +171,7 @@ class LectureAction
 
             $lecture = LectureModel::where('iid', $instructor->id)
                 ->where('aid', $this->association->id)
+                ->where('hid', $host->id)
                 ->where('title', $title)
                 ->where('start_date', $StartDate)
                 ->where("province", $Province)
