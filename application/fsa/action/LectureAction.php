@@ -123,30 +123,33 @@ class LectureAction
                 ->where('aid', $this->association->id)
                 ->column('id');
 
-            $tag_dataunit_ids = TagDataunitModel::whereIn('name', [$TagDataunits, $TagDataunits1, $TagDataunits2])
-                ->where('aid', $this->association->id)
-                ->column('id');
-
+            foreach (explode(',', $role_name) as $tag) {
+                $td = TagRoleModel::where('name', $tag)->find();
+                if (!$td) {
+                    TagRoleModel::create([
+                        'aid' => $this->association->id,
+                        'is_show' => 1,
+                        'name' => $role_name,
+                    ]);
+                }
+            }
             $tag_role_ids = TagRoleModel::whereIn('name', [$role_name])
                 ->where('aid', $this->association->id)
                 ->column('id');
-            if (empty($tag_role_ids)) {
-                TagRoleModel::create([
-                    'aid' => $this->association->id,
-                    'is_show' => 1,
-                    'name' => $role_name,
-                ]);
+
+            foreach (explode(',', $form_name) as $tag) {
+                $td = TagFormModel::where('name', $tag)->find();
+                if (!$td) {
+                    TagFormModel::create([
+                        'aid' => $this->association->id,
+                        'is_show' => 1,
+                        'name' => $form_name,
+                    ]);
+                }
             }
             $tag_form_ids = TagFormModel::where('name', $form_name)
                 ->where('aid', $this->association->id)
                 ->column('id');
-            if (empty($tag_form_ids)) {
-                TagFormModel::create([
-                    'aid' => $this->association->id,
-                    'is_show' => 1,
-                    'name' => $form_name,
-                ]);
-            }
 
             $lecture = LectureModel::where('iid', $instructor->id)
                 ->where('aid', $this->association->id)
