@@ -93,7 +93,7 @@ class LectureAction
                 throw new \Error("参数人数不能为空-行数：" . $i);
             }
             if (strlen($phone) < 5) {
-                throw new \Error("手机号-行数：" . $i);
+                throw new \Error("手机号不能为空-行数：" . $i);
             }
             if (strlen($instructor_name) < 1) {
                 throw new \Error('姓名不能为空-行数：' . $i);
