@@ -202,7 +202,7 @@ class LectureAction
                     ])
                     ->update();
             } else {
-                LectureModel::create([
+                $le = LectureModel::create([
                     'aid' => $this->association->id,
                     'iid' => $instructor->id,
                     'hid' => $host->id,
@@ -219,6 +219,9 @@ class LectureAction
                     'street' => $Street,
                     'visitor' => $Visitor,
                 ]);
+                if (!$le) {
+                    throw new \Error('插入错误-行数：' . $i);
+                }
             }
         }
         Db::commit();
